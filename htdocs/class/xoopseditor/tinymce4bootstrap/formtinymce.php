@@ -38,7 +38,7 @@ class XoopsFormTinymce4Bootstrap extends XoopsEditor
      * @param array $configs Editor Options
      */
 
-    function __construct($configs)
+    public function __construct($configs)
     {
         $current_path = __FILE__;
         if (DIRECTORY_SEPARATOR != "/") {
@@ -67,7 +67,7 @@ class XoopsFormTinymce4Bootstrap extends XoopsEditor
      * @return string
      */
 
-    function renderValidationJS()
+    public function renderValidationJS()
     {
         if ($this->isRequired() && $eltname = $this->getName()) {
             //$eltname = $this->getName();
@@ -75,8 +75,8 @@ class XoopsFormTinymce4Bootstrap extends XoopsEditor
             $eltmsg     = empty($eltcaption) ? sprintf(_FORM_ENTER, $eltname) : sprintf(_FORM_ENTER, $eltcaption);
             $eltmsg     = str_replace('"', '\"', stripslashes($eltmsg));
             $ret        = "\n";
-            $ret .= "if ( tinyMCE.get('{$eltname}').getContent() == \"\" || tinyMCE.get('{$eltname}').getContent() == null) ";
-            $ret .= "{ window.alert(\"{$eltmsg}\"); tinyMCE.get('{$eltname}').focus(); return false; }";
+            $ret        .= "if ( tinyMCE.get('{$eltname}').getContent() == \"\" || tinyMCE.get('{$eltname}').getContent() == null) ";
+            $ret        .= "{ window.alert(\"{$eltmsg}\"); tinyMCE.get('{$eltname}').focus(); return false; }";
 
             return $ret;
         }
@@ -90,7 +90,7 @@ class XoopsFormTinymce4Bootstrap extends XoopsEditor
      * @return string
      */
 
-    function getLanguage()
+    public function getLanguage()
     {
         if ($this->language) {
             return $this->language;
@@ -107,7 +107,7 @@ class XoopsFormTinymce4Bootstrap extends XoopsEditor
         return $this->language;
     }
 
-    function getFonts()
+    public function getFonts()
     {
         if (empty($this->config["fonts"]) && defined("_XOOPS_EDITOR_TINYMCE4_FONTS")) {
             $this->config["fonts"] = constant("_XOOPS_EDITOR_TINYMCE4_FONTS");
@@ -122,7 +122,7 @@ class XoopsFormTinymce4Bootstrap extends XoopsEditor
      * @return sting HTML
      */
 
-    function render()
+    public function render()
     {
         $ret = $this->editor->render();
         $ret .= parent::render();
@@ -136,7 +136,7 @@ class XoopsFormTinymce4Bootstrap extends XoopsEditor
      * @return
      */
 
-    function isActive()
+    public function isActive()
     {
         return is_readable(XOOPS_ROOT_PATH . $this->rootPath . "/tinymce.php");
     }
