@@ -26,11 +26,11 @@ xoops_load('XoopsEditor');
 
 class XoopsFormTinymce4Bootstrap extends XoopsEditor
 {
-    var $language;
-    var $width  = "100%";
-    var $height = "500px";
+    public $language;
+    public $width  = "100%";
+    public $height = "500px";
 
-    var $editor;
+    public $editor;
 
     /**
      * Constructor

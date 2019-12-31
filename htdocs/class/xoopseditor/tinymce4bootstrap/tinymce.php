@@ -25,9 +25,9 @@
  */
 class TinyMCE
 {
-    var $rootpath;
-    var $config  = array();
-    var $setting = array();
+    public $rootpath;
+    public $config  = array();
+    public $setting = array();
 
     /**
      * PHP 5 Constructor
