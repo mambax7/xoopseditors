@@ -18,7 +18,7 @@ tinymce.PluginManager.add('qrcode', function(editor) {
         }
         win = editor.windowManager.open({
             title: title,
-            file: '/class/xoopseditor/tinymce4/external_plugins/qrcode/qrcode.html',
+            file: '/class/xoopseditor/tinymce4bootstrap/external_plugins/qrcode/qrcode.html',
             filetype: 'image',
             width: 550,
             height: 540,
@@ -36,7 +36,7 @@ tinymce.PluginManager.add('qrcode', function(editor) {
     }
     editor.addButton('qrcode', {
         icon: true,
-        image: '/class/xoopseditor/tinymce4/external_plugins/qrcod/icon.png',
+        image: '/class/xoopseditor/tinymce4bootstrap/external_plugins/qrcod/icon.png',
         tooltip: 'Create QRcode',
         shortcut: 'Ctrl+QR',
         onclick: openmanager

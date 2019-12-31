@@ -24,7 +24,7 @@
 
 xoops_load('XoopsEditor');
 
-class XoopsFormTinymce4 extends XoopsEditor
+class XoopsFormTinymce4Bootstrap extends XoopsEditor
 {
     var $language;
     var $width  = "100%";
@@ -45,7 +45,7 @@ class XoopsFormTinymce4 extends XoopsEditor
             $current_path = str_replace(strpos($current_path, "\\\\", 2) ? "\\\\" : DIRECTORY_SEPARATOR, "/", $current_path);
         }
 
-        $this->rootPath = "/class/xoopseditor/tinymce4";
+        $this->rootPath = "/class/xoopseditor/tinymce4bootstrap";
         parent::__construct($configs);
         $this->configs["elements"]    = $this->getName();
         $this->configs["language"]    = $this->getLanguage();

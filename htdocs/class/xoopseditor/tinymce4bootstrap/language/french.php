@@ -14,7 +14,7 @@
  * Assocated with editor_registry.php
  */
 // Name of the editor
-define("_XOOPS_EDITOR_TINYMCE4","TinyMCE4");
+define("_XOOPS_EDITOR_TINYMCE4","TinyMCE4bootstrap");
 // The value must be the same as /tinymce/jscripts/langs/your_language_code, for example, "en" for English, "fr" for French
 // For details, check http://tinymce.moxiecode.com/download_i18n.php
 define("_XOOPS_EDITOR_TINYMCE4_LANGUAGE","fr_FR");

@@ -4,7 +4,7 @@ $current_path = __DIR__;
 if ( DIRECTORY_SEPARATOR != "/" ) {
     $current_path = str_replace( DIRECTORY_SEPARATOR, "/", $current_path);
 }
-$xoops_root_path = substr($current_path, 0, strpos(strtolower($current_path), "/class/xoopseditor/tinymce4/"));
+$xoops_root_path = substr($current_path, 0, strpos(strtolower($current_path), "/class/xoopseditor/tinymce4bootstrap/"));
 include_once $xoops_root_path . "/mainfile.php";
 
 $chemin_array=parse_url(XOOPS_URL);

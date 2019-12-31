@@ -26,11 +26,11 @@ return array(
 
 // default skin
 // "skin"       => "lightgray",
-// "skin_url"       => "/class/xoopseditor/tinymce4/external_skins/charcoal",
-// "skin_url"       => "/class/xoopseditor/tinymce4/external_skins/pepper-grinder",
-// "skin_url"       => "/class/xoopseditor/tinymce4/external_skins/tundora",
-// "skin_url"       => "/class/xoopseditor/tinymce4/external_skins/tundora",
-// "skin_url"       => "/class/xoopseditor/tinymce4/external_skins/xenmce",
+// "skin_url"       => "/class/xoopseditor/tinymce4bootstrap/external_skins/charcoal",
+// "skin_url"       => "/class/xoopseditor/tinymce4bootstrap/external_skins/pepper-grinder",
+// "skin_url"       => "/class/xoopseditor/tinymce4bootstrap/external_skins/tundora",
+// "skin_url"       => "/class/xoopseditor/tinymce4bootstrap/external_skins/tundora",
+// "skin_url"       => "/class/xoopseditor/tinymce4bootstrap/external_skins/xenmce",
 
 
     // language code of the default language pack to use with TinyMCE. These codes are in ISO-639-1 format
@@ -68,14 +68,14 @@ return array(
                  "insertdatetime,media,nonbreaking,save,table,contextmenu,directionality,".
                  "emoticons,template,paste,textcolor,".
                  "xoops_quote,xoops_code,xoops_tagextgal,".
-                 "filemanager,responsivefilemanager,youtube,qrcode,alignbtn,chartextbtn",
+                 "filemanager,responsivefilemanager,youtube,qrcode,alignbtn,chartextbtn,bootstrap",
 
 //  "exclude_plugins" => "autosave,bbcode,example,fullpage",
 //  "content_css" => "editor_xoops.css",
 
     "toolbar1" => "chartext align table | forecolor backcolor bullist numlist | styleselect formatselect",
     "toolbar2" => "responsivefilemanager image media youtube | link unlink anchor | qrcode emoticons hr xoops_emoticons xoops_quote xoops_code xoops_tagextgal template",
-    "toolbar3" => "undo redo preview fullscreen removeformat visualblocks code",
+    "toolbar3" => "undo redo preview fullscreen removeformat visualblocks code bootstrap",
 
     // Full XHTML rule set
     "valid_elements" => ""

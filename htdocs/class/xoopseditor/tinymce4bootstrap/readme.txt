@@ -7,8 +7,8 @@
 ===============================
 TinyMCE V4.10
 ===============================
-- Problème des boutons à liste déroulante : décalage sur la bas
-Remède : <!DOCTYPE html> is required for TinyMCE 4 since it's a HTML5 editor
+- ProblÃ¨me des boutons Ã  liste dÃ©roulante : dÃ©calage sur la bas
+RemÃ¨de : <!DOCTYPE html> is required for TinyMCE 4 since it's a HTML5 editor
 Ne fonctionne pas sous XOOPS... (?)
 
 
@@ -64,7 +64,7 @@ file: b+"/youtube.html"
 ===============================
 Ajout de alignbtn
 ===============================
-permet d'afficher sous forme de liste déroulante les boutons alignements / gauche / centré / droit / justifié /
+permet d'afficher sous forme de liste dÃ©roulante les boutons alignements / gauche / centrÃ© / droit / justifiÃ© /
 
 
 

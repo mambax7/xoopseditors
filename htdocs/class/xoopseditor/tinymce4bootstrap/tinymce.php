@@ -295,6 +295,7 @@ class TinyMCE
                 tinyMCE.init({
             ';
 
+
 foreach ($this->setting as $key => $val) {
          $ret .= $key . ":";
          if ($val === true) {
@@ -319,21 +320,21 @@ foreach ($this->setting as $key => $val) {
             $chemin_path =  $chemin_array["path"];
     }
 
-//   $ret .='language_url : "'.$chemin_path.'/class/xoopseditor/tinymce4/tinymce/js/tinymce/langs/fr_FR.js",';
+//   $ret .='language_url : "'.$chemin_path.'/class/xoopseditor/tinymce4bootstrap/tinymce/js/tinymce/langs/fr_FR.js",';
 
     $ret .= 'external_plugins: {';
-    $ret .= '"qrcode": "'.$chemin_path.'/class/xoopseditor/tinymce4/external_plugins/qrcode/plugin.min.js",';
-    $ret .= '"youtube": "'.$chemin_path.'/class/xoopseditor/tinymce4/external_plugins/youtube/plugin.min.js",';
-    $ret .= '"alignbtn": "'.$chemin_path.'/class/xoopseditor/tinymce4/external_plugins/alignbtn/plugin.min.js",';
-    $ret .= '"chartextbtn": "'.$chemin_path.'/class/xoopseditor/tinymce4/external_plugins/chartextbtn/plugin.min.js",';
-    $ret .= '"xoops_code": "'.$chemin_path.'/class/xoopseditor/tinymce4/external_plugins/xoops_code/plugin.min.js",';
-    $ret .= '"xoops_quote": "'.$chemin_path.'/class/xoopseditor/tinymce4/external_plugins/xoops_quote/plugin.min.js",';
-    $ret .= '"xoops_tagextgal": "'.$chemin_path.'/class/xoopseditor/tinymce4/external_plugins/xoops_tagextgal/plugin.min.js",';
+    $ret .= '"qrcode": "'.$chemin_path.'/class/xoopseditor/tinymce4bootstrap/external_plugins/qrcode/plugin.min.js",';
+    $ret .= '"youtube": "'.$chemin_path.'/class/xoopseditor/tinymce4bootstrap/external_plugins/youtube/plugin.min.js",';
+    $ret .= '"alignbtn": "'.$chemin_path.'/class/xoopseditor/tinymce4bootstrap/external_plugins/alignbtn/plugin.min.js",';
+    $ret .= '"chartextbtn": "'.$chemin_path.'/class/xoopseditor/tinymce4bootstrap/external_plugins/chartextbtn/plugin.min.js",';
+    $ret .= '"xoops_code": "'.$chemin_path.'/class/xoopseditor/tinymce4bootstrap/external_plugins/xoops_code/plugin.min.js",';
+    $ret .= '"xoops_quote": "'.$chemin_path.'/class/xoopseditor/tinymce4bootstrap/external_plugins/xoops_quote/plugin.min.js",';
+    $ret .= '"xoops_tagextgal": "'.$chemin_path.'/class/xoopseditor/tinymce4bootstrap/external_plugins/xoops_tagextgal/plugin.min.js",';
 
-    $ret .= '"codemirror": "'.$chemin_path.'/class/xoopseditor/tinymce4/external_plugins/codemirror/plugin.min.js",';
+    $ret .= '"codemirror": "'.$chemin_path.'/class/xoopseditor/tinymce4bootstrap/external_plugins/codemirror/plugin.min.js",';
 
-    $ret .= '"filemanager": "'.$chemin_path.'/class/xoopseditor/tinymce4/external_plugins/filemanager/plugin.min.js",';
-    $ret .= '"responsivefilemanager": "'.$chemin_path.'/class/xoopseditor/tinymce4/external_plugins/responsivefilemanager/plugin.min.js",';
+    $ret .= '"filemanager": "'.$chemin_path.'/class/xoopseditor/tinymce4bootstrap/external_plugins/filemanager/plugin.min.js",';
+    $ret .= '"responsivefilemanager": "'.$chemin_path.'/class/xoopseditor/tinymce4bootstrap/external_plugins/responsivefilemanager/plugin.min.js",';
     $ret .= '},';
 
 $ret .= 'codemirror: {
@@ -351,7 +352,7 @@ $ret .= 'codemirror: {
 
     $ret .= "\n";
 
-    $ret .= '"external_filemanager_path": "'.$chemin_path.'/class/xoopseditor/tinymce4/external_plugins/filemanager/",';
+    $ret .= '"external_filemanager_path": "'.$chemin_path.'/class/xoopseditor/tinymce4bootstrap/external_plugins/filemanager/",';
     $ret .= "\n";
 
     $ret .='templates: "'.$chemin_path.'/uploads/filemanager/templates/liste-templates.js",';
