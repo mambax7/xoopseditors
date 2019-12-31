@@ -1,12 +1,12 @@
 <?php
 
-if($_SESSION['verify'] != 'RESPONSIVEfilemanager') die('forbiden');
+if('RESPONSIVEfilemanager' != $_SESSION['verify']) die('forbiden');
 
 function deleteDir($dir) {
     if (!file_exists($dir)) return true;
     if (!is_dir($dir)) return unlink($dir);
     foreach (scandir($dir) as $item) {
-        if ($item == '.' || $item == '..') continue;
+        if ('.' == $item || '..' == $item) continue;
         if (!deleteDir($dir.DIRECTORY_SEPARATOR.$item)) return false;
     }
 
@@ -87,7 +87,7 @@ function foldersize($path) {
     $cleanPath = rtrim($path, '/'). '/';
 
     foreach($files as $t) {
-        if ($t <> '.' && $t <> '..') {
+        if ('.' <> $t && '..' <> $t) {
             $currentFile = $cleanPath . $t;
             if (is_dir($currentFile)) {
                 $size = foldersize($currentFile);
@@ -159,7 +159,7 @@ function fix_filename($str,$transliteration){
     // Empty or incorrectly transliterated filename.
     // Here is a point: a good file UNKNOWN_LANGUAGE.jpg could become .jpg in previous code.
     // So we add that default 'file' name to fix that issue.
-    if( strpos( $str, '.' ) === 0 )
+    if(0 === strpos($str, '.' ))
     {
        $str = 'file'.$str;
     }
@@ -189,7 +189,7 @@ function fix_path($path,$transliteration){
     $info=pathinfo($path);
     $tmp_path=$info['dirname'];
     $str=fix_filename($info['filename'],$transliteration);
-    if($tmp_path != '')
+    if('' != $tmp_path)
     return $tmp_path.DIRECTORY_SEPARATOR.$str;
     else
     return $str;
@@ -198,7 +198,7 @@ function fix_path($path,$transliteration){
 function base_url(){
   return sprintf(
       '%s://%s',
-    isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http',
+    isset($_SERVER['HTTPS']) && 'off' != $_SERVER['HTTPS'] ? 'https' : 'http',
     $_SERVER['HTTP_HOST']
   );
 }
@@ -210,7 +210,7 @@ function config_loading($current_path,$fld){
     return true;
     }
     echo '!!!!' . $parent=fix_dirname($fld);
-    if($parent != '.' && !empty($parent)){
+    if('.' != $parent && !empty($parent)){
     config_loading($current_path,$parent);
     }
 
@@ -247,7 +247,7 @@ function image_check_memory_usage($img, $max_breedte, $max_hoogte){
 
 function endsWith($haystack, $needle)
 {
-    return $needle === '' || substr($haystack, -strlen($needle)) === $needle;
+    return '' === $needle || substr($haystack, -strlen($needle)) === $needle;
 }
 
 function new_thumbnails_creation($targetPath,$targetFile,$name,$current_path,$relative_image_creation,$relative_path_from_current_pos,$relative_image_creation_name_to_prepend,$relative_image_creation_name_to_append,$relative_image_creation_width,$relative_image_creation_height,$fixed_image_creation,$fixed_path_from_filemanager,$fixed_image_creation_name_to_prepend,$fixed_image_creation_to_append,$fixed_image_creation_width,$fixed_image_creation_height){
@@ -255,7 +255,7 @@ function new_thumbnails_creation($targetPath,$targetFile,$name,$current_path,$re
     $all_ok=true;
     if($relative_image_creation){
     foreach($relative_path_from_current_pos as $k=>$path){
-        if($path != '' && $path[strlen($path) - 1] != '/') $path .= '/';
+        if('' != $path && '/' != $path[strlen($path) - 1]) $path .= '/';
         if (!file_exists($targetPath.$path)) create_folder($targetPath.$path,false);
         $info=pathinfo($name);
         if(!endsWith($targetPath,$path))
@@ -267,7 +267,7 @@ function new_thumbnails_creation($targetPath,$targetFile,$name,$current_path,$re
     //create fixed thumbs
     if($fixed_image_creation){
     foreach($fixed_path_from_filemanager as $k=>$path){
-        if($path != '' && $path[strlen($path) - 1] != '/') $path .= '/';
+        if('' != $path && '/' != $path[strlen($path) - 1]) $path .= '/';
         $base_dir=$path.substr_replace($targetPath, '', 0, strlen($current_path));
         if (!file_exists($base_dir)) create_folder($base_dir,false);
         $info=pathinfo($name);

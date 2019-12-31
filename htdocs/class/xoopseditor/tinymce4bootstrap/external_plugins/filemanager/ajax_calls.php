@@ -1,7 +1,7 @@
 <?php
 
 include('config/config.php');
-if($_SESSION['verify'] != 'RESPONSIVEfilemanager') die('forbiden');
+if('RESPONSIVEfilemanager' != $_SESSION['verify']) die('forbiden');
 include('include/utils.php');
 
 if(isset($_GET['action']))
@@ -16,11 +16,11 @@ if(isset($_GET['action']))
         if(isset($_GET['sort_by']))
             $_SESSION['sort_by'] = $_GET['sort_by'];
         if(isset($_GET['descending']))
-            $_SESSION['descending'] = $_GET['descending'] === 'true';
+            $_SESSION['descending'] = 'true' === $_GET['descending'];
         break;
     case 'image_size':
         $pos = strpos($_POST['path'],$upload_dir);
-        if ($pos !== false) {
+        if (false !== $pos) {
         $info=getimagesize(substr_replace($_POST['path'],$current_path,$pos,strlen($upload_dir)));
         echo json_encode($info);
         }
@@ -28,12 +28,12 @@ if(isset($_GET['action']))
         break;
     case 'save_img':
         $info=pathinfo($_POST['name']);
-        if(strpos($_POST['path'],'/')===0
-        || strpos($_POST['path'],'../')!==FALSE
-        || strpos($_POST['path'],'./')===0
-        || strpos($_POST['url'],'http://featherfiles.aviary.com')!==0
-        || $_POST['name']!=fix_filename($_POST['name'],$transliteration)
-        || !in_array(strtolower($info['extension']), ['jpg', 'jpeg', 'png']))
+        if(0 === strpos($_POST['path'], '/')
+           || FALSE !== strpos($_POST['path'], '../')
+           || 0 === strpos($_POST['path'], './')
+           || 0 !== strpos($_POST['url'], 'http://featherfiles.aviary.com')
+           || $_POST['name']!=fix_filename($_POST['name'],$transliteration)
+           || !in_array(strtolower($info['extension']), ['jpg', 'jpeg', 'png']))
             die('wrong data');
         $image_data = file_get_contents($_POST['url']);
         file_put_contents($current_path.$_POST['path'].$_POST['name'],$image_data);
@@ -46,7 +46,7 @@ if(isset($_GET['action']))
         }*/
         break;
     case 'extract':
-        if(strpos($_POST['path'],'/')===0 || strpos($_POST['path'],'../')!==FALSE || strpos($_POST['path'],'./')===0)
+        if(0 === strpos($_POST['path'], '/') || FALSE !== strpos($_POST['path'], '../') || 0 === strpos($_POST['path'], './'))
         die('wrong path');
         $path=$current_path.$_POST['path'];
         $info=pathinfo($path);
@@ -54,13 +54,13 @@ if(isset($_GET['action']))
         switch($info['extension']){
         case 'zip':
             $zip = new ZipArchive();
-            if ($zip->open($path) === true) {
+            if (true === $zip->open($path)) {
             //make all the folders
             for($i = 0; $i < $zip->numFiles; ++$i)
             {
                 $OnlyFileName = $zip->getNameIndex($i);
                 $FullFileName = $zip->statIndex($i);
-                if ($FullFileName['name'][strlen($FullFileName['name'])-1] == '/')
+                if ('/' == $FullFileName['name'][strlen($FullFileName['name']) - 1])
                 {
                 create_folder($base_folder.$FullFileName['name']);
                 }
@@ -71,7 +71,7 @@ if(isset($_GET['action']))
                 $OnlyFileName = $zip->getNameIndex($i);
                 $FullFileName = $zip->statIndex($i);
 
-                if (!($FullFileName['name'][strlen($FullFileName['name'])-1] == '/'))
+                if (!('/' == $FullFileName['name'][strlen($FullFileName['name']) - 1]))
                 {
                 $fileinfo = pathinfo($OnlyFileName);
                 if(in_array(strtolower($fileinfo['extension']),$ext))

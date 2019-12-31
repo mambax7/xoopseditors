@@ -18,7 +18,7 @@ if (!isset($_GET['index']) || !is_numeric($_GET['index'])) {
     $out = $snippets->deleteSnippet($_GET['index']);
     $return_msg = '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' . SNIPPET_DELETED . '</div>';
 }
-if ($error == false) {
+if (false == $error) {
     $data['snippetsList']  = $snippets->render();
     $data['totalSnippets'] = $snippets->total_snippets;
 }

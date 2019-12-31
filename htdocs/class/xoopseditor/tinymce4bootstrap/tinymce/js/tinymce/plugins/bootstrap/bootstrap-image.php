@@ -58,7 +58,7 @@ function build_image()
             if (!empty($imgStyle)) {
                 $imgClass .= $imgStyle;
             }
-            if ($imgResponsive !== 'false') {
+            if ('false' !== $imgResponsive) {
                 if (empty($imgClass)) {
                     $imgClass = 'img-responsive';
                 } else {

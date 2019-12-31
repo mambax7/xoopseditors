@@ -107,7 +107,7 @@ class TinyMCE
         $this->setting['plugins'] = implode(',', $this->loadPlugins());
         $configured[]             = 'plugins';
 
-        if ($this->setting['theme'] != 'simple') {
+        if ('simple' != $this->setting['theme']) {
             if (empty($this->config['buttons'])) {
                 $this->config['buttons'][] = [
                     'before' => '',
@@ -181,7 +181,7 @@ class TinyMCE
                 if (isset($this->setting['theme_' . $this->setting['theme'] . "_buttons{$i}"])) {
                     $checklist = explode(',', $this->setting['theme_' . $this->setting['theme'] . "_buttons{$i}"]);
                     foreach ($checklist as $plugin) {
-                        if (strpos(strtolower($plugin), 'xoops') != false) {
+                        if (false != strpos(strtolower($plugin), 'xoops')) {
                             if (in_array($plugin, $this->xoopsPlugins)) {
                                 $buttons[] = $plugin;
                             }
@@ -237,7 +237,7 @@ class TinyMCE
         $xoopsPlugins = [];
         $allplugins   = XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . $this->rootpath . '/plugins');
         foreach ($allplugins as $plugin) {
-            if (strpos(strtolower($plugin), 'xoops') != false && file_exists(XOOPS_ROOT_PATH . $this->config['rootpath'] . "/include/$plugin.php")) {
+            if (false != strpos(strtolower($plugin), 'xoops') && file_exists(XOOPS_ROOT_PATH . $this->config['rootpath'] . "/include/$plugin.php")) {
                 if ($right = @include XOOPS_ROOT_PATH . $this->config['rootpath'] . "/include/$plugin.php") {
                     $xoopsPlugins[$plugin] = $plugin;
                 }
@@ -299,9 +299,9 @@ class TinyMCE
 
         foreach ($this->setting as $key => $val) {
             $ret .= $key . ':';
-            if ($val === true) {
+            if (true === $val) {
                 $ret .= 'true,';
-            } elseif ($val === false) {
+            } elseif (false === $val) {
                 $ret .= 'false,';
             } else {
                 $ret .= "'{$val}',";

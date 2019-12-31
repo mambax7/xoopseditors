@@ -24,9 +24,9 @@ if (!isset($_POST['index']) || !is_numeric($_POST['index']) || !isset($_POST['ti
     $out = $snippets->editSnippet($_POST['index'], utf8_decode(urldecode($_POST['title'])), utf8_decode(urldecode($_POST['code'])));
     $return_msg = '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' . SNIPPET_UPDATED . '</div>';
     $return_danger_msg = '';
-    if ($out === 'script_forbidden') {
+    if ('script_forbidden' === $out) {
         $return_danger_msg = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' . SCRIPT_FORBIDDEN . '</div>';
-    } elseif ($out === 'php_forbidden') {
+    } elseif ('php_forbidden' === $out) {
         $return_danger_msg = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' . PHP_FORBIDDEN . '</div>';
     }
 }

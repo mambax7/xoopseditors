@@ -2,7 +2,7 @@
 
 include '../config/config.php';
 if(!$java_upload) die('forbidden');
-if($_SESSION['verify'] != 'RESPONSIVEfilemanager') die('forbidden');
+if('RESPONSIVEfilemanager' != $_SESSION['verify']) die('forbidden');
 
 //Let's load the 'interesting' stuff ...  ;-)
 include 'jupload.php';
@@ -25,7 +25,7 @@ while($cycle && $i<$max_cycles){
 
 $path= '../' . $current_path . $_GET['path'];
 
-if(strpos($_GET['path'],'../')!==FALSE || strpos($_GET['path'],'./')!==FALSE || strpos($_GET['path'],'/')===0) die ('path error');
+if(FALSE !== strpos($_GET['path'], '../') || FALSE !== strpos($_GET['path'], './') || 0 === strpos($_GET['path'], '/')) die ('path error');
 
 $path=str_replace(' ','~',$path);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -93,7 +93,7 @@ $appletParameters = [
 ];
 
 // for htaccess protected folders
-if((isset($_SERVER['PHP_AUTH_USER']) && $_SERVER['PHP_AUTH_USER'] != '') && $_SERVER['PHP_AUTH_USER'] != '' && $_SERVER['PHP_AUTH_USER'] != '')
+if((isset($_SERVER['PHP_AUTH_USER']) && '' != $_SERVER['PHP_AUTH_USER']) && '' != $_SERVER['PHP_AUTH_USER'] && '' != $_SERVER['PHP_AUTH_USER'])
 {
     $appletParameters['specificHeaders'] = 'Authorization: Basic '.base64_encode($_SERVER['PHP_AUTH_USER'] . ':' . $_SERVER['PHP_AUTH_PW']);
 }

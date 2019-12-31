@@ -28,7 +28,7 @@ $snippets->getSnippets();
             </div>
         </div>
 <?php
-if ($allowEdit == 'true') { ?>
+if ('true' == $allowEdit) { ?>
             <div class="row margin-bottom-md" id="new-snippet-form-wrapper">
                 <div class="choice-title">
                     <span><?php echo ADD_NEW_SNIPPET; ?></span>
@@ -72,7 +72,7 @@ if ($allowEdit == 'true') { ?>
             <div id="code-title">
                 <a href="#" id="code-slide-link"><?php echo CODE; ?> <i class="glyphicon glyphicon-arrow-up"></i></a>
 <?php
-if ($allowEdit == 'true') { ?>
+if ('true' == $allowEdit) { ?>
                 <a href="#" id="edit-snippet-button" class="btn btn-default" data-toggle="tooltip" title="" data-original-title="<?php echo CHOOSE_SNIPPET_TO_EDIT; ?>">
                     <?php echo EDIT; ?> <i class="glyphicon glyphicon-edit"></i>
                 </a>
@@ -145,7 +145,7 @@ jQuery(document).ready(function ($) {
     getBootstrapStyles();
 
 <?php
-if ($allowEdit == 'true') { ?>
+if ('true' == $allowEdit) { ?>
     var disableOkButton,
         showAddSnippetForm;
 
@@ -377,7 +377,7 @@ if ($allowEdit == 'true') { ?>
             });
         });
 <?php
-if ($allowEdit == 'true') { ?>
+if ('true' == $allowEdit) { ?>
         $('#add-new-snippet-btn').on('click', showAddSnippetForm);
     <?php
 } // end $allowEdit ?>

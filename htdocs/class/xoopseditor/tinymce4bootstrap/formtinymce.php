@@ -99,7 +99,7 @@ class XoopsFormTinymce4Bootstrap extends XoopsEditor
             $this->language = strtolower(constant('_XOOPS_EDITOR_TINYMCE4_LANGUAGE'));
         } else {
             $this->language = str_replace('_', '-', strtolower(_LANGCODE));
-            if (strtolower(_CHARSET) == 'utf-8') {
+            if ('utf-8' == strtolower(_CHARSET)) {
                 $this->language .= '_utf8';
             }
         }

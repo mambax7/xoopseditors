@@ -1,6 +1,6 @@
 <?php
 include('config/config.php');
-if($_SESSION['verify'] != 'RESPONSIVEfilemanager') die('forbiden');
+if('RESPONSIVEfilemanager' != $_SESSION['verify']) die('forbiden');
 include('include/utils.php');
 
 $storeFolder = $_POST['path'];
@@ -8,12 +8,12 @@ $storeFolderThumb = $_POST['path_thumb'];
 
 $path_pos=strpos($storeFolder,$current_path);
 $thumb_pos=strpos($_POST['path_thumb'],$thumbs_base_path);
-if($path_pos!==0
-    || $thumb_pos !==0
-    || strpos($storeFolderThumb,'../',strlen($thumbs_base_path))!==FALSE
-    || strpos($storeFolderThumb,'./',strlen($thumbs_base_path))!==FALSE
-    || strpos($storeFolder,'../',strlen($current_path))!==FALSE
-    || strpos($storeFolder,'./',strlen($current_path))!==FALSE )
+if(0 !== $path_pos
+   || 0 !== $thumb_pos
+   || FALSE !== strpos($storeFolderThumb, '../', strlen($thumbs_base_path))
+   || FALSE !== strpos($storeFolderThumb, './', strlen($thumbs_base_path))
+   || FALSE !== strpos($storeFolder, '../', strlen($current_path))
+   || FALSE !== strpos($storeFolder, './', strlen($current_path)))
     die('wrong path');
 
 $path=$storeFolder;
@@ -70,14 +70,14 @@ if (!empty($_FILES)) {
             $srcHeight = $imginfo[1];
 
             if($image_resizing){
-            if($image_resizing_width==0){
-                if($image_resizing_height==0){
+            if(0 == $image_resizing_width){
+                if(0 == $image_resizing_height){
                 $image_resizing_width=$srcWidth;
                 $image_resizing_height =$srcHeight;
                 }else{
                 $image_resizing_width=$image_resizing_height*$srcWidth/$srcHeight;
             }
-            }elseif($image_resizing_height==0){
+            }elseif(0 == $image_resizing_height){
                 $image_resizing_height =$image_resizing_width*$srcHeight/$srcWidth;
             }
             $srcWidth=$image_resizing_width;
@@ -86,12 +86,12 @@ if (!empty($_FILES)) {
             }
             //max resizing limit control
             $resize=false;
-            if($image_max_width!=0 && $srcWidth >$image_max_width){
+            if(0 != $image_max_width && $srcWidth > $image_max_width){
             $resize=true;
             $srcHeight=$image_max_width*$srcHeight/$srcWidth;
             $srcWidth=$image_max_width;
             }
-            if($image_max_height!=0 && $srcHeight >$image_max_height){
+            if(0 != $image_max_height && $srcHeight > $image_max_height){
             $resize=true;
             $srcWidth =$image_max_height*$srcWidth/$srcHeight;
             $srcHeight =$image_max_height;

@@ -306,9 +306,9 @@ class imageLib
     {
         // *** We can pass in an array of options to change the crop position
         $cropPos = 'm';
-        if (is_array($option) && fix_strtolower($option[0]) == 'crop') {
+        if (is_array($option) && 'crop' == fix_strtolower($option[0])) {
             $cropPos = $option[1];         # get the crop option
-        } elseif (strpos($option, '-') !== false) {
+        } elseif (false !== strpos($option, '-')) {
             // *** Or pass in a hyphen seperated option
             $optionPiecesArray = explode('-', $option);
             $cropPos           = end($optionPiecesArray);
@@ -338,7 +338,7 @@ class imageLib
         imagecopyresampled($this->imageResized, $this->image, 0, 0, 0, 0, $optimalWidth, $optimalHeight, $this->width, $this->height);
 
         // *** If '4', then crop too
-        if ($option == 4 || $option == 'crop') {
+        if (4 == $option || 'crop' == $option) {
             if (($optimalWidth >= $newWidth && $optimalHeight >= $newHeight)) {
                 $this->crop($optimalWidth, $optimalHeight, $newWidth, $newHeight, $cropPos);
             }
@@ -847,12 +847,12 @@ class imageLib
         #
     {
         if (is_array($option)) {
-            if (fix_strtolower($option[0]) == 'crop' && count($option) == 2) {
+            if ('crop' == fix_strtolower($option[0]) && 2 == count($option)) {
                 return 'crop';
             } else {
                 throw new Exception('Crop resize option array is badly formatted.');
             }
-        } elseif (strpos($option, 'crop') !== false) {
+        } elseif (false !== strpos($option, 'crop')) {
             return 'crop';
         }
 
@@ -1319,7 +1319,7 @@ class imageLib
         // *** Check if the user wants transparency
         $isTransparent = false;
         if (!is_array($bgColor)) {
-            if (fix_strtolower($bgColor) == 'transparent') {
+            if ('transparent' == fix_strtolower($bgColor)) {
                 $isTransparent = true;
             }
         }
@@ -1408,7 +1408,7 @@ class imageLib
         // *** Set blur width and height
         $blurWidth = $blurHeight = $blur;
 
-        if ($shadowAngle == 0) {
+        if (0 == $shadowAngle) {
             $distWidth  = 0;
             $distHeight = 0;
         } else {
@@ -1417,7 +1417,7 @@ class imageLib
         }
 
         // *** Convert color
-        if (fix_strtolower($bgColor) != 'transparent') {
+        if ('transparent' != fix_strtolower($bgColor)) {
             $rgbArray = $this->formatColor($bgColor);
             $r0       = $rgbArray['r'];
             $g0       = $rgbArray['g'];
@@ -1506,7 +1506,7 @@ class imageLib
                 $t        = $a / 128.0;
 
                 // *** Create color
-                if (fix_strtolower($bgColor) == 'transparent') {
+                if ('transparent' == fix_strtolower($bgColor)) {
                     $myColour = imagecolorallocatealpha($rgb, $r, $g, $b, $a);
                 } else {
                     $myColour = imagecolorallocate($rgb, $r * (1.0 - $t) + $r0 * $t, $g * (1.0 - $t) + $g0 * $t, $b * (1.0 - $t) + $b0 * $t);
@@ -1577,7 +1577,7 @@ class imageLib
         #
     {
         // *** Get the caption box measurements
-        if (count($this->captionBoxPositionArray) == 4) {
+        if (4 == count($this->captionBoxPositionArray)) {
             $x1 = $this->captionBoxPositionArray['x1'];
             $x2 = $this->captionBoxPositionArray['x2'];
             $y1 = $this->captionBoxPositionArray['y1'];
@@ -1684,7 +1684,7 @@ class imageLib
                 return array();
             }
         };
-        if ($this->fileExtension != '.jpg') {
+        if ('.jpg' != $this->fileExtension) {
             if ($debug) {
                 throw new Exception('Metadata not supported for this image type.');
             } else {
@@ -1696,7 +1696,7 @@ class imageLib
         // *** Format the apperture value
         $ev            = $exifData['ApertureValue'];
         $apPeicesArray = explode('/', $ev);
-        if (count($apPeicesArray) == 2) {
+        if (2 == count($apPeicesArray)) {
             $apertureValue = round($apPeicesArray[0] / $apPeicesArray[1], 2, PHP_ROUND_HALF_DOWN) . ' EV';
         } else {
             $apertureValue = '';
@@ -1705,7 +1705,7 @@ class imageLib
         // *** Format the focal length
         $focalLength   = $exifData['FocalLength'];
         $flPeicesArray = explode('/', $focalLength);
-        if (count($flPeicesArray) == 2) {
+        if (2 == count($flPeicesArray)) {
             $focalLength = $flPeicesArray[0] / $flPeicesArray[1] . '.0 mm';
         } else {
             $focalLength = '';
@@ -1714,7 +1714,7 @@ class imageLib
         // *** Format fNumber
         $fNumber       = $exifData['FNumber'];
         $fnPeicesArray = explode('/', $fNumber);
-        if (count($fnPeicesArray) == 2) {
+        if (2 == count($fnPeicesArray)) {
             $fNumber = $fnPeicesArray[0] / $fnPeicesArray[1];
         } else {
             $fNumber = '';
@@ -1760,7 +1760,7 @@ class imageLib
             $exifDataArray['exposure time'] = '';
         }
 
-        if ($apertureValue != '') {
+        if ('' != $apertureValue) {
             $exifDataArray['aperture value'] = $apertureValue;
         } else {
             $exifDataArray['aperture value'] = '';
@@ -1778,7 +1778,7 @@ class imageLib
             $exifDataArray['fnumber'] = '';
         }
 
-        if ($fNumber != '') {
+        if ('' != $fNumber) {
             $exifDataArray['fnumber value'] = $fNumber;
         } else {
             $exifDataArray['fnumber value'] = '';
@@ -1790,7 +1790,7 @@ class imageLib
             $exifDataArray['iso'] = '';
         }
 
-        if ($focalLength != '') {
+        if ('' != $focalLength) {
             $exifDataArray['focal length'] = $focalLength;
         } else {
             $exifDataArray['focal length'] = '';
@@ -1802,13 +1802,13 @@ class imageLib
             $exifDataArray['exposure program'] = '';
         }
 
-        if ($mm != '') {
+        if ('' != $mm) {
             $exifDataArray['metering mode'] = $mm;
         } else {
             $exifDataArray['metering mode'] = '';
         }
 
-        if ($flash != '') {
+        if ('' != $flash) {
             $exifDataArray['flash status'] = $flash;
         } else {
             $exifDataArray['flash status'] = '';
@@ -2103,7 +2103,7 @@ class imageLib
         putenv('GDFONTPATH=' . realpath('.'));
 
         // *** Check if the passed in font exsits...
-        if ($font == null || !file_exists($font)) {
+        if (null == $font || !file_exists($font)) {
             // *** ...If not, default to this font.
             $font = $fontPath . '/arimo.ttf';
 
@@ -2181,7 +2181,7 @@ class imageLib
         $y        = $posArray['height'];
 
         // *** Set watermark opacity
-        if (fix_strtolower(strrchr($watermarkImage, '.')) == '.png') {
+        if ('.png' == fix_strtolower(strrchr($watermarkImage, '.'))) {
             $opacity = $this->invertTransparency($opacity, 100);
             $this->filterOpacity($stamp, $opacity);
         }
@@ -2301,7 +2301,7 @@ class imageLib
             return false;
         }
 
-        if ($opacity == 100) {
+        if (100 == $opacity) {
             return true;
         }
 
@@ -2332,7 +2332,7 @@ class imageLib
                 $colorxy = imagecolorat($img, $x, $y);
                 $alpha   = ($colorxy >> 24) & 0xFF;
                 //calculate new alpha
-                if ($minalpha !== 127) {
+                if (127 !== $minalpha) {
                     $alpha = 127 + 127 * $opacity * ($alpha - 127) / (127 - $minalpha);
                 } else {
                     $alpha += 127 * $opacity;
@@ -2506,7 +2506,7 @@ class imageLib
         //imagedestroy($this->imageResized);
 
         // *** Display error if a file type is not supported.
-        if ($error != '') {
+        if ('' != $error) {
             $this->errorArray[] = $error . ' support is NOT enabled. File not saved.';
         }
     }
@@ -2792,14 +2792,14 @@ class imageLib
 
         // *** If it's an array it should be R, G, B
         if (is_array($value)) {
-            if (key($value) == 0 && count($value) == 3) {
+            if (0 == key($value) && 3 == count($value)) {
                 $rgbArray['r'] = $value[0];
                 $rgbArray['g'] = $value[1];
                 $rgbArray['b'] = $value[2];
             } else {
                 $rgbArray = $value;
             }
-        } elseif (fix_strtolower($value) == 'transparent') {
+        } elseif ('transparent' == fix_strtolower($value)) {
             $rgbArray = array(
                 'r' => 255,
                 'g' => 255,
@@ -2821,7 +2821,7 @@ class imageLib
     {
         $color = str_replace('#', '', $hex);
 
-        if (strlen($color) == 3) {
+        if (3 == strlen($color)) {
             $color = $color . $color;
         }
 
@@ -2854,7 +2854,7 @@ class imageLib
         $g = $colorArray['g'];
         $b = $colorArray['b'];
 
-        if (imagecolorexact($this->imageResized, $r, $g, $b) == -1) {
+        if (-1 == imagecolorexact($this->imageResized, $r, $g, $b)) {
             return false;
         } else {
             return true;
@@ -2874,7 +2874,7 @@ class imageLib
             $colorArray  = $this->formatColor($greenChroma);
             $match       = $this->testColorExists($colorArray);
             $green--;
-        } while ($match == false && $green > 0);
+        } while (false == $match && $green > 0);
 
         // *** If no match, just bite the bullet and use green value of 255
         if (!$match) {
@@ -2897,7 +2897,7 @@ class imageLib
             $colorArray = $this->formatColor($blueChroma);
             $match      = $this->testColorExists($colorArray);
             $blue--;
-        } while ($match == false && $blue > 0);
+        } while (false == $match && $blue > 0);
 
         // *** If no match, just bite the bullet and use blue value of 255
         if (!$match) {
@@ -2948,7 +2948,7 @@ class imageLib
                 $b     = $color & 0xFF;
                 for ($i = 0; $i < 270; ++$i) {
                     //if ($r . $g . $b == ($r1 + $i) . ($g1 + $i) . ($b1 + $i)) {
-                    if ($r == 0 && $g == 255 && $b == 0) {
+                    if (0 == $r && 255 == $g && 0 == $b) {
                         //if ($g == 255) {
                         $trans_colour = imagecolorallocatealpha($src, 0, 0, 0, 127);
                         imagefill($src, $x, $y, $trans_colour);
@@ -3086,7 +3086,7 @@ class imageLib
 
         //1 : Chargement des ent�tes FICHIER
         $FILE = unpack('vfile_type/Vfile_size/Vreserved/Vbitmap_offset', fread($f1, 14));
-        if ($FILE['file_type'] != 19778) {
+        if (19778 != $FILE['file_type']) {
             return false;
         }
 
@@ -3097,7 +3097,7 @@ class imageLib
         );
         $BMP['colors'] = pow(2, $BMP['bits_per_pixel']);
 
-        if ($BMP['size_bitmap'] == 0) {
+        if (0 == $BMP['size_bitmap']) {
             $BMP['size_bitmap'] = $FILE['file_size'] - $FILE['bitmap_offset'];
         }
 
@@ -3107,7 +3107,7 @@ class imageLib
         $BMP['decal']            -= floor($BMP['width'] * $BMP['bytes_per_pixel'] / 4);
         $BMP['decal']            = 4 - (4 * $BMP['decal']);
 
-        if ($BMP['decal'] == 4) {
+        if (4 == $BMP['decal']) {
             $BMP['decal'] = 0;
         }
 
@@ -3127,9 +3127,9 @@ class imageLib
         while ($Y >= 0) {
             $X = 0;
             while ($X < $BMP['width']) {
-                if ($BMP['bits_per_pixel'] == 24) {
+                if (24 == $BMP['bits_per_pixel']) {
                     $COLOR = unpack('V', substr($IMG, $P, 3) . $VIDE);
-                } elseif ($BMP['bits_per_pixel'] == 16) {
+                } elseif (16 == $BMP['bits_per_pixel']) {
                     /*
            * BMP 16bit fix
            * =================
@@ -3151,34 +3151,34 @@ class imageLib
                     $green    = ($COLOR[1] & 0x07e0) >> 3;
                     $red      = ($COLOR[1] & 0xf800) >> 8;
                     $COLOR[1] = $red * 65536 + $green * 256 + $blue;
-                } elseif ($BMP['bits_per_pixel'] == 8) {
+                } elseif (8 == $BMP['bits_per_pixel']) {
                     $COLOR    = unpack('n', $VIDE . substr($IMG, $P, 1));
                     $COLOR[1] = $PALETTE[$COLOR[1] + 1];
-                } elseif ($BMP['bits_per_pixel'] == 4) {
+                } elseif (4 == $BMP['bits_per_pixel']) {
                     $COLOR = unpack('n', $VIDE . substr($IMG, floor($P), 1));
-                    if (($P * 2) % 2 == 0) {
+                    if (0 == ($P * 2) % 2) {
                         $COLOR[1] = ($COLOR[1] >> 4);
                     } else {
                         $COLOR[1] = ($COLOR[1] & 0x0F);
                     }
                     $COLOR[1] = $PALETTE[$COLOR[1] + 1];
-                } elseif ($BMP['bits_per_pixel'] == 1) {
+                } elseif (1 == $BMP['bits_per_pixel']) {
                     $COLOR = unpack('n', $VIDE . substr($IMG, floor($P), 1));
-                    if (($P * 8) % 8 == 0) {
+                    if (0 == ($P * 8) % 8) {
                         $COLOR[1] = $COLOR[1] >> 7;
-                    } elseif (($P * 8) % 8 == 1) {
+                    } elseif (1 == ($P * 8) % 8) {
                         $COLOR[1] = ($COLOR[1] & 0x40) >> 6;
-                    } elseif (($P * 8) % 8 == 2) {
+                    } elseif (2 == ($P * 8) % 8) {
                         $COLOR[1] = ($COLOR[1] & 0x20) >> 5;
-                    } elseif (($P * 8) % 8 == 3) {
+                    } elseif (3 == ($P * 8) % 8) {
                         $COLOR[1] = ($COLOR[1] & 0x10) >> 4;
-                    } elseif (($P * 8) % 8 == 4) {
+                    } elseif (4 == ($P * 8) % 8) {
                         $COLOR[1] = ($COLOR[1] & 0x8) >> 3;
-                    } elseif (($P * 8) % 8 == 5) {
+                    } elseif (5 == ($P * 8) % 8) {
                         $COLOR[1] = ($COLOR[1] & 0x4) >> 2;
-                    } elseif (($P * 8) % 8 == 6) {
+                    } elseif (6 == ($P * 8) % 8) {
                         $COLOR[1] = ($COLOR[1] & 0x2) >> 1;
-                    } elseif (($P * 8) % 8 == 7) {
+                    } elseif (7 == ($P * 8) % 8) {
                         $COLOR[1] = ($COLOR[1] & 0x1);
                     }
                     $COLOR[1] = $PALETTE[$COLOR[1] + 1];

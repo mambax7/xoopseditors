@@ -1,14 +1,14 @@
 <?php
 include('config/config.php');
-if($_SESSION['verify'] != 'RESPONSIVEfilemanager') die('forbiden');
+if('RESPONSIVEfilemanager' != $_SESSION['verify']) die('forbiden');
 include('include/utils.php');
 
-if(strpos($_POST['path'],'/')===0
-    || strpos($_POST['path'],'../')!==FALSE
-    || strpos($_POST['path'],'./')===0)
+if(0 === strpos($_POST['path'], '/')
+   || FALSE !== strpos($_POST['path'], '../')
+   || 0 === strpos($_POST['path'], './'))
     die('wrong path');
 
-if(strpos($_POST['name'],'/')!==FALSE)
+if(FALSE !== strpos($_POST['name'], '/'))
     die('wrong path');
 
 $path=$current_path.$_POST['path'];

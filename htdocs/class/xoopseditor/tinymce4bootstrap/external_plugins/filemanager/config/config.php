@@ -129,11 +129,11 @@ $allowed_groups_createfolder= [1]; // id des groupes autoris?s create folder
 if ($xoopsUser) {
     $usergroups = $GLOBALS['xoopsUser']->getGroups();
     $result_upload = array_intersect($usergroups, $allowed_groups_upload);
-        if ($result_upload || $result_upload!=null) {
+        if ($result_upload || null != $result_upload) {
            $upload_files=true;
         }
   $result_createfolder = array_intersect($usergroups, $allowed_groups_createfolder);
-       if ($result_createfolder || $result_createfolder!=null) {
+       if ($result_createfolder || null != $result_createfolder) {
           $create_folders=true;
         }
 }
