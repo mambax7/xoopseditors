@@ -197,6 +197,9 @@ class JUpload {
 
     /**
      * Log a message on the current output, as a HTML comment.
+     * @param      $function
+     * @param      $msg
+     * @param bool $htmlComment
      */
     protected function logDebug($function, $msg, $htmlComment=true) {
         $output = "[DEBUG] [$function] $msg";
@@ -210,6 +213,8 @@ class JUpload {
     /**
      * Log a message to the PHP log.
      * Declared "protected" so it may be Extended if you require customised logging (e.g. particular log file location).
+     * @param $function
+     * @param $msg
      */
     protected function logPHPDebug($function, $msg) {
         if ($this->classparams['debug_php'] === true) {
@@ -233,7 +238,8 @@ class JUpload {
 
     /**
      * Convert a value ending in 'G','M' or 'K' to bytes
-     *
+     * @param $val
+     * @return int|string
      */
     private function tobytes($val) {
         $val = trim($val);
@@ -364,6 +370,9 @@ class JUpload {
      *      - If yes, and the duplicate class param is set to rename, the file is renamed.
      *      - If yes, and the duplicate class param is set to overwrite, the file is not renamed. The existing one will be erased.
      *      - If yes, and the duplicate class param is set to reject, an error is thrown.
+     * @param $name
+     * @param $subdir
+     * @return string
      */
     private function dstfinal(&$name, &$subdir) {
         $name = preg_replace('![`$\\\\/|]!', '_', $name);
@@ -458,11 +467,13 @@ class JUpload {
     return $flist;
 }
 
-/**
- * Generation of the applet tag, and necessary things around (js content). Insertion of this into the content of the
- * page.
- * See the tag_jscript and tag_applet class parameters.
- */
+    /**
+     * Generation of the applet tag, and necessary things around (js content). Insertion of this into the content of the
+     * page.
+     * See the tag_jscript and tag_applet class parameters.
+     * @param $str
+     * @return string|string[]|null
+     */
 private function generateAppletTag($str) {
     $this->logDebug('generateAppletTag', 'Entering function');
     $str = preg_replace('/'.$this->classparams['tag_jscript'].'/', $this->str_jsinit(), $str);
@@ -470,23 +481,27 @@ private function generateAppletTag($str) {
     return preg_replace('/'.$this->classparams['tag_applet'].'/', $this->str_applet(), $str);
 }
 
-/**
- * This function is called when constructing the page, when we're not reveiving uploaded files. It 'just' construct
- * the applet tag, by calling the relevant function.
- *
- * This *must* be public, because it is called from PHP's output buffering
- */
+    /**
+     * This function is called when constructing the page, when we're not reveiving uploaded files. It 'just' construct
+     * the applet tag, by calling the relevant function.
+     *
+     * This *must* be public, because it is called from PHP's output buffering
+     * @param $str
+     * @return string|string[]|null
+     */
 public function interceptBeforeUpload($str) {
     $this->logDebug('interceptBeforeUpload', 'Entering function');
 
     return $this->generateAppletTag($str);
 }
 
-/**
- * This function displays the uploaded files description in the current page (see tag_flist class parameter)
- *
- * This *must* be public, because it is called from PHP's output buffering.
- */
+    /**
+     * This function displays the uploaded files description in the current page (see tag_flist class parameter)
+     *
+     * This *must* be public, because it is called from PHP's output buffering.
+     * @param $str
+     * @return string|string[]|null
+     */
 public function interceptAfterUpload($str) {
     $this->logDebug('interceptAfterUpload', 'Entering function');
     $this->logPHPDebug('interceptAfterUpload', $this->files);

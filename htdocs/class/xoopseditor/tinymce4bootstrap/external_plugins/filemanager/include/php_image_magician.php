@@ -1086,7 +1086,12 @@ class imageLib
 
     ## --------------------------------------------------------
 
-    /** Apply a PNG overlay */
+    /** Apply a PNG overlay
+     * @param $im
+     * @param $type
+     * @param $amount
+     * @return mixed
+     */
     private function gd_apply_overlay($im, $type, $amount)
         #
         # Original Author:    Marc Hibbins

@@ -133,7 +133,7 @@ class XoopsFormTinymce4Bootstrap extends XoopsEditor
     /**
      * Check if compatible
      *
-     * @return
+     * @return bool
      */
 
     public function isActive()

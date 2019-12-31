@@ -160,8 +160,8 @@ class Snippets
 
     /**
      * Removes unwanted script tags from snippet
-     * @param  $snippet_tag
-     * @return $snippet_tag
+     * @param $element
+     * @return string|string[]|null $snippet_tag
      */
     private function removeScripts($element)
     {
@@ -180,7 +180,7 @@ class Snippets
     /**
      * Removes unwanted php scripts from snippet
      * @param  $element    title | content
-     * @return $element element cleaned
+     * @return \content|string|string[]|\title|null $element element cleaned
      */
     private function removePhp($element)
     {

@@ -41,7 +41,9 @@ $path=str_replace(' ','~',$path);
  *  but the function must accept one unique parameter: the array that contains the file descriptions.
  *
  * @param $juploadPhpSupportClass The instance of the JUpload PHP class.
- * @param $file The array wich contains info about all uploaded files.
+ * @param $files
+ * @return string
+ * @return string
  */
 function handle_uploaded_files($juploadPhpSupportClass, $files) {
     return
