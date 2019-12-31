@@ -1,5 +1,5 @@
-![alt XOOPS CMS](http://xoops.org/images/logoXoops4GithubRepository.png)
-# Contributing to [XOOPS CMS](http://xoops.org)
+![alt XOOPS CMS](https://xoops.org/images/logoXoops4GithubRepository.png)
+# Contributing to [XOOPS CMS](https://xoops.org)
 
 Contributions are **welcome** and will be fully **credited**.
 
