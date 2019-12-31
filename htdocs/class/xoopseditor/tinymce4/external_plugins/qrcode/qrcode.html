@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>
+    QR-Code Generator
+  </title>
+
+  <link href="./css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap theme -->
+  <link href="./css/bootstrap-theme.min.css" rel="stylesheet">
+  <link href="./colorpicker/css/bootstrap-colorpicker.min.css" rel="stylesheet">
+  <link href="./css/style.css" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="http://html5shiv.googlecode.com/svn/trunk/html5.js">
+    </script>
+    <![endif]-->
+
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <form id="generator" class="form-horizontal">
+
+          <div class="form-group">
+            <label class="col-xs-5 control-label" for=
+            "formatOption">
+              Select format:
+            </label>
+
+            <div class="col-xs-7">
+              <select class=" form-control" id="formatOption">
+                <option value="some text here" selected="selected">
+                  Text
+                </option>
+                <option value="http://www.url.com">
+                  Url
+                </option>
+                <option value="MATMSG:TO:info@url.com;SUB:subject;BODY:message;">
+                  Email
+                </option>
+                <option value="TEL:33312450903">
+                  Tel
+                </option>
+                <option value="SMSTO:33312450903:subject here">
+                  SMS
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-xs-2 control-label" for="codeData">
+              Data
+            </label>
+
+            <div class="col-xs-10">
+              <textarea class="form-control" id="codeData" rows="3"></textarea>
+              <div id="textarea_feedback"></div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-xs-5 control-label" for=
+            "codeSize">
+              Size:
+            </label>
+
+            <div class="col-xs-7">
+              <select class=" form-control" id="codeSize">
+                <option value="75x75">
+                  XXSmall
+                </option>
+                <option value="125x125" selected="selected">
+                  XSmall
+                </option>
+                <option value="140x140">
+                  Small
+                </option>
+                <option value="170x170">
+                  Medium
+                </option>
+                <option value="240x240">
+                  Large
+                </option>
+                <option value="300x300">
+                  XLarge
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-xs-5 control-label" for="codeColor">
+              Color (optioneel)
+            </label>
+            <div class="col-xs-4">
+              <input class="form-control bscp" id="codeColor" value="#000000" type="text">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-xs-5 control-label" for=
+            "SelectCodding">
+              Encoding:
+            </label>
+
+            <div class="col-xs-7">
+              <select class=" form-control" id="SelectCodding">
+                <option value="UTF-8" selected="selected">
+                  UTF-8
+                </option>
+                <option value="ISO-8859-1">
+                  ISO-8859-1
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-xs-3 pull-right">
+            <button id="generate" type="button" class="btn btn-primary pull-right">
+              <span class="glyphicon glyphicon-qrcode">
+              </span>
+              Generate
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+      <div id="image">
+      </div>
+      <span id="arrow" class="glyphicon glyphicon-arrow-up">
+        &nbsp;Click!
+      </span>
+
+      <div id="alert_placeholder">
+      </div>
+
+      <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#formats">
+        Help data formats ?
+      </button>
+
+
+      <div id="formats" class="panel panel-default collapse">
+        <!-- Default panel contents -->
+
+        <!-- List group -->
+        <ul class="list-group">
+          <li class="list-group-item">
+            Text &rarr; normal text input
+          </li>
+          <li class="list-group-item">
+            Url &rarr; http://www.info.com
+          </li>
+          <li class="list-group-item">
+            Email &rarr; MATMSG:TO:info@url.com;SUB:subject;BODY:message;
+          </li>
+          <li class="list-group-item">
+            Tel &rarr; TEL:33312450903
+          </li>
+          <li class="list-group-item">
+            SMS &rarr; SMSTO:33312450903:subject here
+          </li>
+          <li class="list-group-item">
+            Bookmark &rarr; MEBKM:TITLE:here title:URL:http://www.info.com
+          </li>
+          <li class="list-group-item">
+            More info <a href="http://qrserver.com/api/documentation/create-qr-code/" target="_blank">here</a>
+          </li>
+        </ul>
+      </div>
+
+  </div>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script type="text/javascript">
+    if (typeof jQuery === 'undefined')
+    {
+      document.write(unescape("%3Cscript src='js/jquery.js' type='text/javascript'%3E%3C/script%3E"));
+    }
+  </script>
+  <script src="./js/bootstrap.min.js">
+  </script>
+  <script src="./colorpicker/js/bootstrap-colorpicker.min.js">
+  </script>
+  <script src="./js/qr.js">
+  </script>
+        <script>
+            $(function() {
+                // Code for those demos
+                var _createColorpickers = function() {
+                    $('#codeColor').colorpicker({
+                        format: 'hex'
+                    });
+                }
+                _createColorpickers();
+
+                $('.bscp-destroy').click(function(e) {
+                    e.preventDefault();
+                    $('.bscp').colorpicker('destroy');
+                });
+
+                $('.bscp-create').click(function(e) {
+                    e.preventDefault();
+                    _createColorpickers();
+                });
+            });
+  </script>
+  </body>
+</html>
