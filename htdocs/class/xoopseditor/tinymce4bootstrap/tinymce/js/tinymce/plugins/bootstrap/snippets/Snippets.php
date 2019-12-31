@@ -127,7 +127,7 @@ class Snippets
         $new_content->appendChild($content_text);
         $new_snippet->appendChild($new_title);
         $new_snippet->appendChild($new_content);
-        $old_snippet = $dom->documentElement->getElementsByTagName('snippet')->Item($index);
+        $old_snippet = $dom->documentElement->getElementsByTagName('snippet')->item($index);
         $dom->documentElement->replaceChild($new_snippet, $old_snippet);
         $dom->save($this->xml_file);
         $this->getSnippets();
@@ -150,7 +150,7 @@ class Snippets
         $dom->preserveWhiteSpace = false;
         $dom->formatOutput = true;
         $dom->loadXML($xml->asXML());
-        $old_snippet = $dom->documentElement->getElementsByTagName('snippet')->Item($index);
+        $old_snippet = $dom->documentElement->getElementsByTagName('snippet')->item($index);
         $dom->documentElement->removeChild($old_snippet);
         $dom->save($this->xml_file);
         $this->getSnippets();
@@ -166,7 +166,7 @@ class Snippets
     private function removeScripts($element)
     {
         $dom = new DOMDocument();
-        $dom->loadHtml($element);
+        $dom->loadHTML($element);
 
         $xpath = new DOMXPath($dom);
         while ($node = $xpath->query('//script')->item(0)) {
