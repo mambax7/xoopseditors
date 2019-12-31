@@ -1,22 +1,22 @@
 <?php
 
 include('config/config.php');
-if($_SESSION["verify"] != "RESPONSIVEfilemanager") die('forbiden');
+if($_SESSION['verify'] != 'RESPONSIVEfilemanager') die('forbiden');
 include('include/utils.php');
 
 if(isset($_GET['action']))
     switch($_GET['action']){
     case 'view':
         if(isset($_GET['type']))
-        $_SESSION["view_type"] =$_GET['type'];
+            $_SESSION['view_type'] = $_GET['type'];
         else
         die('view type number missing');
         break;
     case 'sort':
         if(isset($_GET['sort_by']))
-        $_SESSION["sort_by"] =$_GET['sort_by'];
+            $_SESSION['sort_by'] = $_GET['sort_by'];
         if(isset($_GET['descending']))
-        $_SESSION["descending"] =$_GET['descending']==="true";
+            $_SESSION['descending'] = $_GET['descending'] === 'true';
         break;
     case 'image_size':
         $pos = strpos($_POST['path'],$upload_dir);
@@ -50,9 +50,9 @@ if(isset($_GET['action']))
         die('wrong path');
         $path=$current_path.$_POST['path'];
         $info=pathinfo($path);
-        $base_folder=$current_path.fix_dirname($_POST['path'])."/";
+        $base_folder=$current_path.fix_dirname($_POST['path']) . '/';
         switch($info['extension']){
-        case "zip":
+        case 'zip':
             $zip = new ZipArchive();
             if ($zip->open($path) === true) {
             //make all the folders
@@ -60,7 +60,7 @@ if(isset($_GET['action']))
             {
                 $OnlyFileName = $zip->getNameIndex($i);
                 $FullFileName = $zip->statIndex($i);
-                if ($FullFileName['name'][strlen($FullFileName['name'])-1] =="/")
+                if ($FullFileName['name'][strlen($FullFileName['name'])-1] == '/')
                 {
                 create_folder($base_folder.$FullFileName['name']);
                 }
@@ -71,7 +71,7 @@ if(isset($_GET['action']))
                 $OnlyFileName = $zip->getNameIndex($i);
                 $FullFileName = $zip->statIndex($i);
 
-                if (!($FullFileName['name'][strlen($FullFileName['name'])-1] =="/"))
+                if (!($FullFileName['name'][strlen($FullFileName['name'])-1] == '/'))
                 {
                 $fileinfo = pathinfo($OnlyFileName);
                 if(in_array(strtolower($fileinfo['extension']),$ext))
@@ -85,24 +85,24 @@ if(isset($_GET['action']))
             echo 'failed to open file';
             }
             break;
-        case "gz":
+        case 'gz':
             $p = new PharData($path);
             $p->decompress(); // creates files.tar
             break;
-        case "tar":
+        case 'tar':
             // unarchive from the tar
             $phar = new PharData($path);
             $phar->decompressFiles();
             $files = [];
             check_files_extensions_on_phar( $phar, $files, '', $ext );
-            $phar->extractTo( $current_path.fix_dirname( $_POST['path'] )."/", $files, TRUE );
+            $phar->extractTo( $current_path.fix_dirname( $_POST['path'] ) . '/', $files, TRUE );
 
             break;
         }
         break;
     case 'media_preview':
 
-$preview_file = $_GET["file"];
+$preview_file = $_GET['file'];
 $info = pathinfo($preview_file);
 ?>
 <div id="jp_container_1" class="jp-video " style="margin:0 auto;">

@@ -38,7 +38,7 @@ define('lang_Swipe_help','Swipe the name of file/folder to show options');
 define('lang_Upload_base','Alapértelmezett feltöltő');
 define('lang_Upload_java','JAVA feltöltő (nagyméretű fájlokhoz)');
 define('lang_Upload_java_help',"Ha a Java Applet nem töltődik be: 1. ellenőrizze, hogy a JAVA telepítve van-e, ha nincs: <a href='http://java.com/en/download/'>[letöltés]</a> 2. ellenőrizze, hogy a tűzfal nem blokkolja-e");
-define('lang_Upload_base_help',"Drag & Drop file/s inside above area or click in it (for modern browsers) otherwise select the file and click on button. When the upload end, click on upper return button.");
+define('lang_Upload_base_help', 'Drag & Drop file/s inside above area or click in it (for modern browsers) otherwise select the file and click on button. When the upload end, click on upper return button.');
 define('lang_Type_dir','Mappa');
 define('lang_Type','Típus');
 define('lang_Dimension','Felbontás');

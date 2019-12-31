@@ -2,7 +2,7 @@
 
 include '../config/config.php';
 if(!$java_upload) die('forbidden');
-if($_SESSION["verify"] != "RESPONSIVEfilemanager") die('forbidden');
+if($_SESSION['verify'] != 'RESPONSIVEfilemanager') die('forbidden');
 
 //Let's load the 'interesting' stuff ...  ;-)
 include 'jupload.php';
@@ -16,14 +16,14 @@ while($cycle && $i<$max_cycles){
     ++$i;
     if($path==$current_path)  $cycle=false;
 
-    if(file_exists($path."config.php")){
-    require_once($path."config.php");
+    if(file_exists($path . 'config.php')){
+    require_once($path . 'config.php');
     $cycle=false;
     }
-    $path=fix_dirname($path)."/";
+    $path= fix_dirname($path) . '/';
 }
 
-$path="../".$current_path.$_GET['path'];
+$path= '../' . $current_path . $_GET['path'];
 
 if(strpos($_GET['path'],'../')!==FALSE || strpos($_GET['path'],'./')!==FALSE || strpos($_GET['path'],'/')===0) die ('path error');
 
@@ -48,7 +48,7 @@ $path=str_replace(' ','~',$path);
 function handle_uploaded_files($juploadPhpSupportClass, $files) {
     return
         "<P>We are in the 'handle_uploaded_files' callback function, in the index.php script. To avoid double coding, we "
-        . "just call the default behavior of the JUpload PHP class. Just replace this by your code...</P>"
+        . 'just call the default behavior of the JUpload PHP class. Just replace this by your code...</P>'
         . $juploadPhpSupportClass->defaultAfterUploadManagement();
         ;
 
@@ -95,7 +95,7 @@ $appletParameters = [
 // for htaccess protected folders
 if((isset($_SERVER['PHP_AUTH_USER']) && $_SERVER['PHP_AUTH_USER'] != '') && $_SERVER['PHP_AUTH_USER'] != '' && $_SERVER['PHP_AUTH_USER'] != '')
 {
-    $appletParameters['specificHeaders'] = 'Authorization: Basic '.base64_encode($_SERVER['PHP_AUTH_USER'].":".$_SERVER['PHP_AUTH_PW']);
+    $appletParameters['specificHeaders'] = 'Authorization: Basic '.base64_encode($_SERVER['PHP_AUTH_USER'] . ':' . $_SERVER['PHP_AUTH_PW']);
 }
 
 //

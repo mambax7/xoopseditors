@@ -107,7 +107,7 @@ class JUpload {
         $appletparams['maxFileSize'] = $maxfs;
         $appletparams['maxFileSize'] = $this->tobytes($appletparams['maxFileSize']);
         if (isset($classparams['errormail'])) {
-            $appletparams['urlToSendErrorTo'] = $_SERVER["PHP_SELF"] . '?errormail';
+            $appletparams['urlToSendErrorTo'] = $_SERVER['PHP_SELF'] . '?errormail';
         }
 
         // Same for class parameters
@@ -176,9 +176,9 @@ class JUpload {
         if (!isset($classparams['http_flist_end']))
         $classparams['http_flist_end'] = "</table>\n";
         if (!isset($classparams['http_flist_file_before']))
-        $classparams['http_flist_file_before'] = "<tr><td>";
+        $classparams['http_flist_file_before'] = '<tr><td>';
         if (!isset($classparams['http_flist_file_between']))
-        $classparams['http_flist_file_between'] = "</td><td>";
+        $classparams['http_flist_file_between'] = '</td><td>';
         if (!isset($classparams['http_flist_file_after']))
         $classparams['http_flist_file_after'] = "</td></tr>\n";
 
@@ -451,7 +451,7 @@ class JUpload {
                 //If it's a specific key, let's display it:
                 if ($key != 'name' && $key != 'size' && $key != 'relativePath' && $key != 'fullName' && $key != 'md5sum') {
                     if ($addBR) {
-                        $flist .= "<br>";
+                        $flist .= '<br>';
                     } else {
                         // First line. We must add a new 'official' list separator.
                         $flist .= $this->classparams['http_flist_file_between'];
@@ -601,7 +601,7 @@ private function receive_uploaded_files() {
             }
         }
         if (isset($this->classparams['allowed_file_extensions']) && is_array($this->classparams['allowed_file_extensions'])) {
-            $fileExtension = substr(strrchr($value['name'][$cnt], "."), 1);
+            $fileExtension = substr(strrchr($value['name'][$cnt], '.'), 1);
             if (!in_array($fileExtension, $this->classparams['allowed_file_extensions'])) {
                 $this->abort('File extension '.$fileExtension.' not allowed');
             }
@@ -625,7 +625,7 @@ private function receive_uploaded_files() {
                 $this->abort("Unable to move uploaded file (from ${files_data['tmp_name']} to $tmpname)");
         } else {
             trigger_error("Unable to move uploaded file (from ${files_data['tmp_name']} to $tmpname)",E_USER_WARNING);
-            $this->abort("Unable to move uploaded file");
+            $this->abort('Unable to move uploaded file');
     }
 }
 

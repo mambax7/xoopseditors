@@ -38,7 +38,7 @@ class TinyMCE
     public function __construct($config)
     {
         $this->setConfig($config);
-        $this->rootpath = $this->config["rootpath"] . "/tinymce/js/tinymce";
+        $this->rootpath = $this->config['rootpath'] . '/tinymce/js/tinymce';
     }
 
     /**
@@ -76,112 +76,112 @@ class TinyMCE
     {
         // list of configured options
         $configured                = [];
-        $this->setting["selector"] = "textarea";
-        $this->setting["theme"]    = "modern";
+        $this->setting['selector'] = 'textarea';
+        $this->setting['theme']    = 'modern';
 
         // Load default settings
-        if (!($this->setting = @include($GLOBALS['xoops']->path("var/configs/tinymce.php")))) {
-            $this->setting = include __DIR__ . "/settings.php";
+        if (!($this->setting = @include($GLOBALS['xoops']->path('var/configs/tinymce.php')))) {
+            $this->setting = include __DIR__ . '/settings.php';
         }
 
         // get editor language (from ...)
-        if (is_readable(XOOPS_ROOT_PATH . $this->rootpath . '/langs/' . $this->config["language"] . '.js')) {
-            $this->setting["language"] = $this->config["language"];
-            $configured[]              = "language";
+        if (is_readable(XOOPS_ROOT_PATH . $this->rootpath . '/langs/' . $this->config['language'] . '.js')) {
+            $this->setting['language'] = $this->config['language'];
+            $configured[]              = 'language';
         }
 
-        $this->setting["content_css"] = implode(",", $this->loadCss());
-        $configured[]                 = "content_css";
+        $this->setting['content_css'] = implode(',', $this->loadCss());
+        $configured[]                 = 'content_css';
 
-        if (!empty($this->config["theme"]) && is_dir(XOOPS_ROOT_PATH . $this->rootpath . "/themes/" . $this->config["theme"])) {
-            $this->setting["theme"] = $this->config["theme"];
-            $configured[]           = "theme";
+        if (!empty($this->config['theme']) && is_dir(XOOPS_ROOT_PATH . $this->rootpath . '/themes/' . $this->config['theme'])) {
+            $this->setting['theme'] = $this->config['theme'];
+            $configured[]           = 'theme';
         }
 
-        if (!empty($this->config["mode"])) {
-            $this->setting["mode"] = $this->config["mode"];
-            $configured[]          = "mode";
+        if (!empty($this->config['mode'])) {
+            $this->setting['mode'] = $this->config['mode'];
+            $configured[]          = 'mode';
         }
 
         // load all plugins except the plugins in setting["exclude_plugins"]
-        $this->setting["plugins"] = implode(",", $this->loadPlugins());
-        $configured[]             = "plugins";
+        $this->setting['plugins'] = implode(',', $this->loadPlugins());
+        $configured[]             = 'plugins';
 
-        if ($this->setting["theme"] != "simple") {
-            if (empty($this->config["buttons"])) {
-                $this->config["buttons"][] = [
-                    "before" => "",
-                    "add"    => "",
+        if ($this->setting['theme'] != 'simple') {
+            if (empty($this->config['buttons'])) {
+                $this->config['buttons'][] = [
+                    'before' => '',
+                    'add'    => '',
                 ];
-                $this->config["buttons"][] = [
-                    "before" => "",
-                    "add"    => "",
+                $this->config['buttons'][] = [
+                    'before' => '',
+                    'add'    => '',
                 ];
-                $this->config["buttons"][] = [
-                    "before" => "",
-                    "add"    => "",
+                $this->config['buttons'][] = [
+                    'before' => '',
+                    'add'    => '',
                 ];
             }
             $i = 0;
-            foreach ($this->config["buttons"] as $button) {
+            foreach ($this->config['buttons'] as $button) {
                 ++$i;
-                if (isset($button["before"])) {
-                    $this->setting["theme_" . $this->setting["theme"] . "_buttons{$i}_add_before"] = $button["before"];
+                if (isset($button['before'])) {
+                    $this->setting['theme_' . $this->setting['theme'] . "_buttons{$i}_add_before"] = $button['before'];
                 }
-                if (isset($button["add"])) {
-                    $this->setting["theme_" . $this->setting["theme"] . "_buttons{$i}_add"] = $button["add"];
+                if (isset($button['add'])) {
+                    $this->setting['theme_' . $this->setting['theme'] . "_buttons{$i}_add"] = $button['add'];
                 }
-                if (isset($button[""])) {
-                    $this->setting["theme_" . $this->setting["theme"] . "_buttons{$i}"] = $button[""];
+                if (isset($button[''])) {
+                    $this->setting['theme_' . $this->setting['theme'] . "_buttons{$i}"] = $button[''];
                 }
             }
-            $configured[] = "buttons";
+            $configured[] = 'buttons';
 
-            if (isset($this->config["toolbar_location"])) {
-                $this->setting["theme_" . $this->setting["theme"] . "_toolbar_location"] = $this->config["toolbar_location"];
-                $configured[]                                                            = "toolbar_location";
+            if (isset($this->config['toolbar_location'])) {
+                $this->setting['theme_' . $this->setting['theme'] . '_toolbar_location'] = $this->config['toolbar_location'];
+                $configured[]                                                            = 'toolbar_location';
             } else {
-                $this->setting["theme_" . $this->setting["theme"] . "_toolbar_location"] = "top";
+                $this->setting['theme_' . $this->setting['theme'] . '_toolbar_location'] = 'top';
             }
 
-            if (isset($this->config["toolbar_align"])) {
-                $this->setting["theme_" . $this->setting["theme"] . "_toolbar_align"] = $this->config["toolbar_align"];
-                $configured[]                                                         = "toolbar_align";
+            if (isset($this->config['toolbar_align'])) {
+                $this->setting['theme_' . $this->setting['theme'] . '_toolbar_align'] = $this->config['toolbar_align'];
+                $configured[]                                                         = 'toolbar_align';
             } else {
-                $this->setting["theme_" . $this->setting["theme"] . "_toolbar_align"] = "left";
+                $this->setting['theme_' . $this->setting['theme'] . '_toolbar_align'] = 'left';
             }
 
-            if (isset($this->config["statusbar_location"])) {
-                $this->setting["theme_" . $this->setting["theme"] . "_statusbar_location"] = $this->config["statusbar_location"];
-                $configured[]                                                              = "statusbar_location";
+            if (isset($this->config['statusbar_location'])) {
+                $this->setting['theme_' . $this->setting['theme'] . '_statusbar_location'] = $this->config['statusbar_location'];
+                $configured[]                                                              = 'statusbar_location';
             }
 
-            if (isset($this->config["path_location"])) {
-                $this->setting["theme_" . $this->setting["theme"] . "_path_location"] = $this->config["path_location"];
-                $configured[]                                                         = "path_location";
+            if (isset($this->config['path_location'])) {
+                $this->setting['theme_' . $this->setting['theme'] . '_path_location'] = $this->config['path_location'];
+                $configured[]                                                         = 'path_location';
             }
 
-            if (isset($this->config["resize_horizontal"])) {
-                $this->setting["theme_" . $this->setting["theme"] . "_resize_horizontal"] = $this->config["resize_horizontal"];
-                $configured[]                                                             = "resize_horizontal";
+            if (isset($this->config['resize_horizontal'])) {
+                $this->setting['theme_' . $this->setting['theme'] . '_resize_horizontal'] = $this->config['resize_horizontal'];
+                $configured[]                                                             = 'resize_horizontal';
             }
 
-            if (isset($this->config["resizing"])) {
-                $this->setting["theme_" . $this->setting["theme"] . "_resizing"] = $this->config["resizing"];
-                $configured[]                                                    = "resizing";
+            if (isset($this->config['resizing'])) {
+                $this->setting['theme_' . $this->setting['theme'] . '_resizing'] = $this->config['resizing'];
+                $configured[]                                                    = 'resizing';
             }
 
-            if (!empty($this->config["fonts"])) {
-                $this->setting["theme_" . $this->setting["theme"] . "_fonts"] = $this->config["fonts"];
-                $configured[]                                                 = "fonts";
+            if (!empty($this->config['fonts'])) {
+                $this->setting['theme_' . $this->setting['theme'] . '_fonts'] = $this->config['fonts'];
+                $configured[]                                                 = 'fonts';
             }
 
             for ($i = 1; $i <= 4; ++$i) {
                 $buttons = [];
-                if (isset($this->setting["theme_" . $this->setting["theme"] . "_buttons{$i}"])) {
-                    $checklist = explode(",", $this->setting["theme_" . $this->setting["theme"] . "_buttons{$i}"]);
+                if (isset($this->setting['theme_' . $this->setting['theme'] . "_buttons{$i}"])) {
+                    $checklist = explode(',', $this->setting['theme_' . $this->setting['theme'] . "_buttons{$i}"]);
                     foreach ($checklist as $plugin) {
-                        if (strpos(strtolower($plugin), "xoops") != false) {
+                        if (strpos(strtolower($plugin), 'xoops') != false) {
                             if (in_array($plugin, $this->xoopsPlugins)) {
                                 $buttons[] = $plugin;
                             }
@@ -189,7 +189,7 @@ class TinyMCE
                             $buttons[] = $plugin;
                         }
                     }
-                    $this->setting["theme_" . $this->setting["theme"] . "_buttons{$i}"] = implode(",", $buttons);
+                    $this->setting['theme_' . $this->setting['theme'] . "_buttons{$i}"] = implode(',', $buttons);
                 }
             }
         }
@@ -202,8 +202,8 @@ class TinyMCE
             $this->setting[$key] = $val;
         }
 
-        if (!is_dir(XOOPS_ROOT_PATH . $this->rootpath . "/themes/" . $this->setting["theme"] . '/docs/' . $this->setting["language"] . '/')) {
-            $this->setting["docs_language"] = "en";
+        if (!is_dir(XOOPS_ROOT_PATH . $this->rootpath . '/themes/' . $this->setting['theme'] . '/docs/' . $this->setting['language'] . '/')) {
+            $this->setting['docs_language'] = 'en';
         }
 
         unset($this->config, $configured);
@@ -215,17 +215,17 @@ class TinyMCE
     public function loadPlugins()
     {
         $plugins      = [];
-        $plugins_list = XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . $this->rootpath . "/plugins");
-        if (empty($this->setting["plugins"])) {
+        $plugins_list = XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . $this->rootpath . '/plugins');
+        if (empty($this->setting['plugins'])) {
             $plugins = $plugins_list;
         } else {
-            $plugins = array_intersect(explode(",", $this->setting["plugins"]), $plugins_list);
+            $plugins = array_intersect(explode(',', $this->setting['plugins']), $plugins_list);
         }
-        if (!empty($this->setting["exclude_plugins"])) {
-            $plugins = array_diff($plugins, explode(",", $this->setting["exclude_plugins"]));
+        if (!empty($this->setting['exclude_plugins'])) {
+            $plugins = array_diff($plugins, explode(',', $this->setting['exclude_plugins']));
         }
-        if (!empty($this->config["plugins"])) {
-            $plugins = array_merge($plugins, $this->config["plugins"]);
+        if (!empty($this->config['plugins'])) {
+            $plugins = array_merge($plugins, $this->config['plugins']);
         }
 
         return $plugins;
@@ -235,10 +235,10 @@ class TinyMCE
     public function get_xoopsPlugins()
     {
         $xoopsPlugins = [];
-        $allplugins   = XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . $this->rootpath . "/plugins");
+        $allplugins   = XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . $this->rootpath . '/plugins');
         foreach ($allplugins as $plugin) {
-            if (strpos(strtolower($plugin), "xoops") != false && file_exists(XOOPS_ROOT_PATH . $this->config["rootpath"] . "/include/$plugin.php")) {
-                if ($right = @include XOOPS_ROOT_PATH . $this->config["rootpath"] . "/include/$plugin.php") {
+            if (strpos(strtolower($plugin), 'xoops') != false && file_exists(XOOPS_ROOT_PATH . $this->config['rootpath'] . "/include/$plugin.php")) {
+                if ($right = @include XOOPS_ROOT_PATH . $this->config['rootpath'] . "/include/$plugin.php") {
                     $xoopsPlugins[$plugin] = $plugin;
                 }
             }
@@ -285,11 +285,11 @@ class TinyMCE
 
         $this->init();
 
-        if (!empty($this->setting["callback"])) {
-            $callback = $this->setting["callback"];
-            unset($this->setting["callback"]);
+        if (!empty($this->setting['callback'])) {
+            $callback = $this->setting['callback'];
+            unset($this->setting['callback']);
         } else {
-            $callback = "";
+            $callback = '';
         }
 
         $ret = '<script language="javascript" type="text/javascript" src="' . XOOPS_URL . $this->rootpath . '/tinymce.min.js"></script>';
@@ -298,11 +298,11 @@ class TinyMCE
             ';
 
         foreach ($this->setting as $key => $val) {
-            $ret .= $key . ":";
+            $ret .= $key . ':';
             if ($val === true) {
-                $ret .= "true,";
+                $ret .= 'true,';
             } elseif ($val === false) {
-                $ret .= "false,";
+                $ret .= 'false,';
             } else {
                 $ret .= "'{$val}',";
             }
@@ -312,13 +312,13 @@ class TinyMCE
         //   Ajout alain01 tinymce v4
 
         $chemin_array  = parse_url(XOOPS_URL);
-        $chemin_scheme = $chemin_array["scheme"]; // http
-        $chemin_host   = $chemin_array["host"]; // www.example.com  or // localhost
+        $chemin_scheme = $chemin_array['scheme']; // http
+        $chemin_host   = $chemin_array['host']; // www.example.com  or // localhost
         //  $chemin_path =  $chemin_array["path"]; // /myweb1
         if (!isset($chemin_array['path'])) {
             $chemin_path = '';
         } else {
-            $chemin_path = $chemin_array["path"];
+            $chemin_path = $chemin_array['path'];
         }
 
         //   $ret .='language_url : "'.$chemin_path.'/class/xoopseditor/tinymce4bootstrap/tinymce/js/tinymce/langs/fr_FR.js",';

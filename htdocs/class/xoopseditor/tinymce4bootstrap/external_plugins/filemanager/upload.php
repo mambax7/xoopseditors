@@ -1,6 +1,6 @@
 <?php
 include('config/config.php');
-if($_SESSION["verify"] != "RESPONSIVEfilemanager") die('forbiden');
+if($_SESSION['verify'] != 'RESPONSIVEfilemanager') die('forbiden');
 include('include/utils.php');
 
 $storeFolder = $_POST['path'];
@@ -23,8 +23,8 @@ $i=0;
 while($cycle && $i<$max_cycles){
     ++$i;
     if($path==$current_path)  $cycle=false;
-    if(file_exists($path."config.php")){
-    require_once($path."config.php");
+    if(file_exists($path . 'config.php')){
+    require_once($path . 'config.php');
     $cycle=false;
     }
     $path=fix_dirname($path).'/';
@@ -42,10 +42,10 @@ if (!empty($_FILES)) {
     if(file_exists($targetPath.$_FILES['file']['name'])){
         $i = 1;
         $info=pathinfo($_FILES['file']['name']);
-        while(file_exists($targetPath.$info['filename']."_".$i.".".$info['extension'])) {
+        while(file_exists($targetPath.$info['filename'] . '_' . $i . '.' . $info['extension'])) {
             ++$i;
         }
-        $_FILES['file']['name']=$info['filename']."_".$i.".".$info['extension'];
+        $_FILES['file']['name']=$info['filename'] . '_' . $i . '.' . $info['extension'];
     }
     $targetFile =  $targetPath. $_FILES['file']['name'];
     $targetFileThumb =  $targetPathThumb. $_FILES['file']['name'];
@@ -125,5 +125,5 @@ if(isset($_POST['submit'])){
         'fldr'      => $_POST['fldr'],
         ]
     );
-    header("location: dialog.php?" . $query);
+    header('location: dialog.php?' . $query);
 }

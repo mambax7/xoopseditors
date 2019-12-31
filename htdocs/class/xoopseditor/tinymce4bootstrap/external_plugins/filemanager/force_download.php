@@ -1,6 +1,6 @@
 <?php
 include('config/config.php');
-if($_SESSION["verify"] != "RESPONSIVEfilemanager") die('forbiden');
+if($_SESSION['verify'] != 'RESPONSIVEfilemanager') die('forbiden');
 include('include/utils.php');
 
 if(strpos($_POST['path'],'/')===0
@@ -21,8 +21,8 @@ if(!in_array(fix_strtolower($info['extension']), $ext)){
 
 header('Pragma: private');
 header('Cache-control: private, must-revalidate');
-header("Content-Type: application/octet-stream");
-header("Content-Length: " .(string)(filesize($path.$name)) );
+header('Content-Type: application/octet-stream');
+header('Content-Length: ' . (string)(filesize($path . $name)) );
 header('Content-Disposition: attachment; filename="'.($name).'"');
 readfile($path.$name);
 

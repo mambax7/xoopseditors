@@ -1,15 +1,15 @@
 <?php
 // XOOPS
 $current_path = __DIR__;
-if ( DIRECTORY_SEPARATOR != "/" ) {
-    $current_path = str_replace( DIRECTORY_SEPARATOR, "/", $current_path);
+if (DIRECTORY_SEPARATOR != '/') {
+    $current_path = str_replace(DIRECTORY_SEPARATOR, '/', $current_path);
 }
-$xoops_root_path = substr($current_path, 0, strpos(strtolower($current_path), "/class/xoopseditor/tinymce4bootstrap/"));
-include_once $xoops_root_path . "/mainfile.php";
+$xoops_root_path = substr($current_path, 0, strpos(strtolower($current_path), '/class/xoopseditor/tinymce4bootstrap/'));
+include_once $xoops_root_path . '/mainfile.php';
 
 $chemin_array=parse_url(XOOPS_URL);
-$chemin_scheme =  $chemin_array["scheme"]; // http
-$chemin_host =  $chemin_array["host"]; // www.example.com  or // localhost
+$chemin_scheme = $chemin_array['scheme']; // http
+$chemin_host = $chemin_array['host']; // www.example.com  or // localhost
 //  $chemin_path =  $chemin_array["path"]; // /myweb1
   if (!isset($chemin_array['path']))
     {
@@ -17,7 +17,7 @@ $chemin_host =  $chemin_array["host"]; // www.example.com  or // localhost
     }
   else
     {
-      $chemin_path =  $chemin_array["path"];
+      $chemin_path = $chemin_array['path'];
     }
 // XOOPS
 
@@ -51,7 +51,7 @@ mb_internal_encoding('UTF-8');
 //    |   |   |   |   |- plugin.min.js
 
 //$base_url="http://www.site.com";  // base url (only domain) of site (without final /). If you prefer relative urls leave empty
-$base_url=$chemin_scheme."://".$chemin_host;
+$base_url= $chemin_scheme . '://' . $chemin_host;
 
 //$upload_dir = '/source/'; // path from base_url to base of upload folder (with start and final /)
 
@@ -68,8 +68,8 @@ $thumbs_base_path = '../../../../../uploads/filemanager/thumbs/'; // relative pa
 
 $MaxSizeUpload=100; //Mb
 
-$default_language="en_EN"; //default language file name
-$icon_theme="ico"; //ico or ico_dark you can cusatomize just putting a folder inside filemanager/img
+$default_language= 'en_EN'; //default language file name
+$icon_theme= 'ico'; //ico or ico_dark you can cusatomize just putting a folder inside filemanager/img
 $show_folder_size=true; //Show or not show folder size in list view feature in filemanager (is possible, if there is a large folder, to greatly increase the calculations)
 $show_sorting_bar=true; //Show or not show sorting feature in filemanager
 $loading_bar=true; //Show or not show loading bar
@@ -144,7 +144,7 @@ if ($xoopsUser) {
 //**********************
 $ext_img = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'tiff', 'svg']; //Images
 $ext_file = ['doc', 'docx', 'rtf', 'pdf', 'xls', 'xlsx', 'txt', 'csv', 'html', 'xhtml', 'psd', 'sql', 'log', 'fla', 'xml', 'ade', 'adp', 'mdb', 'accdb', 'ppt', 'pptx', 'odt', 'ots', 'ott', 'odb', 'odg', 'otp', 'otg', 'odf', 'ods', 'odp', 'css', 'ai']; //Files
-$ext_video = ['mov', 'mpeg', 'mp4', 'avi', 'mpg', 'wma', "flv", "webm"]; //Video
+$ext_video = ['mov', 'mpeg', 'mp4', 'avi', 'mpg', 'wma', 'flv', 'webm']; //Video
 $ext_music = ['mp3', 'm4a', 'ac3', 'aiff', 'mid', 'ogg', 'wav']; //Audio
 $ext_misc = ['zip', 'rar', 'gz', 'tar', 'iso', 'dmg']; //Archives
 
@@ -155,8 +155,8 @@ $ext=array_merge($ext_img, $ext_file, $ext_misc, $ext_video,$ext_music); //allow
  * AVIARY config
 *******************/
 $aviary_active=true;
-$aviary_key="dvh8qudbp6yx2bnp";
-$aviary_secret="m6xaym5q42rpw433";
+$aviary_key= 'dvh8qudbp6yx2bnp';
+$aviary_secret= 'm6xaym5q42rpw433';
 $aviary_version=3;
 $aviary_language='en';
 
