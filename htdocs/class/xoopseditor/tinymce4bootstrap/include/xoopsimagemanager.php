@@ -12,7 +12,7 @@
  */
 if (!defined("XOOPS_ROOT_PATH")) { die("XOOPS root path not defined"); }
 // check categories readability by group
-$groups = is_object( $GLOBALS["xoopsUser"] ) ? $GLOBALS["xoopsUser"]->getGroups() : array( XOOPS_GROUP_ANONYMOUS );
+$groups = is_object( $GLOBALS["xoopsUser"] ) ? $GLOBALS["xoopsUser"]->getGroups() : [XOOPS_GROUP_ANONYMOUS];
 $imgcat_handler = xoops_getHandler('imagecategory');
 if ( count($imgcat_handler->getList($groups, 'imgcat_read', 1)) == 0 ) {
     return false;

@@ -116,13 +116,15 @@ require_once $language_file;
 if(!isset($_GET['type'])) $_GET['type']=0;
 if(!isset($_GET['field_id'])) $_GET['field_id']='';
 
-$get_params = http_build_query(array(
+$get_params = http_build_query(
+    [
     'type'      => $_GET['type'],
     'lang'      => $lang,
     'popup'     => $popup,
     'field_id'  => isset($_GET['field_id']) ? $_GET['field_id'] : '',
     'fldr'      => ''
-));
+    ]
+);
 ?>
 
 <!DOCTYPE html>
@@ -257,7 +259,7 @@ $get_params = http_build_query(array(
     <input type="hidden" id="file_number_limit_js" value="<?php echo $file_number_limit_js; ?>" />
     <input type="hidden" id="descending" value="<?php echo $descending?"true":"false"; ?>" />
     <?php $protocol = 'http'; ?>
-    <input type="hidden" id="current_url" value="<?php echo str_replace(array('&filter='.$filter),array(''),$protocol."://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']); ?>" />
+    <input type="hidden" id="current_url" value="<?php echo str_replace(['&filter=' . $filter], [''], $protocol . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']); ?>" />
     <input type="hidden" id="lang_show_url" value="<?php echo lang_Show_url; ?>" />
     <input type="hidden" id="lang_extract" value="<?php echo lang_Extract; ?>" />
     <input type="hidden" id="lang_file_info" value="<?php echo fix_strtoupper(lang_File_info); ?>" />
@@ -328,23 +330,23 @@ $files = scandir($current_path.$subfolder.$subdir);
 $n_files=count($files);
 
 //php sorting
-$sorted=array();
-$current_folder=array();
-$prev_folder=array();
+$sorted= [];
+$current_folder= [];
+$prev_folder= [];
 foreach($files as $k=>$file){
-    if($file==".") $current_folder=array('file'=>$file);
-    elseif($file=="..") $prev_folder=array('file'=>$file);
+    if($file==".") $current_folder= ['file' =>$file];
+    elseif($file=="..") $prev_folder= ['file' =>$file];
     elseif(is_dir($current_path.$subfolder.$subdir.$file)){
     $date=filemtime($current_path.$subfolder.$subdir. $file);
     $size=foldersize($current_path.$subfolder.$subdir. $file);
     $file_ext=lang_Type_dir;
-    $sorted[$k]=array('file'=>$file,'date'=>$date,'size'=>$size,'extension'=>$file_ext);
+    $sorted[$k]= ['file' =>$file, 'date' =>$date, 'size' =>$size, 'extension' =>$file_ext];
     }else{
     $file_path=$current_path.$subfolder.$subdir.$file;
     $date=filemtime($file_path);
     $size=filesize($file_path);
     $file_ext = substr(strrchr($file,'.'),1);
-    $sorted[$k]=array('file'=>$file,'date'=>$date,'size'=>$size,'extension'=>$file_ext);
+    $sorted[$k]= ['file' =>$file, 'date' =>$date, 'size' =>$size, 'extension' =>$file_ext];
     }
 }
 
@@ -383,7 +385,7 @@ if($descending){
     $sorted=array_reverse($sorted);
 }
 
-$files=array_merge(array($prev_folder),array($current_folder),$sorted);
+$files=array_merge([$prev_folder], [$current_folder], $sorted);
 ?>
 <!----- header div start ------->
 <div class="navbar navbar-fixed-top">
@@ -512,7 +514,7 @@ $files=array_merge(array($prev_folder),array($current_folder),$sorted);
         <ul class="grid cs-style-2 <?php echo "list-view".$view; ?>">
         <?php
 
-        $jplayer_ext=array("mp4","flv","webmv","webma","webm","m4a","m4v","ogv","oga","mp3","midi","mid","ogg","wav");
+        $jplayer_ext= ["mp4", "flv", "webmv", "webma", "webm", "m4a", "m4v", "ogv", "oga", "mp3", "midi", "mid", "ogg", "wav"];
         foreach ($files as $file_array) {
             $file=$file_array['file'];
             if($file == '.' || (isset($file_array['extension']) && $file_array['extension']!=lang_Type_dir) || ($file == '..' && $subdir == '') || in_array($file, $hidden_folders) || ($filter!='' && $file!=".." && strpos($file,$filter)===false))

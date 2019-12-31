@@ -173,23 +173,23 @@ class imageLib
     private   $fileExtension;
 
     private $debug      = true;
-    private $errorArray = array();
+    private $errorArray = [];
 
     private $forceStretch        = true;
     private $aggresiveSharpening = false;
 
-    private $transparentArray = array('.png', '.gif');
+    private $transparentArray = ['.png', '.gif'];
     private $keepTransparency = true;
-    private $fillColorArray   = array('r' => 255, 'g' => 255, 'b' => 255);
+    private $fillColorArray   = ['r' => 255, 'g' => 255, 'b' => 255];
 
-    private $sharpenArray = array('jpg');
+    private $sharpenArray = ['jpg'];
 
     private $psdReaderPath;
     private $filterOverlayPath;
 
     private $isInterlace;
 
-    private $captionBoxPositionArray = array();
+    private $captionBoxPositionArray = [];
 
     private $fontDir = 'fonts';
 
@@ -891,7 +891,7 @@ class imageLib
   Draw border
 *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-**-*-*-*-*-*-*-*-*-*-*-*-*-*/
 
-    public function addBorder($thickness = 1, $rgbArray = array(255, 255, 255))
+    public function addBorder($thickness = 1, $rgbArray = [255, 255, 255])
         # Author:     Jarrod Oberto
         # Date:       05-05-11
         # Purpose:    Add a border to the image

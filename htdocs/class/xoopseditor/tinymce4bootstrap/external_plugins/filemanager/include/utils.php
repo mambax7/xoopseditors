@@ -71,7 +71,7 @@ function create_img($imgfile, $imgthumb, $newwidth, $newheight="") {
 }
 
 function makeSize($size) {
-   $units = array('B','KB','MB','GB','TB');
+   $units = ['B', 'KB', 'MB', 'GB', 'TB'];
    $u = 0;
    while ( (round($size / 1024) > 0) && ($u < 4) ) {
      $size = $size / 1024;

@@ -20,7 +20,7 @@
  * @author          Laurent JEN <dugris@frxoops.org>
  * @version         $Id: settings.php 8290 2011-11-15 01:57:18Z beckmi $
  */
-return array(
+return [
     "selector" => "textarea",
     "theme"     => "modern",
 
@@ -334,4 +334,4 @@ return array(
         ."|onkeyup|onmousedown|onmousemove|onmouseout|onmouseover|onmouseup|style"
         ."|title]",
 
-);
+];

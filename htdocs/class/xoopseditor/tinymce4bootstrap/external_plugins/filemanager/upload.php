@@ -116,12 +116,14 @@ if (!empty($_FILES)) {
     exit();
 }
 if(isset($_POST['submit'])){
-    $query = http_build_query(array(
+    $query = http_build_query(
+        [
         'type'      => $_POST['type'],
         'lang'      => $_POST['lang'],
         'popup'     => $_POST['popup'],
         'field_id'  => $_POST['field_id'],
         'fldr'      => $_POST['fldr'],
-    ));
+        ]
+    );
     header("location: dialog.php?" . $query);
 }

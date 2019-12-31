@@ -63,7 +63,7 @@ function handle_uploaded_files($juploadPhpSupportClass, $files) {
 // You can use all applet parameters in this array.
 // see all details http://jupload.sourceforge.net/howto-customization.html
 //
-$appletParameters = array(
+$appletParameters = [
         //Default value is ... maximum size for a file on the current FS. 2G is problably too much already.
         'maxFileSize' => $JAVAMaxSizeUpload.'G',
         //
@@ -88,7 +88,7 @@ $appletParameters = array(
         'sendMD5Sum' => 'false',
         //
         'debugLevel' => 0 // 100 disables redirect after upload, so we keep it below. This still gives a lot of information, in case of problem.
-    );
+];
 
 // for htaccess protected folders
 if((isset($_SERVER['PHP_AUTH_USER']) && $_SERVER['PHP_AUTH_USER'] != '') && $_SERVER['PHP_AUTH_USER'] != '' && $_SERVER['PHP_AUTH_USER'] != '')
@@ -98,7 +98,7 @@ if((isset($_SERVER['PHP_AUTH_USER']) && $_SERVER['PHP_AUTH_USER'] != '') && $_SE
 
 //
 //Then: the jupload PHP class parameters
-$classParameters = array(
+$classParameters = [
         //Files won't be stored on the server. Useful for first tests of the applet behavior ... and sourceforge demo site !
         'demo_mode' => false,
         //
@@ -112,7 +112,7 @@ $classParameters = array(
         //I work on windows. The default configuration is /var/tmp/jupload_test
         'destdir' => $path  //Where to store the files on the web
         //'errormail' => 'me@my.domain.org',
-    );
+];
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Instantiate and initialize JUpload : integration of the applet in your web site.

@@ -58,7 +58,7 @@ class JUpload {
     public $classparams;
     public $files;
 
-    public function __construct($appletparams = array(), $classparams = array()) {
+    public function __construct($appletparams = [], $classparams = []) {
         if (gettype($classparams) != 'array')
         $this->abort('Invalid type of parameter classparams: Expecting an array');
         if (gettype($appletparams) != 'array')
@@ -565,10 +565,10 @@ private function receive_uploaded_files() {
         //$md5sums = (isset($_POST["md5sum$cnt"])) ? $_POST["md5sum$cnt"] : null;
 
         if (gettype($relpaths) == 'string') {
-            $relpaths = array($relpaths);
+            $relpaths = [$relpaths];
         }
         if (gettype($md5sums) == 'string') {
-            $md5sums = array($md5sums);
+            $md5sums = [$md5sums];
         }
         if ($this->appletparams['sendMD5Sum'] == 'true'  && !is_array($md5sums)) {
             $this->abort('Expecting an array of MD5 checksums');
@@ -743,21 +743,21 @@ private function page_start() {
                 $this->abort('Invalid session (in afterupload, GET, check of is_array(files)): files is not an array');
             }
             // clear session data ready for new upload
-            $_SESSION[$this->classparams['var_prefix'].'files'] = array();
+            $_SESSION[$this->classparams['var_prefix'].'files'] = [];
 
             // start intercepting the content of the calling page, to display the upload result.
-            ob_start(array(& $this, 'interceptAfterUpload'));
+            ob_start([& $this, 'interceptAfterUpload']);
 
         } else {
             $this->logDebug('page_start', 'afterupload is not set');
             if ($this->classparams['session_regenerate']) {
                 session_regenerate_id(true);
             }
-            $this->files = array();
+            $this->files = [];
             $_SESSION[$this->classparams['var_prefix'].'size'] = 0;
             $_SESSION[$this->classparams['var_prefix'].'files'] = $this->files;
             // start intercepting the content of the calling page, to display the applet tag.
-            ob_start(array(& $this, 'interceptBeforeUpload'));
+            ob_start([& $this, 'interceptBeforeUpload']);
         }
 
     } else if ($_SERVER['REQUEST_METHOD'] == 'POST') {
