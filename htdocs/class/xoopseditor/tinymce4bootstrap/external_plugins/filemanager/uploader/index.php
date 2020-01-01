@@ -40,7 +40,7 @@ $path=str_replace(' ','~',$path);
  * - Have the class parameter callbackAfterUploadManagement set to 'handle_uploaded_files', name of this callback. You can use any name you want,
  *  but the function must accept one unique parameter: the array that contains the file descriptions.
  *
- * @param $juploadPhpSupportClass The instance of the JUpload PHP class.
+ * @param JUpload $juploadPhpSupportClass The instance of the JUpload PHP class.
  * @param $files
  * @return string
  * @return string

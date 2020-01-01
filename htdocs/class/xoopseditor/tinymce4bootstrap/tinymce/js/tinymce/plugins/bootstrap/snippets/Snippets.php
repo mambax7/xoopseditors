@@ -179,7 +179,7 @@ class Snippets
 
     /**
      * Removes unwanted php scripts from snippet
-     * @param  $element    title | content
+     * @param  string $element    title | content
      * @return \content|string|string[]|\title|null $element element cleaned
      */
     private function removePhp($element)
