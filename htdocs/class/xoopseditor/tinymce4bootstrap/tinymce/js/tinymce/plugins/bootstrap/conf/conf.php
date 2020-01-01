@@ -21,11 +21,12 @@ define('PRISM_JS', 'prism/prism.min.js');
 $bootstrap_css_path = addslashes($_GET['bootstrap_css_path']);
 function siteURL()
 {
-    $protocol = (!empty($_SERVER['HTTPS']) && 'off' !== $_SERVER['HTTPS'] || 443 == $_SERVER['SERVER_PORT']) ? 'https://' : 'http://';
+    $protocol   = (!empty($_SERVER['HTTPS']) && 'off' !== $_SERVER['HTTPS'] || 443 == $_SERVER['SERVER_PORT']) ? 'https://' : 'http://';
     $domainName = $_SERVER['HTTP_HOST'];
 
-    return $protocol.$domainName;
+    return $protocol . $domainName;
 }
+
 define('SITE_URL', siteURL());
 
 /* language */

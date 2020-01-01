@@ -1,4 +1,5 @@
 <?php
+
 class Snippets
 {
     public $snippets;
@@ -14,14 +15,14 @@ class Snippets
 
     public function __construct($xml_file, $allow_edit)
     {
-        $this->allow_edit   = $allow_edit;
-        $this->xml_file    = $xml_file;
+        $this->allow_edit = $allow_edit;
+        $this->xml_file   = $xml_file;
     }
 
     public function getSnippets()
     {
-        $this->xml = simplexml_load_file($this->xml_file);
-        $this->snippets = $this->xml->snippet;
+        $this->xml            = simplexml_load_file($this->xml_file);
+        $this->snippets       = $this->xml->snippet;
         $this->total_snippets = count($this->snippets);
     }
 
@@ -33,8 +34,8 @@ class Snippets
             $html .= '<p>&nbsp;</p><p>' . NO_SNIPPET_TO_DISPLAY . '</p>' . " \n";
             $html .= '</div>' . " \n";
         } else {
-            for ($i=0; $i < $this->total_snippets; $i++) {
-                $snp = $this->snippets[$i];
+            for ($i = 0; $i < $this->total_snippets; $i++) {
+                $snp  = $this->snippets[$i];
                 $html .= '<div class="col-sm-6">' . " \n";
                 $html .= '    <div class="text-center">' . " \n";
                 $html .= '        <div class="choice selector select-snippet" data-index="' . $i . '">' . " \n";
@@ -70,17 +71,17 @@ class Snippets
                 $title   = $this->removeScripts($title);
                 $content = $this->removeScripts($content);
             }
-            $xml = $this->xml;
-            $total_snippets = $this->total_snippets;
-            $dom = dom_import_simplexml($xml)->ownerDocument;
-            $dom = new DOMDocument('1.0');
+            $xml                     = $this->xml;
+            $total_snippets          = $this->total_snippets;
+            $dom                     = dom_import_simplexml($xml)->ownerDocument;
+            $dom                     = new DOMDocument('1.0');
             $dom->preserveWhiteSpace = false;
-            $dom->formatOutput = true;
+            $dom->formatOutput       = true;
             $dom->loadXML($xml->asXML());
-            $new_snippet = $dom->createElement('snippet');
-            $new_title = $dom->createElement('title');
-            $new_content = $dom->createElement('content');
-            $title_text = $dom->createTextNode($title);
+            $new_snippet  = $dom->createElement('snippet');
+            $new_title    = $dom->createElement('title');
+            $new_content  = $dom->createElement('content');
+            $title_text   = $dom->createTextNode($title);
             $content_text = $dom->createTextNode($content);
             $new_title->appendChild($title_text);
             $new_content->appendChild($content_text);
@@ -100,6 +101,7 @@ class Snippets
             return false;
         }
     }
+
     public function editSnippet($index, $title, $content)
     {
         libxml_use_internal_errors(true); // avoid warnings if using html5 tags with $dom->loadXML
@@ -111,17 +113,17 @@ class Snippets
             $title   = $this->removeScripts($title);
             $content = $this->removeScripts($content);
         }
-        $xml = $this->xml;
-        $total_snippets = $this->total_snippets;
-        $dom = dom_import_simplexml($xml)->ownerDocument;
-        $dom = new DOMDocument('1.0');
+        $xml                     = $this->xml;
+        $total_snippets          = $this->total_snippets;
+        $dom                     = dom_import_simplexml($xml)->ownerDocument;
+        $dom                     = new DOMDocument('1.0');
         $dom->preserveWhiteSpace = false;
-        $dom->formatOutput = true;
+        $dom->formatOutput       = true;
         $dom->loadXML($xml->asXML());
-        $new_snippet = $dom->createElement('snippet');
-        $new_title = $dom->createElement('title');
-        $new_content = $dom->createElement('content');
-        $title_text = $dom->createTextNode($title);
+        $new_snippet  = $dom->createElement('snippet');
+        $new_title    = $dom->createElement('title');
+        $new_content  = $dom->createElement('content');
+        $title_text   = $dom->createTextNode($title);
         $content_text = $dom->createTextNode($content);
         $new_title->appendChild($title_text);
         $new_content->appendChild($content_text);
@@ -143,12 +145,12 @@ class Snippets
     public function deleteSnippet($index)
     {
         libxml_use_internal_errors(true); // avoid warnings if using html5 tags with $dom->loadXML
-        $xml = $this->xml;
-        $total_snippets = $this->total_snippets;
-        $dom = dom_import_simplexml($xml)->ownerDocument;
-        $dom = new DOMDocument('1.0');
+        $xml                     = $this->xml;
+        $total_snippets          = $this->total_snippets;
+        $dom                     = dom_import_simplexml($xml)->ownerDocument;
+        $dom                     = new DOMDocument('1.0');
         $dom->preserveWhiteSpace = false;
-        $dom->formatOutput = true;
+        $dom->formatOutput       = true;
         $dom->loadXML($xml->asXML());
         $old_snippet = $dom->documentElement->getElementsByTagName('snippet')->item($index);
         $dom->documentElement->removeChild($old_snippet);
@@ -179,14 +181,14 @@ class Snippets
 
     /**
      * Removes unwanted php scripts from snippet
-     * @param  string $element    title | content
+     * @param string $element title | content
      * @return \content|string|string[]|\title|null $element element cleaned
      */
     private function removePhp($element)
     {
         if (preg_match_all('/<\?php(.+?)\?>/is', $element, $out)) {
             $this->php_found = true;
-            $element = preg_replace('/<\?php(.+?)\?>/is', '', $element);
+            $element         = preg_replace('/<\?php(.+?)\?>/is', '', $element);
         }
 
         return $element;

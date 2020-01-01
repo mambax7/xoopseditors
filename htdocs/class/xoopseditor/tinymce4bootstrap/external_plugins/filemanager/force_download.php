@@ -6,13 +6,13 @@ if ('RESPONSIVEfilemanager' !== $_SESSION['verify']) {
 }
 include('include/utils.php');
 
-if (0 === strpos($_POST['path'], '/')
-    || false !== strpos($_POST['path'], '../')
-    || 0 === strpos($_POST['path'], './')) {
+if (0 === mb_strpos($_POST['path'], '/')
+    || false !== mb_strpos($_POST['path'], '../')
+    || 0 === mb_strpos($_POST['path'], './')) {
     die('wrong path');
 }
 
-if (false !== strpos($_POST['name'], '/')) {
+if (false !== mb_strpos($_POST['name'], '/')) {
     die('wrong path');
 }
 

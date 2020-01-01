@@ -21,13 +21,12 @@
  * @author          Taiwen Jiang <phppp@users.sourceforge.net>
  * @version         $Id: formtinymce.php 8066 2011-11-06 05:09:33Z beckmi $
  */
-
 xoops_load('XoopsEditor');
 
 class XoopsFormTinymce4Bootstrap extends XoopsEditor
 {
     public $language;
-    public $width  = '100%';
+    public $width = '100%';
     public $height = '500px';
 
     public $editor;
@@ -37,22 +36,21 @@ class XoopsFormTinymce4Bootstrap extends XoopsEditor
      *
      * @param array $configs Editor Options
      */
-
     public function __construct($configs)
     {
         $current_path = __FILE__;
         if (DIRECTORY_SEPARATOR !== '/') {
-            $current_path = str_replace(strpos($current_path, "\\\\", 2) ? "\\\\" : DIRECTORY_SEPARATOR, '/', $current_path);
+            $current_path = str_replace(mb_strpos($current_path, '\\\\', 2) ? '\\\\' : DIRECTORY_SEPARATOR, '/', $current_path);
         }
 
         $this->rootPath = '/class/xoopseditor/tinymce4bootstrap';
         parent::__construct($configs);
-        $this->configs['elements']    = $this->getName();
-        $this->configs['language']    = $this->getLanguage();
-        $this->configs['rootpath']    = $this->rootPath;
-        $this->configs['area_width']  = isset($this->configs['width']) ? $this->configs['width'] : $this->width;
+        $this->configs['elements'] = $this->getName();
+        $this->configs['language'] = $this->getLanguage();
+        $this->configs['rootpath'] = $this->rootPath;
+        $this->configs['area_width'] = isset($this->configs['width']) ? $this->configs['width'] : $this->width;
         $this->configs['area_height'] = isset($this->configs['height']) ? $this->configs['height'] : $this->height;
-        $this->configs['fonts']       = $this->getFonts();
+        $this->configs['fonts'] = $this->getFonts();
 
         require_once __DIR__ . '/tinymce.php';
         $this->editor = new TinyMCE($this->configs);
@@ -66,17 +64,16 @@ class XoopsFormTinymce4Bootstrap extends XoopsEditor
      *
      * @return string
      */
-
     public function renderValidationJS()
     {
         if ($this->isRequired() && $eltname = $this->getName()) {
             //$eltname = $this->getName();
             $eltcaption = $this->getCaption();
-            $eltmsg     = empty($eltcaption) ? sprintf(_FORM_ENTER, $eltname) : sprintf(_FORM_ENTER, $eltcaption);
-            $eltmsg     = str_replace('"', '\"', stripslashes($eltmsg));
-            $ret        = "\n";
-            $ret        .= "if ( tinyMCE.get('{$eltname}').getContent() == \"\" || tinyMCE.get('{$eltname}').getContent() == null) ";
-            $ret        .= "{ window.alert(\"{$eltmsg}\"); tinyMCE.get('{$eltname}').focus(); return false; }";
+            $eltmsg = empty($eltcaption) ? sprintf(_FORM_ENTER, $eltname) : sprintf(_FORM_ENTER, $eltcaption);
+            $eltmsg = str_replace('"', '\"', stripslashes($eltmsg));
+            $ret = "\n";
+            $ret .= "if ( tinyMCE.get('{$eltname}').getContent() == \"\" || tinyMCE.get('{$eltname}').getContent() == null) ";
+            $ret .= "{ window.alert(\"{$eltmsg}\"); tinyMCE.get('{$eltname}').focus(); return false; }";
 
             return $ret;
         }
@@ -89,17 +86,16 @@ class XoopsFormTinymce4Bootstrap extends XoopsEditor
      *
      * @return string
      */
-
     public function getLanguage()
     {
         if ($this->language) {
             return $this->language;
         }
-        if (defined('_XOOPS_EDITOR_TINYMCE4_LANGUAGE')) {
-            $this->language = strtolower(constant('_XOOPS_EDITOR_TINYMCE4_LANGUAGE'));
+        if (defined('_XOOPS_EDITOR_TINYMCE4B_LANGUAGE')) {
+            $this->language = mb_strtolower(constant('_XOOPS_EDITOR_TINYMCE4B_LANGUAGE'));
         } else {
-            $this->language = str_replace('_', '-', strtolower(_LANGCODE));
-            if ('utf-8' === strtolower(_CHARSET)) {
+            $this->language = str_replace('_', '-', mb_strtolower(_LANGCODE));
+            if ('utf-8' === mb_strtolower(_CHARSET)) {
                 $this->language .= '_utf8';
             }
         }
@@ -109,8 +105,8 @@ class XoopsFormTinymce4Bootstrap extends XoopsEditor
 
     public function getFonts()
     {
-        if (empty($this->config['fonts']) && defined('_XOOPS_EDITOR_TINYMCE4_FONTS')) {
-            $this->config['fonts'] = constant('_XOOPS_EDITOR_TINYMCE4_FONTS');
+        if (empty($this->config['fonts']) && defined('_XOOPS_EDITOR_TINYMCE4B_FONTS')) {
+            $this->config['fonts'] = constant('_XOOPS_EDITOR_TINYMCE4B_FONTS');
         }
 
         return @$this->config['fonts'];
@@ -121,7 +117,6 @@ class XoopsFormTinymce4Bootstrap extends XoopsEditor
      *
      * @return sting HTML
      */
-
     public function render()
     {
         $ret = $this->editor->render();
@@ -135,10 +130,8 @@ class XoopsFormTinymce4Bootstrap extends XoopsEditor
      *
      * @return bool
      */
-
     public function isActive()
     {
         return is_readable(XOOPS_ROOT_PATH . $this->rootPath . '/tinymce.php');
     }
 }
-

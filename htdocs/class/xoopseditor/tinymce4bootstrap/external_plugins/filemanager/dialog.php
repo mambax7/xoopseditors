@@ -162,10 +162,9 @@ if (isset($_POST['submit'])) {
             'lang'     => $lang,
             'popup'    => $popup,
             'field_id' => isset($_GET['field_id']) ? $_GET['field_id'] : '',
-            'fldr'     => ''
+            'fldr' => '',
         ]
-    );
-    ?>
+    ); ?>
 
     <!DOCTYPE html>
     <html xmlns="http://www.w3.org/1999/xhtml">

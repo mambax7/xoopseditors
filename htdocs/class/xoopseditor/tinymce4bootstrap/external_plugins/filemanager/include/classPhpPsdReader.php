@@ -38,17 +38,17 @@ class PhpPsdReader
     {
         set_time_limit(0);
         $this->infoArray = [];
-        $this->fileName  = $fileName;
-        $this->fp        = fopen($this->fileName, 'rb');
+        $this->fileName = $fileName;
+        $this->fp = fopen($this->fileName, 'rb');
 
         if ('8BPS' === fread($this->fp, 4)) {
             $this->infoArray['version id'] = $this->_getInteger(2);
             fseek($this->fp, 6, SEEK_CUR); // 6 bytes of 0's
-            $this->infoArray['channels']   = $this->_getInteger(2);
-            $this->infoArray['rows']       = $this->_getInteger(4);
-            $this->infoArray['columns']    = $this->_getInteger(4);
+            $this->infoArray['channels'] = $this->_getInteger(2);
+            $this->infoArray['rows'] = $this->_getInteger(4);
+            $this->infoArray['columns'] = $this->_getInteger(4);
             $this->infoArray['colorDepth'] = $this->_getInteger(2);
-            $this->infoArray['colorMode']  = $this->_getInteger(2);
+            $this->infoArray['colorMode'] = $this->_getInteger(2);
 
             /* COLOR MODE DATA SECTION */ //4bytes Length The length of the following color data.
             $this->infoArray['colorModeDataSectionLength'] = $this->_getInteger(4);
@@ -63,16 +63,18 @@ class PhpPsdReader
             fseek($this->fp, $this->infoArray['layerMaskDataSectionLength'], SEEK_CUR); // ignore this snizzle
 
             /*  IMAGE DATA */
-            $this->infoArray['compressionType']           = $this->_getInteger(2);
+            $this->infoArray['compressionType'] = $this->_getInteger(2);
             $this->infoArray['oneColorChannelPixelBytes'] = $this->infoArray['colorDepth'] / 8;
-            $this->colorBytesLength                       = $this->infoArray['rows'] * $this->infoArray['columns'] * $this->infoArray['oneColorChannelPixelBytes'];
+            $this->colorBytesLength = $this->infoArray['rows'] * $this->infoArray['columns'] * $this->infoArray['oneColorChannelPixelBytes'];
 
             if (2 == $this->infoArray['colorMode']) {
                 $this->infoArray['error'] = 'images with indexed colours are not supported yet';
+
                 return false;
             }
         } else {
             $this->infoArray['error'] = 'invalid or unsupported psd';
+
             return false;
         }
     }
@@ -89,13 +91,14 @@ class PhpPsdReader
                     $this->infoArray['scanLinesByteCounts'][] = $this->_getInteger(2);
                 }
                 $this->tempFileName = tempnam(realpath('/tmp'), 'decompressedImageData');
-                $tfp                = fopen($this->tempFileName, 'wb');
+                $tfp = fopen($this->tempFileName, 'wb');
                 foreach ($this->infoArray['scanLinesByteCounts'] as $scanLinesByteCount) {
                     fwrite($tfp, $this->_getPackedBitsDecoded(fread($this->fp, $scanLinesByteCount)));
                 }
                 fclose($tfp);
                 fclose($this->fp);
                 $this->fp = fopen($this->tempFileName, 'rb');
+                // no break
             default:
                 // continue with current file handle;
                 break;
@@ -128,14 +131,12 @@ class PhpPsdReader
                             $bitPointer = 0;
                         }
                         break;
-
                     case 1:
                     case 8: // 8 is indexed with 1 color..., so grayscale
                         $r = $g = $b = $this->_getInteger($this->infoArray['oneColorChannelPixelBytes']);
                         break;
-
                     case 4: // CMYK
-                        $c                 = $this->_getInteger($this->infoArray['oneColorChannelPixelBytes']);
+                        $c = $this->_getInteger($this->infoArray['oneColorChannelPixelBytes']);
                         $currentPointerPos = ftell($this->fp);
                         fseek($this->fp, $this->colorBytesLength - 1, SEEK_CUR);
                         $m = $this->_getInteger($this->infoArray['oneColorChannelPixelBytes']);
@@ -149,10 +150,9 @@ class PhpPsdReader
                         $b = round(($y * $k) / (pow(2, $this->infoArray['colorDepth']) - 1));
 
                         break;
-
                     case 9: // hunter Lab
                         // i still need an understandable lab2rgb convert algorithm... if you have one, please let me know!
-                        $l                 = $this->_getInteger($this->infoArray['oneColorChannelPixelBytes']);
+                        $l = $this->_getInteger($this->infoArray['oneColorChannelPixelBytes']);
                         $currentPointerPos = ftell($this->fp);
                         fseek($this->fp, $this->colorBytesLength - 1, SEEK_CUR);
                         $a = $this->_getInteger($this->infoArray['oneColorChannelPixelBytes']);
@@ -166,7 +166,7 @@ class PhpPsdReader
 
                         break;
                     default:
-                        $r                 = $this->_getInteger($this->infoArray['oneColorChannelPixelBytes']);
+                        $r = $this->_getInteger($this->infoArray['oneColorChannelPixelBytes']);
                         $currentPointerPos = ftell($this->fp);
                         fseek($this->fp, $this->colorBytesLength - 1, SEEK_CUR);
                         $g = $this->_getInteger($this->infoArray['oneColorChannelPixelBytes']);
@@ -194,16 +194,15 @@ class PhpPsdReader
         if (isset($this->tempFileName)) {
             unlink($this->tempFileName);
         }
+
         return $image;
     }
 
     /**
-     *
      * PRIVATE FUNCTIONS
      * @param $string
      * @return string
      */
-
     public function _getPackedBitsDecoded($string)
     {
         /*
@@ -222,7 +221,7 @@ class PhpPsdReader
         */
 
         $stringPointer = 0;
-        $returnString  = '';
+        $returnString = '';
 
         while (1) {
             if (isset($string[$stringPointer])) {
@@ -256,25 +255,22 @@ class PhpPsdReader
             case 1:
                 if ($int < 128) {
                     return $int;
-                } else {
-                    return -256 + $int;
                 }
-                break;
 
+                return -256 + $int;
+                break;
             case 2:
                 if ($int < 32768) {
                     return $int;
-                } else {
-                    return -65536 + $int;
                 }
 
+                return -65536 + $int;
             case 4:
                 if ($int < 2147483648) {
                     return $int;
-                } else {
-                    return -4294967296 + $int;
                 }
 
+                return -4294967296 + $int;
             default:
                 return $int;
         }
@@ -283,12 +279,13 @@ class PhpPsdReader
     public function _hexReverse($hex)
     {
         $output = '';
-        if (strlen($hex) % 2) {
+        if (mb_strlen($hex) % 2) {
             return false;
         }
-        for ($pointer = strlen($hex); $pointer >= 0; $pointer -= 2) {
-            $output .= substr($hex, $pointer, 2);
+        for ($pointer = mb_strlen($hex); $pointer >= 0; $pointer -= 2) {
+            $output .= mb_substr($hex, $pointer, 2);
         }
+
         return $output;
     }
 
@@ -299,11 +296,9 @@ class PhpPsdReader
                 // for some strange reason this is still broken...
                 return @reset(unpack('N', fread($this->fp, 4)));
                 break;
-
             case 2:
                 return @reset(unpack('n', fread($this->fp, 2)));
                 break;
-
             default:
                 return hexdec($this->_hexReverse(bin2hex(fread($this->fp, $byteCount))));
         }
@@ -316,13 +311,12 @@ class PhpPsdReader
  * @param string $fileName
  * @return image identifier
  */
-
 function imagecreatefrompsd($fileName)
 {
     $psdReader = new PhpPsdReader($fileName);
     if (isset($psdReader->infoArray['error'])) {
         return '';
-    } else {
-        return $psdReader->getImage();
     }
+
+    return $psdReader->getImage();
 }

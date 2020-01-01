@@ -6,24 +6,24 @@ if ('RESPONSIVEfilemanager' !== $_SESSION['verify']) {
 }
 include('include/utils.php');
 
-$storeFolder      = $_POST['path'];
+$storeFolder = $_POST['path'];
 $storeFolderThumb = $_POST['path_thumb'];
 
-$path_pos  = strpos($storeFolder, $current_path);
-$thumb_pos = strpos($_POST['path_thumb'], $thumbs_base_path);
+$path_pos = mb_strpos($storeFolder, $current_path);
+$thumb_pos = mb_strpos($_POST['path_thumb'], $thumbs_base_path);
 if (0 !== $path_pos
     || 0 !== $thumb_pos
-    || false !== strpos($storeFolderThumb, '../', strlen($thumbs_base_path))
-    || false !== strpos($storeFolderThumb, './', strlen($thumbs_base_path))
-    || false !== strpos($storeFolder, '../', strlen($current_path))
-    || false !== strpos($storeFolder, './', strlen($current_path))) {
+    || false !== mb_strpos($storeFolderThumb, '../', mb_strlen($thumbs_base_path))
+    || false !== mb_strpos($storeFolderThumb, './', mb_strlen($thumbs_base_path))
+    || false !== mb_strpos($storeFolder, '../', mb_strlen($current_path))
+    || false !== mb_strpos($storeFolder, './', mb_strlen($current_path))) {
     die('wrong path');
 }
 
-$path       = $storeFolder;
-$cycle      = true;
+$path = $storeFolder;
+$cycle = true;
 $max_cycles = 50;
-$i          = 0;
+$i = 0;
 while ($cycle && $i < $max_cycles) {
     ++$i;
     if ($path == $current_path) {
@@ -41,19 +41,19 @@ if (!empty($_FILES)) {
     if (in_array(fix_strtolower($info['extension']), $ext)) {
         $tempFile = $_FILES['file']['tmp_name'];
 
-        $targetPath             = $storeFolder;
-        $targetPathThumb        = $storeFolderThumb;
+        $targetPath = $storeFolder;
+        $targetPathThumb = $storeFolderThumb;
         $_FILES['file']['name'] = fix_filename($_FILES['file']['name'], $transliteration);
 
         if (file_exists($targetPath . $_FILES['file']['name'])) {
-            $i    = 1;
+            $i = 1;
             $info = pathinfo($_FILES['file']['name']);
             while (file_exists($targetPath . $info['filename'] . '_' . $i . '.' . $info['extension'])) {
                 ++$i;
             }
             $_FILES['file']['name'] = $info['filename'] . '_' . $i . '.' . $info['extension'];
         }
-        $targetFile      = $targetPath . $_FILES['file']['name'];
+        $targetFile = $targetPath . $_FILES['file']['name'];
         $targetFileThumb = $targetPathThumb . $_FILES['file']['name'];
 
         if (in_array(fix_strtolower($info['extension']), $ext_img)) {
@@ -90,14 +90,14 @@ if (!empty($_FILES)) {
                 )) {
                     $memory_error = false;
                 } else {
-                    $imginfo   = getimagesize($targetFile);
-                    $srcWidth  = $imginfo[0];
+                    $imginfo = getimagesize($targetFile);
+                    $srcWidth = $imginfo[0];
                     $srcHeight = $imginfo[1];
 
                     if ($image_resizing) {
                         if (0 == $image_resizing_width) {
                             if (0 == $image_resizing_height) {
-                                $image_resizing_width  = $srcWidth;
+                                $image_resizing_width = $srcWidth;
                                 $image_resizing_height = $srcHeight;
                             } else {
                                 $image_resizing_width = $image_resizing_height * $srcWidth / $srcHeight;
@@ -105,20 +105,20 @@ if (!empty($_FILES)) {
                         } elseif (0 == $image_resizing_height) {
                             $image_resizing_height = $image_resizing_width * $srcHeight / $srcWidth;
                         }
-                        $srcWidth  = $image_resizing_width;
+                        $srcWidth = $image_resizing_width;
                         $srcHeight = $image_resizing_height;
                         create_img_gd($targetFile, $targetFile, $image_resizing_width, $image_resizing_height);
                     }
                     //max resizing limit control
                     $resize = false;
                     if (0 != $image_max_width && $srcWidth > $image_max_width) {
-                        $resize    = true;
+                        $resize = true;
                         $srcHeight = $image_max_width * $srcHeight / $srcWidth;
-                        $srcWidth  = $image_max_width;
+                        $srcWidth = $image_max_width;
                     }
                     if (0 != $image_max_height && $srcHeight > $image_max_height) {
-                        $resize    = true;
-                        $srcWidth  = $image_max_height * $srcWidth / $srcHeight;
+                        $resize = true;
+                        $srcWidth = $image_max_height * $srcWidth / $srcHeight;
                         $srcHeight = $image_max_height;
                     }
                     if ($resize) {
@@ -144,11 +144,11 @@ if (!empty($_FILES)) {
 if (isset($_POST['submit'])) {
     $query = http_build_query(
         [
-            'type'     => $_POST['type'],
-            'lang'     => $_POST['lang'],
-            'popup'    => $_POST['popup'],
+            'type' => $_POST['type'],
+            'lang' => $_POST['lang'],
+            'popup' => $_POST['popup'],
             'field_id' => $_POST['field_id'],
-            'fldr'     => $_POST['fldr'],
+            'fldr' => $_POST['fldr'],
         ]
     );
     header('location: dialog.php?' . $query);

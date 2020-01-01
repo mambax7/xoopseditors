@@ -5,12 +5,12 @@ $current_path = __DIR__;
 if (DIRECTORY_SEPARATOR !== '/') {
     $current_path = str_replace(DIRECTORY_SEPARATOR, '/', $current_path);
 }
-$xoops_root_path = substr($current_path, 0, strpos(strtolower($current_path), '/class/xoopseditor/tinymce4bootstrap/'));
+$xoops_root_path = mb_substr($current_path, 0, mb_strpos(mb_strtolower($current_path), '/class/xoopseditor/tinymce4bootstrap/'));
 include_once $xoops_root_path . '/mainfile.php';
 
-$chemin_array  = parse_url(XOOPS_URL);
+$chemin_array = parse_url(XOOPS_URL);
 $chemin_scheme = $chemin_array['scheme']; // http
-$chemin_host   = $chemin_array['host']; // www.example.com  or // localhost
+$chemin_host = $chemin_array['host']; // www.example.com  or // localhost
 //  $chemin_path =  $chemin_array["path"]; // /myweb1
 if (!isset($chemin_array['path'])) {
     $chemin_path = '';
@@ -66,11 +66,11 @@ $thumbs_base_path = '../../../../../uploads/filemanager/thumbs/'; // relative pa
 $MaxSizeUpload = 100; //Mb
 
 $default_language = 'en_EN'; //default language file name
-$icon_theme       = 'ico'; //ico or ico_dark you can cusatomize just putting a folder inside filemanager/img
+$icon_theme = 'ico'; //ico or ico_dark you can cusatomize just putting a folder inside filemanager/img
 $show_folder_size = true; //Show or not show folder size in list view feature in filemanager (is possible, if there is a large folder, to greatly increase the calculations)
 $show_sorting_bar = true; //Show or not show sorting feature in filemanager
-$loading_bar      = true; //Show or not show loading bar
-$transliteration  = false; //active or deactive the transliteration (mean convert all strange characters in A..Za..z0..9 characters)
+$loading_bar = true; //Show or not show loading bar
+$transliteration = false; //active or deactive the transliteration (mean convert all strange characters in A..Za..z0..9 characters)
 
 //*******************************************
 //Images limit and resizing configuration
@@ -79,15 +79,15 @@ $transliteration  = false; //active or deactive the transliteration (mean conver
 // set maximum pixel width and/or maximum pixel height for all images
 // If you set a maximum width or height, oversized images are converted to those limits. Images smaller than the limit(s) are unaffected
 // if you don't need a limit set both to 0
-$image_max_width  = 0;
+$image_max_width = 0;
 $image_max_height = 0;
 
 //Automatic resizing //
 // If you set $image_resizing to true the script converts all uploaded images exactly to image_resizing_width x image_resizing_height dimension
 // If you set width or height to 0 the script automatically calculates the other dimension
 // Is possible that if you upload very big images the script not work to overcome this increase the php configuration of memory and time limit
-$image_resizing        = false;
-$image_resizing_width  = 0;
+$image_resizing = false;
+$image_resizing_width = 0;
 $image_resizing_height = 0;
 
 //******************
@@ -107,12 +107,12 @@ $ellipsis_title_after_first_row = true;
 //*************************
 //Permissions configuration
 //******************
-$delete_files    = true;
-$create_folders  = false;
-$delete_folders  = false;
-$upload_files    = false;
-$rename_files    = false;
-$rename_folders  = false;
+$delete_files = true;
+$create_folders = false;
+$delete_folders = false;
+$upload_files = false;
+$rename_files = false;
+$rename_folders = false;
 $duplicate_files = false;
 
 // XOOPS
@@ -121,10 +121,10 @@ global $xoopsUser;
 // 2 : members
 // 3 : anonymous
 // 4 : your new group
-$allowed_groups_upload       = [1]; // id des groupes autoris?s en upload
+$allowed_groups_upload = [1]; // id des groupes autoris?s en upload
 $allowed_groups_createfolder = [1]; // id des groupes autoris?s create folder
 if ($xoopsUser) {
-    $usergroups    = $GLOBALS['xoopsUser']->getGroups();
+    $usergroups = $GLOBALS['xoopsUser']->getGroups();
     $result_upload = array_intersect($usergroups, $allowed_groups_upload);
     if ($result_upload || null != $result_upload) {
         $upload_files = true;
@@ -139,21 +139,21 @@ if ($xoopsUser) {
 //**********************
 //Allowed extensions (lowercase insert)
 //**********************
-$ext_img   = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'tiff', 'svg']; //Images
-$ext_file  = ['doc', 'docx', 'rtf', 'pdf', 'xls', 'xlsx', 'txt', 'csv', 'html', 'xhtml', 'psd', 'sql', 'log', 'fla', 'xml', 'ade', 'adp', 'mdb', 'accdb', 'ppt', 'pptx', 'odt', 'ots', 'ott', 'odb', 'odg', 'otp', 'otg', 'odf', 'ods', 'odp', 'css', 'ai']; //Files
+$ext_img = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'tiff', 'svg']; //Images
+$ext_file = ['doc', 'docx', 'rtf', 'pdf', 'xls', 'xlsx', 'txt', 'csv', 'html', 'xhtml', 'psd', 'sql', 'log', 'fla', 'xml', 'ade', 'adp', 'mdb', 'accdb', 'ppt', 'pptx', 'odt', 'ots', 'ott', 'odb', 'odg', 'otp', 'otg', 'odf', 'ods', 'odp', 'css', 'ai']; //Files
 $ext_video = ['mov', 'mpeg', 'mp4', 'avi', 'mpg', 'wma', 'flv', 'webm']; //Video
 $ext_music = ['mp3', 'm4a', 'ac3', 'aiff', 'mid', 'ogg', 'wav']; //Audio
-$ext_misc  = ['zip', 'rar', 'gz', 'tar', 'iso', 'dmg']; //Archives
+$ext_misc = ['zip', 'rar', 'gz', 'tar', 'iso', 'dmg']; //Archives
 
 $ext = array_merge($ext_img, $ext_file, $ext_misc, $ext_video, $ext_music); //allowed extensions
 
 /******************
  * AVIARY config
  *******************/
-$aviary_active   = true;
-$aviary_key      = 'dvh8qudbp6yx2bnp';
-$aviary_secret   = 'm6xaym5q42rpw433';
-$aviary_version  = 3;
+$aviary_active = true;
+$aviary_key = 'dvh8qudbp6yx2bnp';
+$aviary_secret = 'm6xaym5q42rpw433';
+$aviary_version = 3;
 $aviary_language = 'en';
 
 //The filter and sorter are managed through both javascript and php scripts because if you have a lot of
@@ -175,7 +175,7 @@ $hidden_files = ['index.html'];
 /*******************
  * JAVA upload
  *******************/
-$java_upload       = true;
+$java_upload = true;
 $JAVAMaxSizeUpload = 200; //Gb
 
 //************************************
@@ -188,20 +188,20 @@ $JAVAMaxSizeUpload = 200; //Gb
 // Remember than the image creation respect the folder hierarchy so if you are inside source/test/test1/ the new image will create at
 // path_from_filemanager/test/test1/
 // PS if there isn't write permission in your destination folder you must set it
-$fixed_image_creation                 = false; //activate or not the creation of one or more image resized with fixed path from filemanager folder
-$fixed_path_from_filemanager          = ['../test/', '../test1/']; //fixed path of the image folder from the current position on upload folder
+$fixed_image_creation = false; //activate or not the creation of one or more image resized with fixed path from filemanager folder
+$fixed_path_from_filemanager = ['../test/', '../test1/']; //fixed path of the image folder from the current position on upload folder
 $fixed_image_creation_name_to_prepend = ['', 'test_']; //name to prepend on filename
-$fixed_image_creation_to_append       = ['_test', '']; //name to appendon filename
-$fixed_image_creation_width           = [300, 400]; //width of image (you can leave empty if you set height)
-$fixed_image_creation_height          = [200, '']; //height of image (you can leave empty if you set width)
+$fixed_image_creation_to_append = ['_test', '']; //name to appendon filename
+$fixed_image_creation_width = [300, 400]; //width of image (you can leave empty if you set height)
+$fixed_image_creation_height = [200, '']; //height of image (you can leave empty if you set width)
 
 // New image resized creation with relative path inside to upload folder after uploading (thumbnails in relative mode)
 // With Responsive filemanager you can create automatically resized image inside the upload folder, also more than one at a time
 // just simply add a value in the array
 // The image creation path is always relative so if i'm inside source/test/test1 and I upload an image, the path start from here
-$relative_image_creation                 = false; //activate or not the creation of one or more image resized with relative path from upload folder
-$relative_path_from_current_pos          = ['thumb/', 'thumb/']; //relative path of the image folder from the current position on upload folder
+$relative_image_creation = false; //activate or not the creation of one or more image resized with relative path from upload folder
+$relative_path_from_current_pos = ['thumb/', 'thumb/']; //relative path of the image folder from the current position on upload folder
 $relative_image_creation_name_to_prepend = ['', 'test_']; //name to prepend on filename
-$relative_image_creation_name_to_append  = ['_test', '']; //name to append on filename
-$relative_image_creation_width           = [300, 400]; //width of image (you can leave empty if you set height)
-$relative_image_creation_height          = [200, '']; //height of image (you can leave empty if you set width)
+$relative_image_creation_name_to_append = ['_test', '']; //name to append on filename
+$relative_image_creation_width = [300, 400]; //width of image (you can leave empty if you set height)
+$relative_image_creation_height = [200, '']; //height of image (you can leave empty if you set width)

@@ -7,6 +7,7 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
+
 /**
  *  TinyMCE 4.x settings for XOOPS
  *
@@ -31,7 +32,6 @@ return [
     // "skin_url"       => "/class/xoopseditor/tinymce4bootstrap/external_skins/tundora",
     // "skin_url"       => "/class/xoopseditor/tinymce4bootstrap/external_skins/tundora",
     // "skin_url"       => "/class/xoopseditor/tinymce4bootstrap/external_skins/xenmce",
-
 
     // language code of the default language pack to use with TinyMCE. These codes are in ISO-639-1 format
     'language'               => 'en',
@@ -60,7 +60,6 @@ return [
 
     // Display or not the menu bar"
     'menubar'                => true,
-
 
     // load plugins
     'plugins'                => 'advlist,autolink,lists,link,image,preview,hr,anchor,'

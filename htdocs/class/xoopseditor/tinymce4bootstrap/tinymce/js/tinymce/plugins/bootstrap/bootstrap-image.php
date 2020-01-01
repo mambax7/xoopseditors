@@ -4,10 +4,10 @@ include_once('conf/conf.php');
 
 /* images path for file browser */
 
-$get_path     = parse_url($_GET['images_path']);
-$img_dir      = $get_path['path']; // ex : '/dir/img/' with or without slashes
+$get_path = parse_url($_GET['images_path']);
+$img_dir = $get_path['path']; // ex : '/dir/img/' with or without slashes
 $current_path = parse_url($_SERVER['HTTP_REFERER']);
-$img_path     = ''; // default
+$img_path = ''; // default
 if (preg_match('`^/`', $img_dir)) { // absolute url sended
     $img_path = $img_dir;
     if (!preg_match('`/$`', $img_dir)) { // add final slash if needed
@@ -22,21 +22,21 @@ if (!is_file($root . $img_path . 'secure.php')) {
 }
 
 if (isset($_GET['imgSrc'])) {
-    $imgSrc        = preg_replace('/\r|\n/', '', urldecode($_GET['imgSrc']));
-    $imgAlt        = preg_replace('/\r|\n/', '', urldecode($_GET['imgAlt']));
-    $imgWidth      = preg_replace('/\r|\n/', '', urldecode($_GET['imgWidth']));
-    $imgHeight     = preg_replace('/\r|\n/', '', urldecode($_GET['imgHeight']));
-    $imgStyle      = preg_replace('/\r|\n/', '', urldecode($_GET['imgStyle']));
+    $imgSrc = preg_replace('/\r|\n/', '', urldecode($_GET['imgSrc']));
+    $imgAlt = preg_replace('/\r|\n/', '', urldecode($_GET['imgAlt']));
+    $imgWidth = preg_replace('/\r|\n/', '', urldecode($_GET['imgWidth']));
+    $imgHeight = preg_replace('/\r|\n/', '', urldecode($_GET['imgHeight']));
+    $imgStyle = preg_replace('/\r|\n/', '', urldecode($_GET['imgStyle']));
     $imgResponsive = preg_replace('/\r|\n/', '', urldecode($_GET['imgResponsive']));
-    $imgCode       = build_image();
+    $imgCode = build_image();
 } else {
-    $imgSrc        = str_replace('bootstrap-image.php', '', $_SERVER['SCRIPT_NAME']) . 'img/tinymce-bootstrap-plugin-small-preview.png';
-    $imgAlt        = '';
-    $imgWidth      = '';
-    $imgHeight     = '';
-    $imgStyle      = '';
+    $imgSrc = str_replace('bootstrap-image.php', '', $_SERVER['SCRIPT_NAME']) . 'img/tinymce-bootstrap-plugin-small-preview.png';
+    $imgAlt = '';
+    $imgWidth = '';
+    $imgHeight = '';
+    $imgStyle = '';
     $imgResponsive = 'true';
-    $imgCode       = build_image();
+    $imgCode = build_image();
 }
 
 function build_image()
@@ -49,7 +49,7 @@ function build_image()
     global $imgResponsive;
     if (@getimagesize($imgSrc) || @getimagesize($_SERVER['DOCUMENT_ROOT'] . $imgSrc)) {
         $info = new SplFileInfo($imgSrc);
-        if (preg_match('`jpg|jpeg|png|gif`', strtolower($info))) {
+        if (preg_match('`jpg|jpeg|png|gif`', mb_strtolower($info))) {
             $img = '<img src="' . $imgSrc . '"';
             if (!empty($imgWidth)) {
                 $img .= ' width="' . $imgWidth . '"';

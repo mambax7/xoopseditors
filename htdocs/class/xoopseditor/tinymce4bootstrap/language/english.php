@@ -10,16 +10,17 @@
  * @author      Taiwen Jiang <phppp@users.sourceforge.net>
  * @version     $Id: english.php 10054 2012-08-11 10:06:44Z beckmi $
  */
+
 /*
  * Assocated with editor_registry.php
  */
 // Name of the editor
-define('_XOOPS_EDITOR_TINYMCE4', 'TinyMCE4bootstrap');
+define('_XOOPS_EDITOR_TINYMCE4B', 'TinyMCE4Bootstrap');
 // The value must be the same as /tinymce/jscripts/langs/your_language_code, for example, "en" for English, "fr" for French
 // For details, check http://tinymce.moxiecode.com/download_i18n.php
-define('_XOOPS_EDITOR_TINYMCE4_LANGUAGE', 'en');
+define('_XOOPS_EDITOR_TINYMCE4B_LANGUAGE', 'en');
 // FONT LIST, FORMAT: "Name=value1,value2;Name=value"
 define(
-    '_XOOPS_EDITOR_TINYMCE4_FONTS',
+    '_XOOPS_EDITOR_TINYMCE4B_FONTS',
     'Arial=arial,helvetica,sans-serif;Courier New=courier new,courier,monospace;Georgia=georgia,times new roman,times,serif;Tahoma=tahoma,arial,helvetica,sans-serif;Times New Roman=times new roman,times,serif;Verdana=verdana,arial,helvetica,sans-serif;Impact=impact;WingDings=wingdings'
 );

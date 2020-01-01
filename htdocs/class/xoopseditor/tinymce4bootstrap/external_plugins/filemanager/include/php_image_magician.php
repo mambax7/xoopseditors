@@ -1,124 +1,124 @@
 <?php
-     # ========================================================================#
-     #
-     #  This work is licensed under the Creative Commons Attribution 3.0 Unported
-     #  License. To view a copy of this license,
-     #  visit http://creativecommons.org/licenses/by/3.0/ or send a letter to
-     #  Creative Commons, 444 Castro Street, Suite 900, Mountain View, California,
-     #  94041, USA.
-     #
-     #  All rights reserved.
-     #
-     #  Author:    Jarrod Oberto
-     #  Version:   1.5.2
-     #  Purpose:   Provide tools for image manipulation using GD
-     #  Param In:  See functions.
-     #  Param Out: Produces a resized image
-     #  Requires : Requires PHP GD library.
-     #  Usage Example:
-     #                     include("lib/php_image_magician.php");
-     #                     $magicianObj = new imageLib('images/car.jpg');
-     #                     $magicianObj -> resizeImage(150, 100, 0);
-     #                     $magicianObj -> saveImage('images/car_small.jpg', 100);
-     #
-     #        - See end of doc for more examples -
-     #
-     #  Supported file types include: jpg, png, gif, bmp, psd (read)
-     #
-     #
-     #
-     #  The following functions are taken from phpThumb() [available from
-     #    http://phpthumb.sourceforge.net], and are used with written permission
-     #  from James Heinrich.
-     #    - GD2BMPstring
-     #      - GetPixelColor
-     #      - LittleEndian2String
-     #
-     #  The following functions are from Marc Hibbins and are used with written
-     #  permission (are also under the Attribution-ShareAlike
-     #  [http://creativecommons.org/licenses/by-sa/3.0/] license.
-     #    -
-     #
-     #  PhpPsdReader is used with written permission from Tim de Koning.
-     #  [http://www.kingsquare.nl/phppsdreader]
-     #
-     #
-     #
-     #  Known issues & Limitations:
-     # -------------------------------
-     #  Not so much an issue, the image is destroyed on the deconstruct rather than
-     #  when we have finished with it. The reason for this is that we don't know
-     #  when we're finished with it as you can both save the image and display
-     #  it directly to the screen (imagedestroy($this->imageResized))
-     #
-     #  Opening BMP files is slow. A test with 884 bmp files processed in a loop
-     #  takes forever - over 5 min. This test inlcuded opening the file, then
-     #  getting and displaying its width and height.
-     #
-     #  $forceStretch:
-     # -------------------------------
-     #  On by default.
-     #  $forceStretch can be disabled by calling method setForceStretch with false
-     #  parameter. If disabled, if an images original size is smaller than the size
-     #  specified by the user, the original size will be used. This is useful when
-     #  dealing with small images.
-     #
-     #  If enabled, images smaller than the size specified will be stretched to
-     #  that size.
-     #
-     #  Tips:
-     # -------------------------------
-     #  * If you're resizing a transparent png and saving it as a jpg, set
-     #  $keepTransparency to false with: $magicianObj->setTransparency(false);
-     #
-     #  FEATURES:
-     #    * EASY TO USE
-     #    * BMP SUPPORT (read & write)
-     #    * PSD (photoshop) support (read)
-     #    * RESIZE IMAGES
-     #      - Preserve transparency (png, gif)
-     #      - Apply sharpening (jpg) (requires PHP >= 5.1.0)
-     #      - Set image quality (jpg, png)
-     #      - Resize modes:
-     #        - exact size
-     #        - resize by width (auto height)
-     #        - resize by height (auto width)
-     #        - auto (automatically determine the best of the above modes to use)
-     #        - crop - resize as best as it can then crop the rest
-     #      - Force stretching of smaller images (upscale)
-     #    * APPLY FILTERS
-     #      - Convert to grey scale
-     #      - Convert to black and white
-     #      - Convert to sepia
-     #      - Convert to negative
-     #    * ROTATE IMAGES
-     #      - Rotate using predefined "left", "right", or "180"; or any custom degree amount
-     #    * EXTRACT EXIF DATA (requires exif module)
-     #      - make
-     #      - model
-     #      - date
-     #      - exposure
-     #      - aperture
-     #      - f-stop
-     #      - iso
-     #      - focal length
-     #      - exposure program
-     #      - metering mode
-     #      - flash status
-     #      - creator
-     #      - copyright
-     #    * ADD WATERMARK
-     #      - Specify exact x, y placement
-     #      - Or, specify using one of the 9 pre-defined placements such as "tl"
-     #        (for top left), "m" (for middle), "br" (for bottom right)
-     #        - also specify padding from edge amount (optional).
-     #      - Set opacity of watermark (png).
-     #    * ADD BORDER
-     #    * USE HEX WHEN SPECIFYING COLORS (eg: #ffffff)
-     #    * SAVE IMAGE OR OUTPUT TO SCREEN
-     #
-     #
-     # ========================================================================#
+# ========================================================================#
+#
+#  This work is licensed under the Creative Commons Attribution 3.0 Unported
+#  License. To view a copy of this license,
+#  visit http://creativecommons.org/licenses/by/3.0/ or send a letter to
+#  Creative Commons, 444 Castro Street, Suite 900, Mountain View, California,
+#  94041, USA.
+#
+#  All rights reserved.
+#
+#  Author:    Jarrod Oberto
+#  Version:   1.5.2
+#  Purpose:   Provide tools for image manipulation using GD
+#  Param In:  See functions.
+#  Param Out: Produces a resized image
+#  Requires : Requires PHP GD library.
+#  Usage Example:
+#                     include("lib/php_image_magician.php");
+#                     $magicianObj = new imageLib('images/car.jpg');
+#                     $magicianObj -> resizeImage(150, 100, 0);
+#                     $magicianObj -> saveImage('images/car_small.jpg', 100);
+#
+#        - See end of doc for more examples -
+#
+#  Supported file types include: jpg, png, gif, bmp, psd (read)
+#
+#
+#
+#  The following functions are taken from phpThumb() [available from
+#    http://phpthumb.sourceforge.net], and are used with written permission
+#  from James Heinrich.
+#    - GD2BMPstring
+#      - GetPixelColor
+#      - LittleEndian2String
+#
+#  The following functions are from Marc Hibbins and are used with written
+#  permission (are also under the Attribution-ShareAlike
+#  [http://creativecommons.org/licenses/by-sa/3.0/] license.
+#    -
+#
+#  PhpPsdReader is used with written permission from Tim de Koning.
+#  [http://www.kingsquare.nl/phppsdreader]
+#
+#
+#
+#  Known issues & Limitations:
+# -------------------------------
+#  Not so much an issue, the image is destroyed on the deconstruct rather than
+#  when we have finished with it. The reason for this is that we don't know
+#  when we're finished with it as you can both save the image and display
+#  it directly to the screen (imagedestroy($this->imageResized))
+#
+#  Opening BMP files is slow. A test with 884 bmp files processed in a loop
+#  takes forever - over 5 min. This test inlcuded opening the file, then
+#  getting and displaying its width and height.
+#
+#  $forceStretch:
+# -------------------------------
+#  On by default.
+#  $forceStretch can be disabled by calling method setForceStretch with false
+#  parameter. If disabled, if an images original size is smaller than the size
+#  specified by the user, the original size will be used. This is useful when
+#  dealing with small images.
+#
+#  If enabled, images smaller than the size specified will be stretched to
+#  that size.
+#
+#  Tips:
+# -------------------------------
+#  * If you're resizing a transparent png and saving it as a jpg, set
+#  $keepTransparency to false with: $magicianObj->setTransparency(false);
+#
+#  FEATURES:
+#    * EASY TO USE
+#    * BMP SUPPORT (read & write)
+#    * PSD (photoshop) support (read)
+#    * RESIZE IMAGES
+#      - Preserve transparency (png, gif)
+#      - Apply sharpening (jpg) (requires PHP >= 5.1.0)
+#      - Set image quality (jpg, png)
+#      - Resize modes:
+#        - exact size
+#        - resize by width (auto height)
+#        - resize by height (auto width)
+#        - auto (automatically determine the best of the above modes to use)
+#        - crop - resize as best as it can then crop the rest
+#      - Force stretching of smaller images (upscale)
+#    * APPLY FILTERS
+#      - Convert to grey scale
+#      - Convert to black and white
+#      - Convert to sepia
+#      - Convert to negative
+#    * ROTATE IMAGES
+#      - Rotate using predefined "left", "right", or "180"; or any custom degree amount
+#    * EXTRACT EXIF DATA (requires exif module)
+#      - make
+#      - model
+#      - date
+#      - exposure
+#      - aperture
+#      - f-stop
+#      - iso
+#      - focal length
+#      - exposure program
+#      - metering mode
+#      - flash status
+#      - creator
+#      - copyright
+#    * ADD WATERMARK
+#      - Specify exact x, y placement
+#      - Or, specify using one of the 9 pre-defined placements such as "tl"
+#        (for top left), "m" (for middle), "br" (for bottom right)
+#        - also specify padding from edge amount (optional).
+#      - Set opacity of watermark (png).
+#    * ADD BORDER
+#    * USE HEX WHEN SPECIFYING COLORS (eg: #ffffff)
+#    * SAVE IMAGE OR OUTPUT TO SCREEN
+#
+#
+# ========================================================================#
 
 class imageLib
 {
@@ -2160,7 +2160,7 @@ class imageLib
             $stamp = $this->openImage($watermarkImage);
         } catch (Exception $e) {
         }    # stamp
-        $im    = $this->imageResized;            # photo
+        $im = $this->imageResized;            # photo
 
         // *** Get stamps width and height
         $sx = imagesx($stamp);

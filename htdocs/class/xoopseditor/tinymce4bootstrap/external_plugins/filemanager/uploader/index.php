@@ -12,10 +12,10 @@ if ('RESPONSIVEfilemanager' !== $_SESSION['verify']) {
 include 'jupload.php';
 include '../include/utils.php';
 
-$path       = $current_path . $_GET['path'];
-$cycle      = true;
+$path = $current_path . $_GET['path'];
+$cycle = true;
 $max_cycles = 50;
-$i          = 0;
+$i = 0;
 while ($cycle && $i < $max_cycles) {
     ++$i;
     if ($path == $current_path) {
@@ -31,8 +31,8 @@ while ($cycle && $i < $max_cycles) {
 
 $path = '../' . $current_path . $_GET['path'];
 
-if (false !== strpos($_GET['path'], '../') || false !== strpos($_GET['path'], './') || 0 === strpos($_GET['path'], '/')) {
-    die ('path error');
+if (false !== mb_strpos($_GET['path'], '../') || false !== mb_strpos($_GET['path'], './') || 0 === mb_strpos($_GET['path'], '/')) {
+    die('path error');
 }
 
 $path = str_replace(' ', '~', $path);
@@ -71,29 +71,29 @@ function handle_uploaded_files($juploadPhpSupportClass, $files)
 //
 $appletParameters = [
     //Default value is ... maximum size for a file on the current FS. 2G is problably too much already.
-    'maxFileSize'           => $JAVAMaxSizeUpload . 'G',
+    'maxFileSize' => $JAVAMaxSizeUpload . 'G',
     //
     //In the sourceforge project structure, the applet jar file is one folder below. Default
     //configuration is ok, if wjhk.jupload.jar is in the same folder as the script containing this call.
-    'archive'               => 'wjhk.jupload.jar',
-    'showLogWindow'         => 'false',
-    'width'                 => '100%',
-    'height'                => '358px',
-    'name'                  => 'No limit Uploader',
+    'archive' => 'wjhk.jupload.jar',
+    'showLogWindow' => 'false',
+    'width' => '100%',
+    'height' => '358px',
+    'name' => 'No limit Uploader',
     'allowedFileExtensions' => implode('/', $ext),
     //To manage, other jar files, like the ftp jar files if postURL is an FTP URL:
     //'archive' => 'wjhk.jupload.jar,jakarta-commons-oro.jar,jakarta-commons-net.jar',
     //
     //Default afterUploadURL displays the list of uploaded files above the applet (in the <!--JUPLOAD_FILES--> markers, see below)
     //You can use any page you want, to manage the uploaded files. Here is a sample, that also only shows the list of files.
-    'afterUploadURL'        => 'success.php?path=' . $_GET['path'],
+    'afterUploadURL' => 'success.php?path=' . $_GET['path'],
     //
     //This demo expects the md5sum to be sent by the applet. But the parameter is not mandatory
     //This value should be set to false (or the line commented), for big files, as md5 calculation
     //may be long  (Note this must be string and *not* boolean true/false)
-    'sendMD5Sum'            => 'false',
-    //
-    'debugLevel'            => 0 // 100 disables redirect after upload, so we keep it below. This still gives a lot of information, in case of problem.
+    'sendMD5Sum' => 'false',
+
+    'debugLevel' => 0, // 100 disables redirect after upload, so we keep it below. This still gives a lot of information, in case of problem.
 ];
 
 // for htaccess protected folders
@@ -105,7 +105,7 @@ if ((isset($_SERVER['PHP_AUTH_USER']) && '' != $_SERVER['PHP_AUTH_USER']) && '' 
 //Then: the jupload PHP class parameters
 $classParameters = [
     //Files won't be stored on the server. Useful for first tests of the applet behavior ... and sourceforge demo site !
-    'demo_mode'     => false,
+    'demo_mode' => false,
     //
     //Allow creation of subdirectories, when uploading several folders/files (drag and drop a folder on the applet to use it).
     'allow_subdirs' => true,
@@ -115,7 +115,7 @@ $classParameters = [
     //'callbackAfterUploadManagement' => 'handle_uploaded_files',
     //
     //I work on windows. The default configuration is /var/tmp/jupload_test
-    'destdir'       => $path  //Where to store the files on the web
+    'destdir' => $path, //Where to store the files on the web
     //'errormail' => 'me@my.domain.org',
 ];
 

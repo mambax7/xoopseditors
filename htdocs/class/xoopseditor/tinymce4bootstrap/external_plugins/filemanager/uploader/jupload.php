@@ -49,12 +49,9 @@
  *
  *      Note: if you are using a callback function (i.e. callbackAfterUploadManagement) and you do not see a global 'object' you
  *                  are expecting then it might have been destroyed by PHP - c.f. http://bugs.php.net/bug.php?id=39693
- *
  */
-
 class JUpload
 {
-
     public $appletparams;
     public $classparams;
     public $files;
@@ -106,15 +103,15 @@ class JUpload
         $appletparams['stringUploadSuccess'] = 'SUCCESS';
         //if (!isset($appletparams['stringUploadError']))
         $appletparams['stringUploadError'] = 'ERROR: (.*)';
-        $maxpost                           = $this->tobytes(ini_get('post_max_size'));
-        $maxmem                            = $this->tobytes(ini_get('memory_limit'));
-        $maxfs                             = $this->tobytes(ini_get('upload_max_filesize'));
-        $obd                               = ini_get('open_basedir');
+        $maxpost = $this->tobytes(ini_get('post_max_size'));
+        $maxmem = $this->tobytes(ini_get('memory_limit'));
+        $maxfs = $this->tobytes(ini_get('upload_max_filesize'));
+        $obd = ini_get('open_basedir');
         if (!isset($appletparams['maxChunkSize'])) {
-            $maxchunk                     = ($maxpost < $maxmem) ? $maxpost : $maxmem;
-            $maxchunk                     = ($maxchunk < $maxfs) ? $maxchunk : $maxfs;
-            $maxchunk                     /= 4;
-            $optchunk                     = (500000 > $maxchunk) ? $maxchunk : 500000;
+            $maxchunk = ($maxpost < $maxmem) ? $maxpost : $maxmem;
+            $maxchunk = ($maxchunk < $maxfs) ? $maxchunk : $maxfs;
+            $maxchunk /= 4;
+            $optchunk = ($maxchunk < 500000) ? $maxchunk : 500000;
             $appletparams['maxChunkSize'] = $optchunk;
         }
         $appletparams['maxChunkSize'] = $this->tobytes($appletparams['maxChunkSize']);
@@ -131,25 +128,21 @@ class JUpload
             $classparams['demo_mode'] = false;
         }
         if ($classparams['demo_mode']) {
-            $classparams['create_destdir']  = false;
-            $classparams['allow_subdirs']   = true;
+            $classparams['create_destdir'] = false;
+            $classparams['allow_subdirs'] = true;
             $classparams['allow_zerosized'] = true;
-            $classparams['duplicate']       = 'overwrite';
+            $classparams['duplicate'] = 'overwrite';
         }
-        if (!isset($classparams['debug_php']))                                            // set true to log some messages in PHP log
-        {
+        if (!isset($classparams['debug_php'])) {                                            // set true to log some messages in PHP log
             $classparams['debug_php'] = false;
         }
-        if (!isset($this->classparams['allowed_mime_types']))                // array of allowed MIME type
-        {
+        if (!isset($this->classparams['allowed_mime_types'])) {                // array of allowed MIME type
             $classparams['allowed_mime_types'] = 'all';
         }
-        if (!isset($this->classparams['allowed_file_extensions']))    // array of allowed file extensions
-        {
+        if (!isset($this->classparams['allowed_file_extensions'])) {    // array of allowed file extensions
             $classparams['allowed_file_extensions'] = 'all';
         }
-        if (!isset($classparams['verbose_errors']))                        // shouldn't display server info on a production site!
-        {
+        if (!isset($classparams['verbose_errors'])) {                        // shouldn't display server info on a production site!
             $classparams['verbose_errors'] = true;
         }
         if (!isset($classparams['session_regenerate'])) {
@@ -228,7 +221,7 @@ class JUpload
         }
 
         $this->appletparams = $appletparams;
-        $this->classparams  = $classparams;
+        $this->classparams = $classparams;
         $this->page_start();
     }
 
@@ -292,13 +285,15 @@ class JUpload
      */
     private function tobytes($val)
     {
-        $val  = trim($val);
-        $last = fix_strtolower($val{strlen($val) - 1});
+        $val = trim($val);
+        $last = fix_strtolower($val[mb_strlen($val) - 1]);
         switch ($last) {
             case 'g':
                 $val *= 1024;
+                // no break
             case 'm':
                 $val *= 1024;
+                // no break
             case 'k':
                 $val *= 1024;
         }
@@ -319,16 +314,16 @@ class JUpload
      */
     private function str_jsinit()
     {
-        $N    = "\n";
+        $N = "\n";
         $name = $this->appletparams['name'];
-        $ret  = '<script type="text/javascript">' . $N;
-        $ret  .= '<!--' . $N;
-        $ret  .= 'function ' . $this->classparams['jscript_wrapper'] . '(name, value) {' . $N;
-        $ret  .= '  document.applets["' . $name . '"] == null || document.applets["' . $name . '"].setProperty(name,value);' . $N;
-        $ret  .= '  document.embeds["' . $name . '"] == null || document.embeds["' . $name . '"].setProperty(name,value);' . $N;
-        $ret  .= '}' . $N;
-        $ret  .= '//-->' . $N;
-        $ret  .= '</script>';
+        $ret = '<script type="text/javascript">' . $N;
+        $ret .= '<!--' . $N;
+        $ret .= 'function ' . $this->classparams['jscript_wrapper'] . '(name, value) {' . $N;
+        $ret .= '  document.applets["' . $name . '"] == null || document.applets["' . $name . '"].setProperty(name,value);' . $N;
+        $ret .= '  document.embeds["' . $name . '"] == null || document.embeds["' . $name . '"].setProperty(name,value);' . $N;
+        $ret .= '}' . $N;
+        $ret .= '//-->' . $N;
+        $ret .= '</script>';
 
         return $ret;
     }
@@ -340,7 +335,7 @@ class JUpload
      */
     private function str_applet()
     {
-        $N      = "\n";
+        $N = "\n";
         $params = $this->appletparams;
         // return the actual applet tag
         $ret = '<object classid = "clsid:8AD9C840-044E-11D1-B3E9-00805F499D93"' . $N;
@@ -402,8 +397,6 @@ class JUpload
         @unlink($this->classparams['destdir'] . '/' . $this->classparams['tmp_prefix'] . 'tmp' . session_id());
         // reset session var
         $_SESSION[$this->classparams['var_prefix'] . 'size'] = 0;
-
-        return;
     }
 
     private function mkdirp($path)
@@ -468,11 +461,11 @@ class JUpload
             if ('rename' === $this->classparams['duplicate']) {
                 $cnt = 1;
                 $dir = $this->classparams['destdir'] . '/' . $subdir;
-                $ext = strrchr($name, '.');
+                $ext = mb_strrchr($name, '.');
                 if ($ext) {
-                    $nameWithoutExtension = substr($name, 0, strlen($name) - strlen($ext));
+                    $nameWithoutExtension = mb_substr($name, 0, mb_strlen($name) - mb_strlen($ext));
                 } else {
-                    $ext                  = '';
+                    $ext = '';
                     $nameWithoutExtension = $name;
                 }
 
@@ -483,7 +476,7 @@ class JUpload
                 }
                 //We store the result name in the byReference name parameter.
                 $name = $nameWithoutExtension . '_' . $cnt . $ext;
-                $ret  = $rtry;
+                $ret = $rtry;
             }
         }
 
@@ -492,7 +485,6 @@ class JUpload
 
     /**
      * Example function to process the files uploaded.  This one simply displays the files' data.
-     *
      */
     public function defaultAfterUploadManagement()
     {
@@ -645,10 +637,10 @@ class JUpload
             if (isset($files_data)) {
                 unset($files_data);
             }
-            $jupart    = (isset($_POST['jupart'])) ? (int)$_POST['jupart'] : 0;
-            $jufinal   = (isset($_POST['jufinal'])) ? (int)$_POST['jufinal'] : 1;
-            $relpaths  = (isset($_POST['relpathinfo'])) ? $_POST['relpathinfo'] : null;
-            $md5sums   = (isset($_POST['md5sum'])) ? $_POST['md5sum'] : null;
+            $jupart = (isset($_POST['jupart'])) ? (int)$_POST['jupart'] : 0;
+            $jufinal = (isset($_POST['jufinal'])) ? (int)$_POST['jufinal'] : 1;
+            $relpaths = (isset($_POST['relpathinfo'])) ? $_POST['relpathinfo'] : null;
+            $md5sums = (isset($_POST['md5sum'])) ? $_POST['md5sum'] : null;
             $mimetypes = (isset($_POST['mimetype'])) ? $_POST['mimetype'] : null;
             //$relpaths = (isset($_POST["relpathinfo$cnt"])) ? $_POST["relpathinfo$cnt"] : null;
             //$md5sums = (isset($_POST["md5sum$cnt"])) ? $_POST["md5sum$cnt"] : null;
@@ -675,24 +667,24 @@ class JUpload
                 }
             }
             if (isset($this->classparams['allowed_file_extensions']) && is_array($this->classparams['allowed_file_extensions'])) {
-                $fileExtension = substr(strrchr($value['name'][$cnt], '.'), 1);
+                $fileExtension = mb_substr(mb_strrchr($value['name'][$cnt], '.'), 1);
                 if (!in_array($fileExtension, $this->classparams['allowed_file_extensions'])) {
                     $this->abort('File extension ' . $fileExtension . ' not allowed');
                 }
             }
 
-            $dstdir  = $this->classparams['destdir'];
+            $dstdir = $this->classparams['destdir'];
             $dstname = $dstdir . '/' . $this->classparams['tmp_prefix'] . session_id();
             $tmpname = $dstdir . '/' . $this->classparams['tmp_prefix'] . 'tmp' . session_id();
 
             // Controls are now done. Let's store the current uploaded files properties in an array, for future use.
-            $files_data['name']         = $value['name'][$cnt];
-            $files_data['size']         = 'not calculated yet';
-            $files_data['tmp_name']     = $value['tmp_name'][$cnt];
-            $files_data['error']        = $value['error'][$cnt];
+            $files_data['name'] = $value['name'][$cnt];
+            $files_data['size'] = 'not calculated yet';
+            $files_data['tmp_name'] = $value['tmp_name'][$cnt];
+            $files_data['error'] = $value['error'][$cnt];
             $files_data['relativePath'] = $relpaths[$cnt];
-            $files_data['md5sum']       = $md5sums[$cnt];
-            $files_data['mimetype']     = $mimetypes[$cnt];
+            $files_data['md5sum'] = $md5sums[$cnt];
+            $files_data['mimetype'] = $mimetypes[$cnt];
 
             if (!move_uploaded_file($files_data['tmp_name'], $tmpname)) {
                 if ($classparams['verbose_errors']) {
@@ -721,14 +713,14 @@ class JUpload
             //If we get here, the upload is a real one (no demo)
             if ($jupart) {
                 // got a chunk of a multi-part upload
-                $len                                                 = filesize($tmpname);
+                $len = filesize($tmpname);
                 $_SESSION[$this->classparams['var_prefix'] . 'size'] += $len;
                 if ($len > 0) {
                     $src = fopen($tmpname, 'rb');
                     $dst = fopen($dstname, (1 == $jupart) ? 'wb' : 'ab');
                     while ($len > 0) {
                         $rlen = ($len > 8192) ? 8192 : $len;
-                        $buf  = fread($src, $rlen);
+                        $buf = fread($src, $rlen);
                         if (!$buf) {
                             fclose($src);
                             fclose($dst);
@@ -770,9 +762,9 @@ class JUpload
                             $this->abort('chmod IO error');
                         }
                         umask($_umask);
-                        $files_data['size']     = filesize($dstfinal);
+                        $files_data['size'] = filesize($dstfinal);
                         $files_data['fullName'] = $dstfinal;
-                        $files_data['path']     = fix_dirname($dstfinal);
+                        $files_data['path'] = fix_dirname($dstfinal);
                         array_push($this->files, $files_data);
                     } else {
                         unlink($dstname);
@@ -796,9 +788,9 @@ class JUpload
                     $this->abort('chmod IO error');
                 }
                 umask($_umask);
-                $files_data['size']     = filesize($dstfinal);
+                $files_data['size'] = filesize($dstfinal);
                 $files_data['fullName'] = $dstfinal;
-                $files_data['path']     = fix_dirname($dstfinal);
+                $files_data['path'] = fix_dirname($dstfinal);
                 array_push($this->files, $files_data);
             }
             ++$cnt;
@@ -810,10 +802,6 @@ class JUpload
         exit;
     }
 
-    /**
-     *
-     *
-     */
     private function page_start()
     {
         $this->logDebug('page_start', 'Entering function');
@@ -822,7 +810,6 @@ class JUpload
         // -> Simply return an empty doc.
         if ('HEAD' === $_SERVER['REQUEST_METHOD']) {
             // Nothing to do
-
         } elseif ('GET' === $_SERVER['REQUEST_METHOD']) {
             // A GET request means: return upload page
             $this->logDebug('page_start', 'Entering GET management');
@@ -843,17 +830,17 @@ class JUpload
                 $_SESSION[$this->classparams['var_prefix'] . 'files'] = [];
 
                 // start intercepting the content of the calling page, to display the upload result.
-                ob_start([& $this, 'interceptAfterUpload']);
+                ob_start([&$this, 'interceptAfterUpload']);
             } else {
                 $this->logDebug('page_start', 'afterupload is not set');
                 if ($this->classparams['session_regenerate']) {
                     session_regenerate_id(true);
                 }
-                $this->files                                          = [];
-                $_SESSION[$this->classparams['var_prefix'] . 'size']  = 0;
+                $this->files = [];
+                $_SESSION[$this->classparams['var_prefix'] . 'size'] = 0;
                 $_SESSION[$this->classparams['var_prefix'] . 'files'] = $this->files;
                 // start intercepting the content of the calling page, to display the applet tag.
-                ob_start([& $this, 'interceptBeforeUpload']);
+                ob_start([&$this, 'interceptBeforeUpload']);
             }
         } elseif ('POST' === $_SERVER['REQUEST_METHOD']) {
             // If we got a POST request, this is the real work.

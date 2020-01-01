@@ -1,8 +1,9 @@
 <?php
-$error = false;
-$data['snippetsList'] = '';
-$data['totalSnippets'] = '';
-$data['returnMsg'] = '';
+
+$error                   = false;
+$data['snippetsList']    = '';
+$data['totalSnippets']   = '';
+$data['returnMsg']       = '';
 $data['returnDangerMsg'] = '';
 if (file_exists('../langs/' . $_POST['language'] . '.php')) {
     $lang = $_POST['language'];
@@ -21,8 +22,8 @@ if (!isset($_POST['index']) || !is_numeric($_POST['index']) || !isset($_POST['ti
         $return_msg = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' . WRONG_DATA . '</div>';
     }
 } else {
-    $out = $snippets->editSnippet($_POST['index'], utf8_decode(urldecode($_POST['title'])), utf8_decode(urldecode($_POST['code'])));
-    $return_msg = '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' . SNIPPET_UPDATED . '</div>';
+    $out               = $snippets->editSnippet($_POST['index'], utf8_decode(urldecode($_POST['title'])), utf8_decode(urldecode($_POST['code'])));
+    $return_msg        = '<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' . SNIPPET_UPDATED . '</div>';
     $return_danger_msg = '';
     if ('script_forbidden' === $out) {
         $return_danger_msg = '<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' . SCRIPT_FORBIDDEN . '</div>';
@@ -31,9 +32,9 @@ if (!isset($_POST['index']) || !is_numeric($_POST['index']) || !isset($_POST['ti
     }
 }
 // if ($error == false) {
-    $data['snippetsList']  = $snippets->render();
-    $data['totalSnippets'] = $snippets->total_snippets;
+$data['snippetsList']  = $snippets->render();
+$data['totalSnippets'] = $snippets->total_snippets;
 // }
-$data['returnMsg'] = $return_msg;
+$data['returnMsg']       = $return_msg;
 $data['returnDangerMsg'] = $return_danger_msg;
 echo json_encode($data);
