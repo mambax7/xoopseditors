@@ -724,7 +724,7 @@ $files=array_merge([$prev_folder], [$current_folder], $sorted);
                     <?php if($is_img){ ?>
                     <a class="tip-right preview" title="<?php echo lang_Preview?>" data-url="<?php echo $src;?>" data-toggle="lightbox" href="#previewLightbox"><i class=" icon-eye-open"></i></a>
                     <?php }elseif(($is_video || $is_audio) && in_array($extension_lower,$jplayer_ext)){ ?>
-                    <a class="tip-right modalAV <?php if($is_audio){ echo 'audio'; }else{ echo 'video'; } ?>" title="<?php echo lang_Preview?>" data-url="ajax_calls.php?action=media_preview&title=<?php echo $filename; ?>&file=<?php echo $current_path . $subfolder . $subdir . $file;; ?>" href="javascript:void('');" ><i class=" icon-eye-open"></i></a>
+                    <a class="tip-right modalAV <?php if($is_audio){ echo 'audio'; }else{ echo 'video'; } ?>" title="<?php echo lang_Preview?>" data-url="ajax_calls.php?action=media_preview&title=<?php echo $filename; ?>&file=<?php echo $current_path . $subfolder . $subdir . $file; ?>" href="javascript:void('');" ><i class=" icon-eye-open"></i></a>
                     <?php }else{ ?>
                     <a class="preview disabled"><i class="icon-eye-open icon-white"></i></a>
                     <?php } ?>

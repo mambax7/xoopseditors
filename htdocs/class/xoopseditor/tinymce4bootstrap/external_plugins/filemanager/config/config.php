@@ -212,4 +212,3 @@ $relative_image_creation_name_to_prepend= ['', 'test_']; //name to prepend on fi
 $relative_image_creation_name_to_append = ['_test', '']; //name to append on filename
 $relative_image_creation_width          = [300, 400]; //width of image (you can leave empty if you set height)
 $relative_image_creation_height         = [200, '']; //height of image (you can leave empty if you set width)
-;
