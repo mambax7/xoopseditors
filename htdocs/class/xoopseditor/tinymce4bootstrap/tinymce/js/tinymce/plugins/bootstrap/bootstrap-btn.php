@@ -211,7 +211,7 @@ if ('ionicon' === $iconFont) {
         </div>
         <div class="col-sm-12" id="code-wrapper">
                 <pre><?php
-                    echo htmlspecialchars($btnCode);
+                    echo htmlspecialchars($btnCode, ENT_QUOTES | ENT_HTML5);
                     ?></pre>
         </div>
     </div>

@@ -149,7 +149,7 @@ if (isset($_GET['icon'])) {
         </div>
         <div class="col-sm-12 text-center" id="code-wrapper">
                 <pre><?php
-                    echo htmlspecialchars($iconCode);
+                    echo htmlspecialchars($iconCode, ENT_QUOTES | ENT_HTML5);
                     ?></pre>
         </div>
     </div>

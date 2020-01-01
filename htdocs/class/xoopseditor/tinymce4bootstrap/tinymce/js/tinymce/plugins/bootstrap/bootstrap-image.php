@@ -189,7 +189,7 @@ if (isset($security_msg)) {
         </div>
         <div class="col-sm-12 text-center" id="code-wrapper">
                 <pre><?php
-                    echo htmlspecialchars($imgCode);
+                    echo htmlspecialchars($imgCode, ENT_QUOTES | ENT_HTML5);
                     ?></pre>
         </div>
     </div>
