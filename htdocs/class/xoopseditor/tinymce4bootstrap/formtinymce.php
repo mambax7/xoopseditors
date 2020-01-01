@@ -142,4 +142,3 @@ class XoopsFormTinymce4Bootstrap extends XoopsEditor
     }
 }
 
-?>
