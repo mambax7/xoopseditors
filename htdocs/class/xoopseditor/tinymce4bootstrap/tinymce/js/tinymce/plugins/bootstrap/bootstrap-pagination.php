@@ -1,11 +1,26 @@
 <?php
+
 include_once('conf/conf.php');
 if (isset($_GET['edit'])) {
-    $newPagination = false;
-    $paginationCode  = '';
+    $newPagination  = false;
+    $paginationCode = '';
 } else {
-    $newPagination = true;
-    $paginationCode  = '<ul class="pagination"><li><a href="' . SITE_URL . '">&laquo;</a></li><li class="active"><a href="' . SITE_URL . '/page-1.html">1</a></li><li><a href="' . SITE_URL . '/page-2.html">2</a></li><li><a href="' . SITE_URL . '/page-3.html">3</a></li><li><a href="' . SITE_URL . '/page-4.html">4</a></li><li><a href="' . SITE_URL . '/page-5.html">5</a></li><li><a href="' . SITE_URL . '/page-5.html">&raquo;</a></li></ul>';
+    $newPagination  = true;
+    $paginationCode = '<ul class="pagination"><li><a href="'
+                      . SITE_URL
+                      . '">&laquo;</a></li><li class="active"><a href="'
+                      . SITE_URL
+                      . '/page-1.html">1</a></li><li><a href="'
+                      . SITE_URL
+                      . '/page-2.html">2</a></li><li><a href="'
+                      . SITE_URL
+                      . '/page-3.html">3</a></li><li><a href="'
+                      . SITE_URL
+                      . '/page-4.html">4</a></li><li><a href="'
+                      . SITE_URL
+                      . '/page-5.html">5</a></li><li><a href="'
+                      . SITE_URL
+                      . '/page-5.html">&raquo;</a></li></ul>';
 }
 ?>
 <!DOCTYPE html>
@@ -13,250 +28,250 @@ if (isset($_GET['edit'])) {
 <head>
     <link rel="stylesheet" href="<?php echo $bootstrap_css_path; ?>">
     <link rel="stylesheet" href="css/plugin.min.css">
-    <link href="<?php echo PRISM_CSS; ?>" type="text/css" rel="stylesheet" />
+    <link href="<?php echo PRISM_CSS; ?>" type="text/css" rel="stylesheet"/>
 </head>
 <body>
-    <div class="container">
-        <div class="row margin-bottom-md">
-            <div class="choice-title">
-                <span><?php echo SIZE; ?></span>
-            </div>
-            <div class="col-md-12">
-                <div class="text-center">
-                    <div class="choice selector select-size">
-                        <ul class="pagination pagination-sm" data-attr="pagination-sm">
-                            <li><a href="#">&laquo;</a></li>
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">&raquo;</a></li>
-                        </ul>
-                    </div>
-                    <div class="choice selector select-size">
-                        <ul class="pagination" data-attr="">
-                            <li><a href="#">&laquo;</a></li>
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">&raquo;</a></li>
-                        </ul>
-                    </div>
-                    <div class="choice selector select-size">
-                        <ul class="pagination pagination-lg" data-attr="pagination-lg">
-                            <li><a href="#">&laquo;</a></li>
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">&raquo;</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+<div class="container">
+    <div class="row margin-bottom-md">
+        <div class="choice-title">
+            <span><?php echo SIZE; ?></span>
         </div>
-        <div class="margin-bottom-md">
-            <div class="row choice-title margin-bottom-md">
-                <span><?php echo ITEMS; ?></span>
-            </div>
-            <div class="row">
-                    <div class="col-xs-2"><h4><?php echo TITLE; ?></h4></div>
-                    <div class="col-xs-6"><h4><?php echo LINK; ?></h4></div>
-                    <div class="col-xs-2"><h4><?php echo CURRENT; ?></h4></div>
-                    <div class="col-xs-2"><h4><?php echo DELETE_CONST; ?></h4></div>
-            </div>
-            <div id="items">
-                <div class="row">
-                    <div class="col-xs-2">
-                        <div class="form-group">
-                            <input class="form-control select-text" type="text" value="first">
-                        </div>
-                    </div>
-                    <div class="col-xs-6">
-                        <div class="form-group">
-                            <input class="form-control select-link" type="text" value="<?php echo SITE_URL; ?>">
-                        </div>
-                    </div>
-                    <div class="col-xs-2">
-                        <div class="btn-group btn-toggle">
-                            <button class="btn btn-sm btn-success active" data-attr="false"><?php echo NO; ?></button>
-                            <button class="btn btn-sm btn-default" data-attr="true"><?php echo YES; ?></button>
-                        </div>
-                    </div>
-                    <div class="col-xs-2">
-                        <div class="form-control form-control-like">
-                            <button class="btn btn-sm btn-danger btn-xs btn-delete-item" data-toggle="tooltip" title="<?php echo DELETE_THIS_ITEM; ?>"><span class="bootstrap-icon-minus"></span></button>
-                        </div>
-                    </div>
+        <div class="col-md-12">
+            <div class="text-center">
+                <div class="choice selector select-size">
+                    <ul class="pagination pagination-sm" data-attr="pagination-sm">
+                        <li><a href="#">&laquo;</a></li>
+                        <li class="active"><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">&raquo;</a></li>
+                    </ul>
                 </div>
-                <div class="row">
-                    <div class="col-xs-2">
-                        <div class="form-group">
-                            <input class="form-control select-text" type="text" value="1">
-                        </div>
-                    </div>
-                    <div class="col-xs-6">
-                        <div class="form-group">
-                            <input class="form-control select-link" type="text" value="<?php echo SITE_URL; ?>/page-1.html">
-                        </div>
-                    </div>
-                    <div class="col-xs-2">
-                        <div class="btn-group btn-toggle">
-                            <button class="btn btn-sm btn-default" data-attr="false"><?php echo NO; ?></button>
-                            <button class="btn btn-sm btn-success active" data-attr="true"><?php echo YES; ?></button>
-                        </div>
-                    </div>
-                    <div class="col-xs-2">
-                        <div class="form-control form-control-like">
-                            <button class="btn btn-sm btn-danger btn-xs btn-delete-item" data-toggle="tooltip" title="<?php echo DELETE_THIS_ITEM; ?>"><span class="bootstrap-icon-minus"></span></button>
-                        </div>
-                    </div>
+                <div class="choice selector select-size">
+                    <ul class="pagination" data-attr="">
+                        <li><a href="#">&laquo;</a></li>
+                        <li class="active"><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">&raquo;</a></li>
+                    </ul>
                 </div>
-                <div class="row">
-                    <div class="col-xs-2">
-                        <div class="form-group">
-                            <input class="form-control select-text" type="text" value="2">
-                        </div>
-                    </div>
-                    <div class="col-xs-6">
-                        <div class="form-group">
-                            <input class="form-control select-link" type="text" value="<?php echo SITE_URL; ?>/page-2.html">
-                        </div>
-                    </div>
-                    <div class="col-xs-2">
-                        <div class="btn-group btn-toggle">
-                            <button class="btn btn-sm btn-success active" data-attr="false"><?php echo NO; ?></button>
-                            <button class="btn btn-sm btn-default" data-attr="true"><?php echo YES; ?></button>
-                        </div>
-                    </div>
-                    <div class="col-xs-2">
-                        <div class="form-control form-control-like">
-                            <button class="btn btn-sm btn-danger btn-xs btn-delete-item" data-toggle="tooltip" title="<?php echo DELETE_THIS_ITEM; ?>"><span class="bootstrap-icon-minus"></span></button>
-                        </div>
-                    </div>
+                <div class="choice selector select-size">
+                    <ul class="pagination pagination-lg" data-attr="pagination-lg">
+                        <li><a href="#">&laquo;</a></li>
+                        <li class="active"><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">&raquo;</a></li>
+                    </ul>
                 </div>
-                <div class="row">
-                    <div class="col-xs-2">
-                        <div class="form-group">
-                            <input class="form-control select-text" type="text" value="3">
-                        </div>
-                    </div>
-                    <div class="col-xs-6">
-                        <div class="form-group">
-                            <input class="form-control select-link" type="text" value="<?php echo SITE_URL; ?>/page-3.html">
-                        </div>
-                    </div>
-                    <div class="col-xs-2">
-                        <div class="btn-group btn-toggle">
-                            <button class="btn btn-sm btn-success active" data-attr="false"><?php echo NO; ?></button>
-                            <button class="btn btn-sm btn-default" data-attr="true"><?php echo YES; ?></button>
-                        </div>
-                    </div>
-                    <div class="col-xs-2">
-                        <div class="form-control form-control-like">
-                            <button class="btn btn-sm btn-danger btn-xs btn-delete-item" data-toggle="tooltip" title="<?php echo DELETE_THIS_ITEM; ?>"><span class="bootstrap-icon-minus"></span></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-2">
-                        <div class="form-group">
-                            <input class="form-control select-text" type="text" value="4">
-                        </div>
-                    </div>
-                    <div class="col-xs-6">
-                        <div class="form-group">
-                            <input class="form-control select-link" type="text" value="<?php echo SITE_URL; ?>/page-4.html">
-                        </div>
-                    </div>
-                    <div class="col-xs-2">
-                        <div class="btn-group btn-toggle">
-                            <button class="btn btn-sm btn-success active" data-attr="false"><?php echo NO; ?></button>
-                            <button class="btn btn-sm btn-default" data-attr="true"><?php echo YES; ?></button>
-                        </div>
-                    </div>
-                    <div class="col-xs-2">
-                        <div class="form-control form-control-like">
-                            <button class="btn btn-sm btn-danger btn-xs btn-delete-item" data-toggle="tooltip" title="<?php echo DELETE_THIS_ITEM; ?>"><span class="bootstrap-icon-minus"></span></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-2">
-                        <div class="form-group">
-                            <input class="form-control select-text" type="text" value="5">
-                        </div>
-                    </div>
-                    <div class="col-xs-6">
-                        <div class="form-group">
-                            <input class="form-control select-link" type="text" value="<?php echo SITE_URL; ?>/page-5.html">
-                        </div>
-                    </div>
-                    <div class="col-xs-2">
-                        <div class="btn-group btn-toggle">
-                            <button class="btn btn-sm btn-success active" data-attr="false"><?php echo NO; ?></button>
-                            <button class="btn btn-sm btn-default" data-attr="true"><?php echo YES; ?></button>
-                        </div>
-                    </div>
-                    <div class="col-xs-2">
-                        <div class="form-control form-control-like">
-                            <button class="btn btn-sm btn-danger btn-xs btn-delete-item" data-toggle="tooltip" title="<?php echo DELETE_THIS_ITEM; ?>"><span class="bootstrap-icon-minus"></span></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-2">
-                        <div class="form-group">
-                            <input class="form-control select-text" type="text" value="last">
-                        </div>
-                    </div>
-                    <div class="col-xs-6">
-                        <div class="form-group">
-                            <input class="form-control select-link" type="text" value="<?php echo SITE_URL; ?>/page-5.html">
-                        </div>
-                    </div>
-                    <div class="col-xs-2">
-                        <div class="btn-group btn-toggle">
-                            <button class="btn btn-sm btn-success active" data-attr="false"><?php echo NO; ?></button>
-                            <button class="btn btn-sm btn-default" data-attr="true"><?php echo YES; ?></button>
-                        </div>
-                    </div>
-                    <div class="col-xs-2">
-                        <div class="form-control form-control-like">
-                            <button class="btn btn-sm btn-danger btn-xs btn-delete-item" data-toggle="tooltip" title="<?php echo DELETE_THIS_ITEM; ?>"><span class="bootstrap-icon-minus"></span></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-4 margin-bottom-md">
-                <div class="form-control form-control-like">
-                    <button class="btn btn-sm btn-success" id="add-new-item"><?php echo ADD_NEW_ITEM; ?><span class="bootstrap-icon-plus append"></span></button>
-                </div>
-            </div>
-        </div>
-        <div class="row" id="preview">
-            <div id="preview-title">
-                <span class="btn-primary"><?php echo PREVIEW; ?></span>
-            </div>
-            <div class="col-sm-12 margin-bottom-md" id="test-wrapper">
-                <?php echo $paginationCode ?>
-            </div>
-        </div>
-        <div class="row">
-            <div id="code-title">
-                <a href="#" id="code-slide-link"><?php echo CODE; ?> <i class="glyphicon glyphicon-arrow-up"></i></a>
-            </div>
-            <div class="col-sm-12" id="code-wrapper">
-                <pre></pre>
             </div>
         </div>
     </div>
+    <div class="margin-bottom-md">
+        <div class="row choice-title margin-bottom-md">
+            <span><?php echo ITEMS; ?></span>
+        </div>
+        <div class="row">
+            <div class="col-xs-2"><h4><?php echo TITLE; ?></h4></div>
+            <div class="col-xs-6"><h4><?php echo LINK; ?></h4></div>
+            <div class="col-xs-2"><h4><?php echo CURRENT; ?></h4></div>
+            <div class="col-xs-2"><h4><?php echo DELETE_CONST; ?></h4></div>
+        </div>
+        <div id="items">
+            <div class="row">
+                <div class="col-xs-2">
+                    <div class="form-group">
+                        <input class="form-control select-text" type="text" value="first">
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <input class="form-control select-link" type="text" value="<?php echo SITE_URL; ?>">
+                    </div>
+                </div>
+                <div class="col-xs-2">
+                    <div class="btn-group btn-toggle">
+                        <button class="btn btn-sm btn-success active" data-attr="false"><?php echo NO; ?></button>
+                        <button class="btn btn-sm btn-default" data-attr="true"><?php echo YES; ?></button>
+                    </div>
+                </div>
+                <div class="col-xs-2">
+                    <div class="form-control form-control-like">
+                        <button class="btn btn-sm btn-danger btn-xs btn-delete-item" data-toggle="tooltip" title="<?php echo DELETE_THIS_ITEM; ?>"><span class="bootstrap-icon-minus"></span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    <div class="form-group">
+                        <input class="form-control select-text" type="text" value="1">
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <input class="form-control select-link" type="text" value="<?php echo SITE_URL; ?>/page-1.html">
+                    </div>
+                </div>
+                <div class="col-xs-2">
+                    <div class="btn-group btn-toggle">
+                        <button class="btn btn-sm btn-default" data-attr="false"><?php echo NO; ?></button>
+                        <button class="btn btn-sm btn-success active" data-attr="true"><?php echo YES; ?></button>
+                    </div>
+                </div>
+                <div class="col-xs-2">
+                    <div class="form-control form-control-like">
+                        <button class="btn btn-sm btn-danger btn-xs btn-delete-item" data-toggle="tooltip" title="<?php echo DELETE_THIS_ITEM; ?>"><span class="bootstrap-icon-minus"></span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    <div class="form-group">
+                        <input class="form-control select-text" type="text" value="2">
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <input class="form-control select-link" type="text" value="<?php echo SITE_URL; ?>/page-2.html">
+                    </div>
+                </div>
+                <div class="col-xs-2">
+                    <div class="btn-group btn-toggle">
+                        <button class="btn btn-sm btn-success active" data-attr="false"><?php echo NO; ?></button>
+                        <button class="btn btn-sm btn-default" data-attr="true"><?php echo YES; ?></button>
+                    </div>
+                </div>
+                <div class="col-xs-2">
+                    <div class="form-control form-control-like">
+                        <button class="btn btn-sm btn-danger btn-xs btn-delete-item" data-toggle="tooltip" title="<?php echo DELETE_THIS_ITEM; ?>"><span class="bootstrap-icon-minus"></span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    <div class="form-group">
+                        <input class="form-control select-text" type="text" value="3">
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <input class="form-control select-link" type="text" value="<?php echo SITE_URL; ?>/page-3.html">
+                    </div>
+                </div>
+                <div class="col-xs-2">
+                    <div class="btn-group btn-toggle">
+                        <button class="btn btn-sm btn-success active" data-attr="false"><?php echo NO; ?></button>
+                        <button class="btn btn-sm btn-default" data-attr="true"><?php echo YES; ?></button>
+                    </div>
+                </div>
+                <div class="col-xs-2">
+                    <div class="form-control form-control-like">
+                        <button class="btn btn-sm btn-danger btn-xs btn-delete-item" data-toggle="tooltip" title="<?php echo DELETE_THIS_ITEM; ?>"><span class="bootstrap-icon-minus"></span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    <div class="form-group">
+                        <input class="form-control select-text" type="text" value="4">
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <input class="form-control select-link" type="text" value="<?php echo SITE_URL; ?>/page-4.html">
+                    </div>
+                </div>
+                <div class="col-xs-2">
+                    <div class="btn-group btn-toggle">
+                        <button class="btn btn-sm btn-success active" data-attr="false"><?php echo NO; ?></button>
+                        <button class="btn btn-sm btn-default" data-attr="true"><?php echo YES; ?></button>
+                    </div>
+                </div>
+                <div class="col-xs-2">
+                    <div class="form-control form-control-like">
+                        <button class="btn btn-sm btn-danger btn-xs btn-delete-item" data-toggle="tooltip" title="<?php echo DELETE_THIS_ITEM; ?>"><span class="bootstrap-icon-minus"></span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    <div class="form-group">
+                        <input class="form-control select-text" type="text" value="5">
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <input class="form-control select-link" type="text" value="<?php echo SITE_URL; ?>/page-5.html">
+                    </div>
+                </div>
+                <div class="col-xs-2">
+                    <div class="btn-group btn-toggle">
+                        <button class="btn btn-sm btn-success active" data-attr="false"><?php echo NO; ?></button>
+                        <button class="btn btn-sm btn-default" data-attr="true"><?php echo YES; ?></button>
+                    </div>
+                </div>
+                <div class="col-xs-2">
+                    <div class="form-control form-control-like">
+                        <button class="btn btn-sm btn-danger btn-xs btn-delete-item" data-toggle="tooltip" title="<?php echo DELETE_THIS_ITEM; ?>"><span class="bootstrap-icon-minus"></span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    <div class="form-group">
+                        <input class="form-control select-text" type="text" value="last">
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <input class="form-control select-link" type="text" value="<?php echo SITE_URL; ?>/page-5.html">
+                    </div>
+                </div>
+                <div class="col-xs-2">
+                    <div class="btn-group btn-toggle">
+                        <button class="btn btn-sm btn-success active" data-attr="false"><?php echo NO; ?></button>
+                        <button class="btn btn-sm btn-default" data-attr="true"><?php echo YES; ?></button>
+                    </div>
+                </div>
+                <div class="col-xs-2">
+                    <div class="form-control form-control-like">
+                        <button class="btn btn-sm btn-danger btn-xs btn-delete-item" data-toggle="tooltip" title="<?php echo DELETE_THIS_ITEM; ?>"><span class="bootstrap-icon-minus"></span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4 margin-bottom-md">
+            <div class="form-control form-control-like">
+                <button class="btn btn-sm btn-success" id="add-new-item"><?php echo ADD_NEW_ITEM; ?><span class="bootstrap-icon-plus append"></span></button>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="preview">
+        <div id="preview-title">
+            <span class="btn-primary"><?php echo PREVIEW; ?></span>
+        </div>
+        <div class="col-sm-12 margin-bottom-md" id="test-wrapper">
+            <?php echo $paginationCode ?>
+        </div>
+    </div>
+    <div class="row">
+        <div id="code-title">
+            <a href="#" id="code-slide-link"><?php echo CODE; ?> <i class="glyphicon glyphicon-arrow-up"></i></a>
+        </div>
+        <div class="col-sm-12" id="code-wrapper">
+            <pre></pre>
+        </div>
+    </div>
+</div>
 <script type="text/javascript" src="<?php echo JQUERY_JS ?>"></script>
 <script type="text/javascript" src="<?php echo BOOTSTRAP_JS ?>"></script>
 <script type="text/javascript" src="js/utils.min.js"></script>
 <script type="text/javascript" src="js/jquery.htmlClean.min.js"></script>
 <script type="text/javascript" src="<?php echo PRISM_JS; ?>"></script>
 <script type="text/javascript">
-    var newPagination  = '<?php echo $newPagination; ?>';
+    var newPagination = '<?php echo $newPagination; ?>';
     var paginationSize;
-    var paginationCode  = '<?php echo $paginationCode; ?>';
+    var paginationCode = '<?php echo $paginationCode; ?>';
     var index;
     $.noConflict();
     jQuery(document).ready(function ($) {
@@ -377,13 +392,12 @@ if (isset($_GET['edit'])) {
                 index -= 1;
             }
             var indexNewItem = index + 1;
-            var linkNewItem  = '<?php echo SITE_URL; ?>/page-' + indexNewItem + '.html';
+            var linkNewItem = '<?php echo SITE_URL; ?>/page-' + indexNewItem + '.html';
             addNewItem(indexNewItem, linkNewItem, true);
         });
 
-        function activateToggleButtons()
-        {
-            $('.btn-toggle').each( function () {
+        function activateToggleButtons() {
+            $('.btn-toggle').each(function () {
                 $(this).on('click', function () {
                     index = $('.btn-toggle').index(this);
                     toggleActive(this, index);
@@ -391,10 +405,10 @@ if (isset($_GET['edit'])) {
             });
         }
 
-        function changeText(input, index)
-        {
+        function changeText(input, index) {
             var li = $('#test-wrapper ul li')[index];
-            var value = $(input).prop('value');console.log(value);
+            var value = $(input).prop('value');
+            console.log(value);
             if (value == 'first') {
                 value = '&laquo;';
             } else if (value == 'last') {
@@ -404,8 +418,7 @@ if (isset($_GET['edit'])) {
             updateCode();
         }
 
-        function changeLink(input, index)
-        {
+        function changeLink(input, index) {
             var li = $('#test-wrapper ul li')[index];
             var value = $(input).prop('value');
             if (value.length < 1) { // new link empty
@@ -423,8 +436,7 @@ if (isset($_GET['edit'])) {
             updateCode();
         }
 
-        function toggleActive(btnGroup, index)
-        {
+        function toggleActive(btnGroup, index) {
             toggleAllBtns('.btn-toggle', false);
             toggleBtn(btnGroup);
             $('#test-wrapper li').removeClass('active');
@@ -433,8 +445,7 @@ if (isset($_GET['edit'])) {
             updateCode();
         }
 
-        function addNewItem(text, link, addToPreview)
-        {
+        function addNewItem(text, link, addToPreview) {
             text = text.toString();
             var newItemHtml;
             var newItemPreview;
@@ -476,8 +487,7 @@ if (isset($_GET['edit'])) {
             updateCode();
         }
 
-        function deleteItem(index)
-        {
+        function deleteItem(index) {
             var li = $('#test-wrapper ul li')[index];
             var row = $('#items div.row')[index];
             li.remove();

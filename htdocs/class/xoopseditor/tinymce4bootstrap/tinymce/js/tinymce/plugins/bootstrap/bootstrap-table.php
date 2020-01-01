@@ -1,4 +1,5 @@
 <?php
+
 include_once('conf/conf.php');
 if (isset($_GET['tableStriped'])) {
     $newTable        = 'false';
@@ -27,216 +28,216 @@ if (isset($_GET['tableStriped'])) {
 <head>
     <link rel="stylesheet" href="<?php echo $bootstrap_css_path; ?>">
     <link rel="stylesheet" href="css/plugin.min.css">
-    <link href="<?php echo PRISM_CSS; ?>" type="text/css" rel="stylesheet" />
+    <link href="<?php echo PRISM_CSS; ?>" type="text/css" rel="stylesheet"/>
 </head>
 <body>
-    <div class="container margin-bottom-md">
-        <div class="row margin-bottom-md">
-            <div class="choice-title">
-                <span><?php echo CELLS; ?></span>
-            </div>
-            <div class="text-center">
-                <button class="btn btn-success" id="cellpicker"><?php echo ROWS_COLS; ?> <span class="glyphicon glyphicon-circle-arrow-down append"></span></button>
-            </div>
+<div class="container margin-bottom-md">
+    <div class="row margin-bottom-md">
+        <div class="choice-title">
+            <span><?php echo CELLS; ?></span>
         </div>
-        <div class="row margin-bottom-md">
-            <div class="choice-title">
-                <span><?php echo STRUCTURE; ?></span>
-            </div>
-            <div class="text-center">
-                <label class="col-sm-3 col-sm-offset-1 col-xs-7"><?php echo HORIZONTAL_HEADER; ?> : </label>
-                <div class="btn-group btn-toggle col-sm-2 col-xs-5" id="horizontal-header">
-                    <button class="btn btn-sm btn-default" data-attr="false"><?php echo NO; ?></button>
-                    <button class="btn btn-sm btn-success active" data-attr="true"><?php echo YES; ?></button>
-                </div>
-                <label class="col-sm-3 col-xs-7"><?php echo VERTICAL_HEADER; ?> : </label>
-                <div class="btn-group btn-toggle col-sm-2 col-xs-5" id="vertical-header">
-                    <button class="btn btn-sm btn-success active" data-attr="false"><?php echo NO; ?></button>
-                    <button class="btn btn-sm btn-default" data-attr="true"><?php echo YES; ?></button>
-                </div>
-            </div>
+        <div class="text-center">
+            <button class="btn btn-success" id="cellpicker"><?php echo ROWS_COLS; ?> <span class="glyphicon glyphicon-circle-arrow-down append"></span></button>
         </div>
-        <div class="row margin-bottom-md">
-            <div class="choice-title">
-                <span><?php echo STYLE; ?></span>
-            </div>
-            <div class="text-center">
-                <div class="choice selector select-style">
-                    <label>table striped</label>
-                    <span id="table-striped"></span>
-                </div>
-                <div class="choice selector select-style">
-                    <label>table bordered</label>
-                    <span id="table-bordered"></span>
-                </div>
-                <div class="choice selector select-style">
-                    <label>table condensed</label>
-                    <span id="table-condensed"></span>
-                </div>
-                <div class="choice selector select-style">
-                    <label>table hover</label>
-                    <span id="table-hover"></span>
-                </div>
-                <div class="choice selector select-style">
-                    <label>table responsive</label>
-                    <span id="table-responsive"></span>
-                </div>
-            </div>
+    </div>
+    <div class="row margin-bottom-md">
+        <div class="choice-title">
+            <span><?php echo STRUCTURE; ?></span>
         </div>
-        <div class="row" id="preview">
-            <div id="preview-title" class="margin-bottom-md">
-                <span class="btn-primary"><?php echo PREVIEW; ?></span>
+        <div class="text-center">
+            <label class="col-sm-3 col-sm-offset-1 col-xs-7"><?php echo HORIZONTAL_HEADER; ?> : </label>
+            <div class="btn-group btn-toggle col-sm-2 col-xs-5" id="horizontal-header">
+                <button class="btn btn-sm btn-default" data-attr="false"><?php echo NO; ?></button>
+                <button class="btn btn-sm btn-success active" data-attr="true"><?php echo YES; ?></button>
             </div>
-            <div class="col-sm-12 test-wrapper-table" id="test-wrapper" style="overflow:auto;">
-            </div>
-        </div>
-        <div class="row">
-            <div id="code-title">
-                <a href="#" id="code-slide-link"><?php echo CODE; ?> <i class="glyphicon glyphicon-arrow-down"></i></a>
-            </div>
-            <div class="col-sm-9 col-sm-offset-3" id="code-wrapper">
-                <pre></pre>
+            <label class="col-sm-3 col-xs-7"><?php echo VERTICAL_HEADER; ?> : </label>
+            <div class="btn-group btn-toggle col-sm-2 col-xs-5" id="vertical-header">
+                <button class="btn btn-sm btn-success active" data-attr="false"><?php echo NO; ?></button>
+                <button class="btn btn-sm btn-default" data-attr="true"><?php echo YES; ?></button>
             </div>
         </div>
     </div>
-    <div id="table-builder-wrapper">
-        <table id="table-builder">
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-        </table>
-        <p id="cellNumbers" class="text-center"></p>
+    <div class="row margin-bottom-md">
+        <div class="choice-title">
+            <span><?php echo STYLE; ?></span>
+        </div>
+        <div class="text-center">
+            <div class="choice selector select-style">
+                <label>table striped</label>
+                <span id="table-striped"></span>
+            </div>
+            <div class="choice selector select-style">
+                <label>table bordered</label>
+                <span id="table-bordered"></span>
+            </div>
+            <div class="choice selector select-style">
+                <label>table condensed</label>
+                <span id="table-condensed"></span>
+            </div>
+            <div class="choice selector select-style">
+                <label>table hover</label>
+                <span id="table-hover"></span>
+            </div>
+            <div class="choice selector select-style">
+                <label>table responsive</label>
+                <span id="table-responsive"></span>
+            </div>
+        </div>
     </div>
+    <div class="row" id="preview">
+        <div id="preview-title" class="margin-bottom-md">
+            <span class="btn-primary"><?php echo PREVIEW; ?></span>
+        </div>
+        <div class="col-sm-12 test-wrapper-table" id="test-wrapper" style="overflow:auto;">
+        </div>
+    </div>
+    <div class="row">
+        <div id="code-title">
+            <a href="#" id="code-slide-link"><?php echo CODE; ?> <i class="glyphicon glyphicon-arrow-down"></i></a>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3" id="code-wrapper">
+            <pre></pre>
+        </div>
+    </div>
+</div>
+<div id="table-builder-wrapper">
+    <table id="table-builder">
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+    <p id="cellNumbers" class="text-center"></p>
+</div>
 <script type="text/javascript" src="<?php echo JQUERY_JS ?>"></script>
 <script type="text/javascript" src="<?php echo BOOTSTRAP_JS ?>"></script>
 <script type="text/javascript" src="js/utils.min.js"></script>
 <script type="text/javascript" src="js/jquery.htmlClean.min.js"></script>
 <script type="text/javascript" src="<?php echo PRISM_JS; ?>"></script>
 <script type="text/javascript">
-    var newTable        = <?php echo $newTable; ?>;
-    var tableRows       = <?php echo $tableRows; ?>; //console.log(glyphicon);
-    var tableCols       = <?php echo $tableCols; ?>; // console.log(tableCols);
-    var tableStriped    = <?php echo $tableStriped; ?>; //console.log(tableStriped);
-    var tableBordered   = <?php echo $tableBordered; ?>; //console.log(tableBordered);
-    var tableHover      = <?php echo $tableHover; ?>; //console.log(tableHover);
-    var tableCondensed  = <?php echo $tableCondensed; ?>; //console.log(tableCondensed);
+    var newTable = <?php echo $newTable; ?>;
+    var tableRows = <?php echo $tableRows; ?>; //console.log(glyphicon);
+    var tableCols = <?php echo $tableCols; ?>; // console.log(tableCols);
+    var tableStriped = <?php echo $tableStriped; ?>; //console.log(tableStriped);
+    var tableBordered = <?php echo $tableBordered; ?>; //console.log(tableBordered);
+    var tableHover = <?php echo $tableHover; ?>; //console.log(tableHover);
+    var tableCondensed = <?php echo $tableCondensed; ?>; //console.log(tableCondensed);
     var tableResponsive = <?php echo $tableResponsive; ?>; //console.log(tableResponsive);
     var horizontalHeader = true;
     var verticalHeader = false;
@@ -381,8 +382,7 @@ if (isset($_GET['tableStriped'])) {
          * @param  string headerType : horizontalHeader|verticalHeader
          * @return void
          */
-        function toggleHeader(element, headerType)
-        {
+        function toggleHeader(element, headerType) {
             var checked = toggleBtn(element);
             if (headerType == 'horizontalHeader') {
                 horizontalHeader = checked;
@@ -398,24 +398,24 @@ if (isset($_GET['tableStriped'])) {
             }
             if (verticalHeader) {
                 $('#test-wrapper table tr td:first-child').each(function () {
-                    $(this).replaceWith( "<th>" + $( this ).text() + "</th>" );
+                    $(this).replaceWith("<th>" + $(this).text() + "</th>");
                 });
             } else {
                 $('#test-wrapper table tr th:first-child').each(function () {
-                    $(this).replaceWith( "<td>" + $( this ).text() + "</td>" );
+                    $(this).replaceWith("<td>" + $(this).text() + "</td>");
                 });
             }
             if (horizontalHeader) {
                 $('#test-wrapper table tr:first-child').find('td').each(function () {
-                    $(this).replaceWith( "<th>" + $( this ).text() + "</th>" );
+                    $(this).replaceWith("<th>" + $(this).text() + "</th>");
                 });
             } else {
                 $('#test-wrapper table tr:first-child').find('th').each(function () {
-                    $(this).replaceWith( "<td>" + $( this ).text() + "</td>" );
+                    $(this).replaceWith("<td>" + $(this).text() + "</td>");
                 });
                 if (verticalHeader) {
                     $('#test-wrapper table tr:first-child td:first-child').each(function () {
-                        $(this).replaceWith( "<th>" + $( this ).text() + "</th>" );
+                        $(this).replaceWith("<th>" + $(this).text() + "</th>");
                     });
                 }
             }
@@ -429,8 +429,7 @@ if (isset($_GET['tableStriped'])) {
             updateCode();
         }
 
-        function buildTable()
-        {
+        function buildTable() {
             tableCode = '';
             if (tableResponsive) {
                 tableCode += '<div class="table-responsive">' + " \n";

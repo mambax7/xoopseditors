@@ -1,4 +1,5 @@
 <?php
+
 include_once('conf/conf.php');
 
 $iconFont        = preg_replace('/\r|\n/', '', urldecode($_GET['iconFont']));
@@ -7,42 +8,42 @@ $default_icon    = '';
 $css_icon_file   = ''; // default = glyphicon
 $js_icon_file    = 'iconset-glyphicon.min.js'; // default
 
-if('glyphicon' === $iconFont) {
+if ('glyphicon' === $iconFont) {
     $icon_main_class = 'glyphicon ';
-    $default_icon  = 'glyphicon-home';
-} else if('ionicon' === $iconFont) {
+    $default_icon    = 'glyphicon-home';
+} elseif ('ionicon' === $iconFont) {
     $css_icon_file = 'ionicons.min.css';
     $js_icon_file  = 'iconset-ionicon-1.5.2.min.js';
     $default_icon  = 'ion-home';
-} else if('fontawesome' === $iconFont) {
-    $css_icon_file = 'font-awesome.min.css';
-    $js_icon_file  = 'iconset-fontawesome-4.2.0.min.js';
+} elseif ('fontawesome' === $iconFont) {
+    $css_icon_file   = 'font-awesome.min.css';
+    $js_icon_file    = 'iconset-fontawesome-4.2.0.min.js';
     $icon_main_class = 'fa ';
-    $default_icon  = 'fa-home';
-} else if('weathericon' === $iconFont) {
-    $css_icon_file = 'weather-icons.min.css';
-    $js_icon_file  = 'iconset-weathericon-1.2.0.min.js';
+    $default_icon    = 'fa-home';
+} elseif ('weathericon' === $iconFont) {
+    $css_icon_file   = 'weather-icons.min.css';
+    $js_icon_file    = 'iconset-weathericon-1.2.0.min.js';
     $icon_main_class = 'wi ';
-    $default_icon  = 'wi-horizon-alt';
-} else if('mapicon' === $iconFont) {
+    $default_icon    = 'wi-horizon-alt';
+} elseif ('mapicon' === $iconFont) {
     $css_icon_file = 'map-icons.min.css';
     $js_icon_file  = 'iconset-mapicon-2.1.0.min.js';
     $default_icon  = 'map-icon-art-gallery';
-} else if('octicon' === $iconFont) {
-    $css_icon_file = 'octicons.min.css';
-    $js_icon_file  = 'iconset-octicon-2.1.2.min.js';
+} elseif ('octicon' === $iconFont) {
+    $css_icon_file   = 'octicons.min.css';
+    $js_icon_file    = 'iconset-octicon-2.1.2.min.js';
     $icon_main_class = 'octicon ';
-    $default_icon  = 'octicon-home';
-} else if('typicon' === $iconFont) {
-    $css_icon_file = 'typicons.min.css';
-    $js_icon_file  = 'iconset-typicon-2.0.6.min.js';
+    $default_icon    = 'octicon-home';
+} elseif ('typicon' === $iconFont) {
+    $css_icon_file   = 'typicons.min.css';
+    $js_icon_file    = 'iconset-typicon-2.0.6.min.js';
     $icon_main_class = 'typcn ';
-    $default_icon  = 'typcn-home';
-} else if('elusiveicon' === $iconFont) {
+    $default_icon    = 'typcn-home';
+} elseif ('elusiveicon' === $iconFont) {
     $css_icon_file = 'elusive-icons.min.css';
     $js_icon_file  = 'iconset-elusiveicon-2.0.0.min.js';
     $default_icon  = 'el-icon-home';
-} else if('materialdesign' === $iconFont) {
+} elseif ('materialdesign' === $iconFont) {
     $css_icon_file = 'material-design-iconic-font.min.css';
     $js_icon_file  = 'iconset-materialdesign-1.1.1.min.js';
     $default_icon  = 'md-home';
@@ -67,91 +68,92 @@ if (isset($_GET['icon'])) {
     <link rel="stylesheet" href="css/plugin.min.css">
     <link rel="stylesheet" href="css/bootstrap-iconpicker.min.css">
     <!-- Icon Fonts CSS -->
-    <?php if(!empty($css_icon_file)) { ?>
-    <link href="css/iconpicker/css/<?php echo $css_icon_file; ?>" rel="stylesheet">
+    <?php if (!empty($css_icon_file)) { ?>
+        <link href="css/iconpicker/css/<?php echo $css_icon_file; ?>" rel="stylesheet">
     <?php } ?>
-    <link rel="stylesheet" media="screen" type="text/css" href="css/colorpicker.min.css" />
-    <link href="<?php echo PRISM_CSS; ?>" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" media="screen" type="text/css" href="css/colorpicker.min.css"/>
+    <link href="<?php echo PRISM_CSS; ?>" type="text/css" rel="stylesheet"/>
 </head>
 <body>
-    <div class="container">
-        <div class="row margin-bottom-md ">
-            <div class="choice-title">
-                <span><?php echo ICON; ?></span>
-            </div>
-            <div class="text-center">
-                <button class="btn btn-default" id="iconpicker"></button>
-            </div>
+<div class="container">
+    <div class="row margin-bottom-md ">
+        <div class="choice-title">
+            <span><?php echo ICON; ?></span>
         </div>
-        <div class="row margin-bottom-md">
-            <div class="choice-title">
-                <span><?php echo ICON_SIZE; ?></span>
-            </div>
-            <div class="text-center">
-                <div class="choice selector select-size margin-bottom-md">
-                    <p><i class="selector-icon <?php echo $icon_main_class . $icon; ?>"></i> extra-small</p>
-                </div>
-                <div class="choice selector select-size margin-bottom-md">
-                    <h4><i class="selector-icon <?php echo $icon_main_class . $icon; ?>"></i> small</h4>
-                </div>
-                <div class="choice selector select-size margin-bottom-md">
-                    <h3><i class="selector-icon <?php echo $icon_main_class . $icon; ?>"></i> medium</h3>
-                </div>
-                <div class="choice selector select-size margin-bottom-md">
-                    <h2><i class="selector-icon <?php echo $icon_main_class . $icon; ?>"></i> large</h2>
-                </div>
-                <strong><?php echo CUSTOM; ?></strong> : <input name="size-input" size="10" value=""> <strong>px</strong>
-            </div>
+        <div class="text-center">
+            <button class="btn btn-default" id="iconpicker"></button>
         </div>
-        <div class="row margin-bottom-md ">
-            <div class="choice-title">
-                <span><?php echo COLOR; ?></span>
-            </div>
-            <div class="text-center">
-                <div class="choice selector select-color">
-                    <span class="color btn-default"></span>
-                </div>
-                <div class="choice selector select-color">
-                    <span class="color btn-primary"></span>
-                </div>
-                <div class="choice selector select-color">
-                    <span class="color btn-success"></span>
-                </div>
-                <div class="choice selector select-color">
-                    <span class="color btn-info"></span>
-                </div>
-                <div class="choice selector select-color">
-                    <span class="color btn-warning"></span>
-                </div>
-                <div class="choice selector select-color">
-                    <span class="color btn-danger"></span>
-                </div>
-                <div id="colorselector">
-                    <label><?php echo CUSTOM; ?> : </label><div style="background-color: rgb(239, 239, 239);"></div>
-                </div>
-            </div>
+    </div>
+    <div class="row margin-bottom-md">
+        <div class="choice-title">
+            <span><?php echo ICON_SIZE; ?></span>
         </div>
-        <div class="row" id="preview">
-            <div id="preview-title">
-                <span class="btn-primary"><?php echo PREVIEW; ?></span>
+        <div class="text-center">
+            <div class="choice selector select-size margin-bottom-md">
+                <p><i class="selector-icon <?php echo $icon_main_class . $icon; ?>"></i> extra-small</p>
             </div>
-            <!-- don't remove beginning space,
-            otherwise tinymce will not allow empty tag and will remove your icon -->
-            <div class="col-sm-12 margin-bottom-md text-center test-icon-wrapper" id="test-wrapper">
-                &nbsp;<?php echo $iconCode; ?>
+            <div class="choice selector select-size margin-bottom-md">
+                <h4><i class="selector-icon <?php echo $icon_main_class . $icon; ?>"></i> small</h4>
             </div>
+            <div class="choice selector select-size margin-bottom-md">
+                <h3><i class="selector-icon <?php echo $icon_main_class . $icon; ?>"></i> medium</h3>
+            </div>
+            <div class="choice selector select-size margin-bottom-md">
+                <h2><i class="selector-icon <?php echo $icon_main_class . $icon; ?>"></i> large</h2>
+            </div>
+            <strong><?php echo CUSTOM; ?></strong> : <input name="size-input" size="10" value=""> <strong>px</strong>
         </div>
-        <div class="row">
-            <div id="code-title">
-                <a href="#" id="code-slide-link">code <i class="glyphicon glyphicon-arrow-up"></i></a>
+    </div>
+    <div class="row margin-bottom-md ">
+        <div class="choice-title">
+            <span><?php echo COLOR; ?></span>
+        </div>
+        <div class="text-center">
+            <div class="choice selector select-color">
+                <span class="color btn-default"></span>
             </div>
-            <div class="col-sm-12 text-center" id="code-wrapper">
-                <pre><?php
-                    echo htmlspecialchars($iconCode);
-                    ?></pre>
+            <div class="choice selector select-color">
+                <span class="color btn-primary"></span>
+            </div>
+            <div class="choice selector select-color">
+                <span class="color btn-success"></span>
+            </div>
+            <div class="choice selector select-color">
+                <span class="color btn-info"></span>
+            </div>
+            <div class="choice selector select-color">
+                <span class="color btn-warning"></span>
+            </div>
+            <div class="choice selector select-color">
+                <span class="color btn-danger"></span>
+            </div>
+            <div id="colorselector">
+                <label><?php echo CUSTOM; ?> : </label>
+                <div style="background-color: rgb(239, 239, 239);"></div>
             </div>
         </div>
     </div>
+    <div class="row" id="preview">
+        <div id="preview-title">
+            <span class="btn-primary"><?php echo PREVIEW; ?></span>
+        </div>
+        <!-- don't remove beginning space,
+        otherwise tinymce will not allow empty tag and will remove your icon -->
+        <div class="col-sm-12 margin-bottom-md text-center test-icon-wrapper" id="test-wrapper">
+            &nbsp;<?php echo $iconCode; ?>
+        </div>
+    </div>
+    <div class="row">
+        <div id="code-title">
+            <a href="#" id="code-slide-link">code <i class="glyphicon glyphicon-arrow-up"></i></a>
+        </div>
+        <div class="col-sm-12 text-center" id="code-wrapper">
+                <pre><?php
+                    echo htmlspecialchars($iconCode);
+                    ?></pre>
+        </div>
+    </div>
+</div>
 <script type="text/javascript" src="<?php echo JQUERY_JS ?>"></script>
 <script type="text/javascript" src="<?php echo BOOTSTRAP_JS ?>"></script>
 <script type="text/javascript" src="js/colorpicker.min.js"></script>
@@ -161,11 +163,11 @@ if (isset($_GET['icon'])) {
 <script type="text/javascript" src="js/bootstrap-iconpicker.min.js"></script>
 <script type="text/javascript" src="<?php echo PRISM_JS; ?>"></script>
 <script type="text/javascript">
-    var icon      = '<?php echo $icon; ?>'; //console.log(icon);
-    var iconFont  = '<?php echo $iconFont; ?>'; //console.log(iconFont);
-    var iconSize  = '<?php echo $iconSize; ?>'; // console.log(iconSize);
+    var icon = '<?php echo $icon; ?>'; //console.log(icon);
+    var iconFont = '<?php echo $iconFont; ?>'; //console.log(iconFont);
+    var iconSize = '<?php echo $iconSize; ?>'; // console.log(iconSize);
     var iconColor = '<?php echo $iconColor; ?>'; //console.log(iconColor);
-    var iconCode  = '<?php echo $iconCode; ?>'; //console.log(iconCode);
+    var iconCode = '<?php echo $iconCode; ?>'; //console.log(iconCode);
 
     $.noConflict();
     jQuery(document).ready(function ($) {
@@ -304,8 +306,7 @@ if (isset($_GET['icon'])) {
 
         /* icon */
 
-        function changeIcon()
-        {
+        function changeIcon() {
             var newIcon = $('#iconpicker').find('input[type="hidden"]').prop('value');
             iconCode = iconCode.replace(icon, newIcon);
             $('.selector.select-size i').removeClass(icon).addClass(newIcon);

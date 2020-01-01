@@ -1,11 +1,12 @@
 <?php
+
 include_once('conf/conf.php');
 if (isset($_GET['edit'])) {
-    $newPager = false;
-    $pagerCode  = '';
+    $newPager  = false;
+    $pagerCode = '';
 } else {
-    $newPager = true;
-    $pagerCode  = '<ul class="pager"><li class="previous"><a href="#">&larr; ' . PREVIOUS . '</a></li> <li class="next"><a href="#">' . NEXT . ' &rarr;</a></li></ul>';
+    $newPager  = true;
+    $pagerCode = '<ul class="pager"><li class="previous"><a href="#">&larr; ' . PREVIOUS . '</a></li> <li class="next"><a href="#">' . NEXT . ' &rarr;</a></li></ul>';
 }
 ?>
 <!DOCTYPE html>
@@ -13,94 +14,94 @@ if (isset($_GET['edit'])) {
 <head>
     <link rel="stylesheet" href="<?php echo $bootstrap_css_path; ?>">
     <link rel="stylesheet" href="css/plugin.min.css">
-    <link href="<?php echo PRISM_CSS; ?>" type="text/css" rel="stylesheet" />
+    <link href="<?php echo PRISM_CSS; ?>" type="text/css" rel="stylesheet"/>
 </head>
 <body>
-    <div class="container">
-        <div class="row margin-bottom-md">
-            <div class="choice-title">
-                <span><?php echo POSITION; ?></span>
-            </div>
-            <div class="col-md-12">
-                <div class="text-center">
-                    <div class="btn-group btn-toggle-position">
-                        <button class="btn btn-sm btn-default" data-attr="false"><?php echo CENTER; ?></button>
-                        <button class="btn btn-sm btn-success active" data-attr="true"><?php echo PUSH_TO_THE_SIDES; ?></button>
-                    </div>
-                </div>
-            </div>
+<div class="container">
+    <div class="row margin-bottom-md">
+        <div class="choice-title">
+            <span><?php echo POSITION; ?></span>
         </div>
-        <div class="row margin-bottom-md">
-            <div class="choice-title margin-bottom-md">
-                <span><?php echo CONTENT; ?></span>
-            </div>
-            <div class="col-xs-4"><h4><?php echo TITLE; ?></h4></div>
-            <div class="col-xs-4"><h4><?php echo LINK; ?></h4></div>
-            <div class="col-xs-4"><h4><?php echo DISABLED; ?></h4></div>
-            <div class="col-xs-12" id="content">
-                <div class="row">
-                    <div class="col-xs-4">
-                        <div class="form-group">
-                            <input class="form-control select-text" type="text" value="&larr; <?php echo PREVIOUS; ?>">
-                        </div>
-                    </div>
-                    <div class="col-xs-4">
-                        <div class="form-group">
-                            <input class="form-control select-link" type="text" value="<?php echo SITE_URL; ?>">
-                        </div>
-                    </div>
-                    <div class="col-xs-4">
-                        <div class="btn-group btn-toggle">
-                            <button class="btn btn-sm btn-success active" data-attr="false"><?php echo NO; ?></button>
-                            <button class="btn btn-sm btn-default" data-attr="true"><?php echo YES; ?></button>
-                        </div>
-                    </div>
+        <div class="col-md-12">
+            <div class="text-center">
+                <div class="btn-group btn-toggle-position">
+                    <button class="btn btn-sm btn-default" data-attr="false"><?php echo CENTER; ?></button>
+                    <button class="btn btn-sm btn-success active" data-attr="true"><?php echo PUSH_TO_THE_SIDES; ?></button>
                 </div>
-                <div class="row">
-                    <div class="col-xs-4">
-                        <div class="form-group">
-                            <input class="form-control select-text" type="text" value="<?php echo NEXT; ?> &rarr;">
-                        </div>
-                    </div>
-                    <div class="col-xs-4">
-                        <div class="form-group">
-                            <input class="form-control select-link" type="text" value="<?php echo SITE_URL; ?>">
-                        </div>
-                    </div>
-                    <div class="col-xs-4">
-                        <div class="btn-group btn-toggle">
-                            <button class="btn btn-sm btn-success active" data-attr="false"><?php echo NO; ?></button>
-                            <button class="btn btn-sm btn-default" data-attr="true"><?php echo YES; ?></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row" id="preview">
-            <div id="preview-title">
-                <span class="btn-primary"><?php echo PREVIEW; ?></span>
-            </div>
-            <div class="col-sm-12 margin-bottom-md" id="test-wrapper">
-                <?php echo $pagerCode ?>
-            </div>
-        </div>
-        <div class="row">
-            <div id="code-title">
-                <a href="#" id="code-slide-link"><?php echo CODE; ?> <i class="glyphicon glyphicon-arrow-up"></i></a>
-            </div>
-            <div class="col-sm-12" id="code-wrapper">
-                <pre></pre>
             </div>
         </div>
     </div>
+    <div class="row margin-bottom-md">
+        <div class="choice-title margin-bottom-md">
+            <span><?php echo CONTENT; ?></span>
+        </div>
+        <div class="col-xs-4"><h4><?php echo TITLE; ?></h4></div>
+        <div class="col-xs-4"><h4><?php echo LINK; ?></h4></div>
+        <div class="col-xs-4"><h4><?php echo DISABLED; ?></h4></div>
+        <div class="col-xs-12" id="content">
+            <div class="row">
+                <div class="col-xs-4">
+                    <div class="form-group">
+                        <input class="form-control select-text" type="text" value="&larr; <?php echo PREVIOUS; ?>">
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="form-group">
+                        <input class="form-control select-link" type="text" value="<?php echo SITE_URL; ?>">
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="btn-group btn-toggle">
+                        <button class="btn btn-sm btn-success active" data-attr="false"><?php echo NO; ?></button>
+                        <button class="btn btn-sm btn-default" data-attr="true"><?php echo YES; ?></button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-4">
+                    <div class="form-group">
+                        <input class="form-control select-text" type="text" value="<?php echo NEXT; ?> &rarr;">
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="form-group">
+                        <input class="form-control select-link" type="text" value="<?php echo SITE_URL; ?>">
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="btn-group btn-toggle">
+                        <button class="btn btn-sm btn-success active" data-attr="false"><?php echo NO; ?></button>
+                        <button class="btn btn-sm btn-default" data-attr="true"><?php echo YES; ?></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="preview">
+        <div id="preview-title">
+            <span class="btn-primary"><?php echo PREVIEW; ?></span>
+        </div>
+        <div class="col-sm-12 margin-bottom-md" id="test-wrapper">
+            <?php echo $pagerCode ?>
+        </div>
+    </div>
+    <div class="row">
+        <div id="code-title">
+            <a href="#" id="code-slide-link"><?php echo CODE; ?> <i class="glyphicon glyphicon-arrow-up"></i></a>
+        </div>
+        <div class="col-sm-12" id="code-wrapper">
+            <pre></pre>
+        </div>
+    </div>
+</div>
 <script type="text/javascript" src="<?php echo JQUERY_JS ?>"></script>
 <script type="text/javascript" src="<?php echo BOOTSTRAP_JS ?>"></script>
 <script type="text/javascript" src="js/utils.min.js"></script>
 <script type="text/javascript" src="js/jquery.htmlClean.min.js"></script>
 <script type="text/javascript" src="<?php echo PRISM_JS; ?>"></script>
 <script type="text/javascript">
-    var newPager  = '<?php echo $newPager; ?>';
-    var pagerCode  = '<?php echo $pagerCode; ?>';
+    var newPager = '<?php echo $newPager; ?>';
+    var pagerCode = '<?php echo $pagerCode; ?>';
     var index;
     $.noConflict();
     jQuery(document).ready(function ($) {
@@ -174,9 +175,8 @@ if (isset($_GET['edit'])) {
         activateToggleDisabled();
         activateTogglePosition();
 
-        function activateToggleDisabled()
-        {
-            $('.btn-toggle').each( function () {
+        function activateToggleDisabled() {
+            $('.btn-toggle').each(function () {
                 $(this).on('click', function () {
                     index = $('.btn-toggle').index(this);
                     toggleDisabled(this, index);
@@ -184,31 +184,27 @@ if (isset($_GET['edit'])) {
             });
         }
 
-        function activateTogglePosition()
-        {
+        function activateTogglePosition() {
             $('.btn-toggle-position').on('click', function () {
                 togglePosition(this);
             });
         }
 
-        function changeText(input, index)
-        {
+        function changeText(input, index) {
             var li = $('#test-wrapper ul li')[index];
             var value = $(input).prop('value');
             $(li).find('a').html(value);
             updateCode();
         }
 
-        function changeLink(input, index)
-        {
+        function changeLink(input, index) {
             var li = $('#test-wrapper ul li')[index];
             var value = $(input).prop('value');
             $(li).find('a').attr('href', value);
             updateCode();
         }
 
-        function toggleDisabled(btnGroup, index)
-        {
+        function toggleDisabled(btnGroup, index) {
             var disabled = toggleBtn(btnGroup);
             var li = $('#test-wrapper li')[index];
             if (disabled) {
@@ -219,8 +215,7 @@ if (isset($_GET['edit'])) {
             updateCode();
         }
 
-        function togglePosition(btnGroup)
-        {
+        function togglePosition(btnGroup) {
             var pulledPager = toggleBtn(btnGroup);
             if (pulledPager) {
                 $('#test-wrapper li:first-child').addClass('previous');
@@ -232,8 +227,7 @@ if (isset($_GET['edit'])) {
             updateCode();
         }
 
-        function addNewItem(text, link, disabled)
-        {
+        function addNewItem(text, link, disabled) {
             text = text.toString();
             var newItemHtml = '<div class="row"><div class="col-sm-4"><div class="form-group"><input class="form-control select-text" type="text" value="' + text + '"></div></div><div class="col-sm-4"><div class="form-group"><input class="form-control select-link" type="text" value="' + link + '"></div></div>';
             if (disabled) {

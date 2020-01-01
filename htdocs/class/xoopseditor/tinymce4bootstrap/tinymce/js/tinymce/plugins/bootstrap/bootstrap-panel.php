@@ -1,4 +1,5 @@
 <?php
+
 include_once('conf/conf.php');
 if (isset($_GET['edit'])) {
     $newPanel            = false;
@@ -25,123 +26,141 @@ if (isset($_GET['edit'])) {
 <head>
     <link rel="stylesheet" href="<?php echo $bootstrap_css_path; ?>">
     <link rel="stylesheet" href="css/plugin.min.css">
-    <link href="<?php echo PRISM_CSS; ?>" type="text/css" rel="stylesheet" />
+    <link href="<?php echo PRISM_CSS; ?>" type="text/css" rel="stylesheet"/>
 </head>
 <body>
-    <div class="container">
-        <div class="row margin-bottom-md">
-            <div class="choice-title">
-                <span><?php echo SECTIONS; ?></span>
-            </div>
-            <div class="col-sm-4 col-sm-offset-2 col-xs-6">
-                <div class="btn-group btn-toggle-panel-heading">
-                    <button class="btn btn-sm btn-default" data-attr="false"><?php echo NO_HEADING; ?></button>
-                    <button class="btn btn-sm btn-success active" data-attr="true"><?php echo HEADING; ?></button>
-                </div>
-            </div>
-            <div class="col-sm-4 col-xs-6">
-                <div class="btn-group btn-toggle-panel-footer">
-                    <button class="btn btn-sm btn-success active" data-attr="false"><?php echo NO_FOOTER; ?></button>
-                    <button class="btn btn-sm btn-default" data-attr="true"><?php echo FOOTER; ?></button>
-                </div>
+<div class="container">
+    <div class="row margin-bottom-md">
+        <div class="choice-title">
+            <span><?php echo SECTIONS; ?></span>
+        </div>
+        <div class="col-sm-4 col-sm-offset-2 col-xs-6">
+            <div class="btn-group btn-toggle-panel-heading">
+                <button class="btn btn-sm btn-default" data-attr="false"><?php echo NO_HEADING; ?></button>
+                <button class="btn btn-sm btn-success active" data-attr="true"><?php echo HEADING; ?></button>
             </div>
         </div>
-        <div class="row margin-bottom-md">
-            <div class="choice-title margin-bottom-md">
-                <span><?php echo PANEL_STYLE; ?></span>
-            </div>
-            <div class="col-sm-2 col-xs-4 text-center">
-                <div class="choice selector select-panel-style">
-                    <div class="panel panel-default" data-attr="panel-default"><div class="panel-heading">default</div><div class="panel-body">panel</div></div>
-                </div>
-            </div>
-            <div class="col-sm-2 col-xs-4 text-center">
-                <div class="choice selector select-panel-style">
-                    <div class="panel panel-primary" data-attr="panel-primary"><div class="panel-heading">primary</div><div class="panel-body">panel</div></div>
-                </div>
-            </div>
-            <div class="col-sm-2 col-xs-4 text-center">
-                <div class="choice selector select-panel-style">
-                    <div class="panel panel-success" data-attr="panel-success"><div class="panel-heading">success</div><div class="panel-body">panel</div></div>
-                </div>
-            </div>
-            <div class="col-sm-2 col-xs-4 text-center">
-                <div class="choice selector select-panel-style">
-                    <div class="panel panel-info" data-attr="panel-info"><div class="panel-heading">info</div><div class="panel-body">panel</div></div>
-                </div>
-            </div>
-            <div class="col-sm-2 col-xs-4 text-center">
-                <div class="choice selector select-panel-style">
-                    <div class="panel panel-warning" data-attr="panel-warning"><div class="panel-heading">warning</div><div class="panel-body">panel</div></div>
-                </div>
-            </div>
-            <div class="col-sm-2 col-xs-4 text-center">
-                <div class="choice selector select-panel-style">
-                    <div class="panel panel-danger" data-attr="panel-danger"><div class="panel-heading">danger</div><div class="panel-body">panel</div></div>
-                </div>
-            </div>
-        </div>
-        <div class="row margin-bottom-md">
-            <div class="choice-title">
-                <span><?php echo PANEL_CONTENT; ?></span>
-            </div>
-        </div>
-        <div class="clearfix">
-            <div class="form-horizontal">
-                <div class="form-group">
-                    <label for="panel-heading-content" class="col-xs-4"><?php echo HEADING_CONTENT; ?> : </label>
-                    <div class="col-xs-8">
-                        <input name="panel-heading-content" class="form-control select-text" type="text" value="&lt;h3 class=&quot;panel-title&quot;&gt;<?php echo PANEL_TITLE; ?>&lt;/h3&gt;">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="panel-body-content" class="col-xs-4"><?php echo MAIN_CONTENT; ?> : </label>
-                    <div class="col-xs-8">
-                        <input name="panel-body-content" class="form-control select-text" type="text" value="&lt;p&gt;<?php echo PANEL_CONTENT; ?>&lt;/p&gt;">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="panel-footer-content" class="col-xs-4"><?php echo FOOTER_CONTENT; ?> : </label>
-                    <div class="col-xs-8">
-                        <input name="panel-footer-content" class="form-control select-text" type="text" value="">
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-12">
-                <p class="text-success text-center"><?php echo HTML_AUTHORIZED; ?></p>
-            </div>
-        </div>
-        <div class="row" id="preview">
-            <div id="preview-title" class="margin-bottom-md">
-                <span class="label-primary"><?php echo PREVIEW; ?></span>
-            </div>
-            <div class="col-sm-12 margin-bottom-md" id="test-wrapper">
-                <?php echo $panelCode ?>
-            </div>
-        </div>
-        <div class="row">
-            <div id="code-title">
-                <a href="#" id="code-slide-link"><?php echo CODE; ?> <i class="glyphicon glyphicon-arrow-up"></i></a>
-            </div>
-            <div class="col-sm-12" id="code-wrapper">
-                <pre></pre>
+        <div class="col-sm-4 col-xs-6">
+            <div class="btn-group btn-toggle-panel-footer">
+                <button class="btn btn-sm btn-success active" data-attr="false"><?php echo NO_FOOTER; ?></button>
+                <button class="btn btn-sm btn-default" data-attr="true"><?php echo FOOTER; ?></button>
             </div>
         </div>
     </div>
+    <div class="row margin-bottom-md">
+        <div class="choice-title margin-bottom-md">
+            <span><?php echo PANEL_STYLE; ?></span>
+        </div>
+        <div class="col-sm-2 col-xs-4 text-center">
+            <div class="choice selector select-panel-style">
+                <div class="panel panel-default" data-attr="panel-default">
+                    <div class="panel-heading">default</div>
+                    <div class="panel-body">panel</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2 col-xs-4 text-center">
+            <div class="choice selector select-panel-style">
+                <div class="panel panel-primary" data-attr="panel-primary">
+                    <div class="panel-heading">primary</div>
+                    <div class="panel-body">panel</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2 col-xs-4 text-center">
+            <div class="choice selector select-panel-style">
+                <div class="panel panel-success" data-attr="panel-success">
+                    <div class="panel-heading">success</div>
+                    <div class="panel-body">panel</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2 col-xs-4 text-center">
+            <div class="choice selector select-panel-style">
+                <div class="panel panel-info" data-attr="panel-info">
+                    <div class="panel-heading">info</div>
+                    <div class="panel-body">panel</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2 col-xs-4 text-center">
+            <div class="choice selector select-panel-style">
+                <div class="panel panel-warning" data-attr="panel-warning">
+                    <div class="panel-heading">warning</div>
+                    <div class="panel-body">panel</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2 col-xs-4 text-center">
+            <div class="choice selector select-panel-style">
+                <div class="panel panel-danger" data-attr="panel-danger">
+                    <div class="panel-heading">danger</div>
+                    <div class="panel-body">panel</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row margin-bottom-md">
+        <div class="choice-title">
+            <span><?php echo PANEL_CONTENT; ?></span>
+        </div>
+    </div>
+    <div class="clearfix">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label for="panel-heading-content" class="col-xs-4"><?php echo HEADING_CONTENT; ?> : </label>
+                <div class="col-xs-8">
+                    <input name="panel-heading-content" class="form-control select-text" type="text" value="&lt;h3 class=&quot;panel-title&quot;&gt;<?php echo PANEL_TITLE; ?>&lt;/h3&gt;">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="panel-body-content" class="col-xs-4"><?php echo MAIN_CONTENT; ?> : </label>
+                <div class="col-xs-8">
+                    <input name="panel-body-content" class="form-control select-text" type="text" value="&lt;p&gt;<?php echo PANEL_CONTENT; ?>&lt;/p&gt;">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="panel-footer-content" class="col-xs-4"><?php echo FOOTER_CONTENT; ?> : </label>
+                <div class="col-xs-8">
+                    <input name="panel-footer-content" class="form-control select-text" type="text" value="">
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <p class="text-success text-center"><?php echo HTML_AUTHORIZED; ?></p>
+        </div>
+    </div>
+    <div class="row" id="preview">
+        <div id="preview-title" class="margin-bottom-md">
+            <span class="label-primary"><?php echo PREVIEW; ?></span>
+        </div>
+        <div class="col-sm-12 margin-bottom-md" id="test-wrapper">
+            <?php echo $panelCode ?>
+        </div>
+    </div>
+    <div class="row">
+        <div id="code-title">
+            <a href="#" id="code-slide-link"><?php echo CODE; ?> <i class="glyphicon glyphicon-arrow-up"></i></a>
+        </div>
+        <div class="col-sm-12" id="code-wrapper">
+            <pre></pre>
+        </div>
+    </div>
+</div>
 <script type="text/javascript" src="<?php echo JQUERY_JS ?>"></script>
 <script type="text/javascript" src="<?php echo BOOTSTRAP_JS ?>"></script>
 <script type="text/javascript" src="js/utils.min.js"></script>
 <script type="text/javascript" src="js/jquery.htmlClean.min.js"></script>
 <script type="text/javascript" src="<?php echo PRISM_JS; ?>"></script>
 <script type="text/javascript">
-    var newPanel            = '<?php echo $newPanel; ?>';
-    var panelHeading        = '<?php echo $panelHeading; ?>';
+    var newPanel = '<?php echo $newPanel; ?>';
+    var panelHeading = '<?php echo $panelHeading; ?>';
     var panelHeadingContent = '<?php echo $panelHeadingContent; ?>';
-    var panelBodyContent    = '<?php echo $panelBodyContent; ?>';
-    var panelFooter         = '<?php echo $panelFooter; ?>';
-    var panelFooterContent  = '<?php echo $panelFooterContent; ?>';
-    var panelStyle          = '<?php echo $panelStyle; ?>';
-    var panelCode           = '<?php echo $panelCode; ?>';
+    var panelBodyContent = '<?php echo $panelBodyContent; ?>';
+    var panelFooter = '<?php echo $panelFooter; ?>';
+    var panelFooterContent = '<?php echo $panelFooterContent; ?>';
+    var panelStyle = '<?php echo $panelStyle; ?>';
+    var panelCode = '<?php echo $panelCode; ?>';
     $.noConflict();
     jQuery(document).ready(function ($) {
 
@@ -260,22 +279,19 @@ if (isset($_GET['edit'])) {
         activateToggle('panel-heading');
         activateToggle('panel-footer');
 
-        function changeText(input, target)
-        {
+        function changeText(input, target) {
             var value = $(input).prop('value');
             $('#test-wrapper').find(target).html(value);
             updateCode();
         }
 
-        function activateToggle(target)
-        {
+        function activateToggle(target) {
             $('.btn-toggle-' + target).on('click', function () {
                 toggle(this, target);
             });
         }
 
-        function toggle(btnGroup, target)
-        {
+        function toggle(btnGroup, target) {
             var panelDiv = $('#test-wrapper .panel');
             if (target == 'panel-heading') {
                 panelHeading = toggleBtn(btnGroup);

@@ -1,11 +1,12 @@
 <?php
+
 include_once('conf/conf.php');
 if (isset($_GET['edit'])) {
-    $newBreadcrumb = false;
-    $breadcrumbCode  = '';
+    $newBreadcrumb  = false;
+    $breadcrumbCode = '';
 } else {
-    $newBreadcrumb = true;
-    $breadcrumbCode  = '<ol class="breadcrumb"><li><a href="' . SITE_URL . '"><span class="glyphicon glyphicon-home"></span></a></li><li><a href="' . SITE_URL . '/content.php">content</a></li><li class="active">page</li></ol>';
+    $newBreadcrumb  = true;
+    $breadcrumbCode = '<ol class="breadcrumb"><li><a href="' . SITE_URL . '"><span class="glyphicon glyphicon-home"></span></a></li><li><a href="' . SITE_URL . '/content.php">content</a></li><li class="active">page</li></ol>';
 }
 ?>
 <!DOCTYPE html>
@@ -13,95 +14,95 @@ if (isset($_GET['edit'])) {
 <head>
     <link rel="stylesheet" href="<?php echo $bootstrap_css_path; ?>">
     <link rel="stylesheet" href="css/plugin.min.css">
-    <link href="<?php echo PRISM_CSS; ?>" type="text/css" rel="stylesheet" />
+    <link href="<?php echo PRISM_CSS; ?>" type="text/css" rel="stylesheet"/>
 </head>
 <body>
-    <div class="container">
-        <div class="row margin-bottom-md">
-            <div class="choice-title margin-bottom-md">
-                <span><?php echo ITEMS; ?></span>
-            </div>
-                <div class="col-sm-4"><h4><?php echo TITLE; ?></h4></div>
-                <div class="col-sm-6"><h4><?php echo LINK; ?></h4></div>
-            <div class="col-md-12" id="items">
-                <div class="row">
-                    <div class="col-xs-4">
-                        <div class="form-group">
-                            <input class="form-control select-text" type="text" value="icon-home">
-                        </div>
-                    </div>
-                    <div class="col-xs-6">
-                        <div class="form-group">
-                            <input class="form-control select-link" type="text" value="<?php echo SITE_URL; ?>">
-                        </div>
+<div class="container">
+    <div class="row margin-bottom-md">
+        <div class="choice-title margin-bottom-md">
+            <span><?php echo ITEMS; ?></span>
+        </div>
+        <div class="col-sm-4"><h4><?php echo TITLE; ?></h4></div>
+        <div class="col-sm-6"><h4><?php echo LINK; ?></h4></div>
+        <div class="col-md-12" id="items">
+            <div class="row">
+                <div class="col-xs-4">
+                    <div class="form-group">
+                        <input class="form-control select-text" type="text" value="icon-home">
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-xs-4">
-                        <div class="form-group">
-                            <input class="form-control select-text" type="text" value="content">
-                        </div>
-                    </div>
-                    <div class="col-xs-6">
-                        <div class="form-group">
-                            <input class="form-control select-link" type="text" value="<?php echo SITE_URL; ?>/content.html">
-                        </div>
-                    </div>
-                    <div class="col-xs-2">
-                        <div class="form-control form-control-like">
-                            <button class="btn btn-sm btn-danger btn-xs btn-delete-item" data-toggle="tooltip" title="<?php echo DELETE_THIS_ITEM; ?>"><span class="bootstrap-icon-minus"></span></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-4">
-                        <div class="form-group">
-                            <input class="form-control select-text" type="text" value="page">
-                        </div>
-                    </div>
-                    <div class="col-xs-6">
-                        <div class="form-group">
-                            <input class="form-control select-link" type="text" value="">
-                        </div>
-                    </div>
-                    <div class="col-xs-2">
-                        <div class="form-control form-control-like">
-                            <button class="btn btn-sm btn-danger btn-xs btn-delete-item" data-toggle="tooltip" title="<?php echo DELETE_THIS_ITEM; ?>"><span class="bootstrap-icon-minus"></span></button>
-                        </div>
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <input class="form-control select-link" type="text" value="<?php echo SITE_URL; ?>">
                     </div>
                 </div>
             </div>
-            <div class="col-sm-4 margin-bottom-md">
-                <div class="form-control form-control-like">
-                    <button class="btn btn-sm btn-success" id="add-new-item"><?php echo ADD_NEW_ITEM; ?><span class="bootstrap-icon-plus append"></span></button>
+            <div class="row">
+                <div class="col-xs-4">
+                    <div class="form-group">
+                        <input class="form-control select-text" type="text" value="content">
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <input class="form-control select-link" type="text" value="<?php echo SITE_URL; ?>/content.html">
+                    </div>
+                </div>
+                <div class="col-xs-2">
+                    <div class="form-control form-control-like">
+                        <button class="btn btn-sm btn-danger btn-xs btn-delete-item" data-toggle="tooltip" title="<?php echo DELETE_THIS_ITEM; ?>"><span class="bootstrap-icon-minus"></span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-4">
+                    <div class="form-group">
+                        <input class="form-control select-text" type="text" value="page">
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="form-group">
+                        <input class="form-control select-link" type="text" value="">
+                    </div>
+                </div>
+                <div class="col-xs-2">
+                    <div class="form-control form-control-like">
+                        <button class="btn btn-sm btn-danger btn-xs btn-delete-item" data-toggle="tooltip" title="<?php echo DELETE_THIS_ITEM; ?>"><span class="bootstrap-icon-minus"></span></button>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="row" id="preview">
-            <div id="preview-title" class="margin-bottom-md">
-                <span class="btn-primary"><?php echo PREVIEW; ?></span>
-            </div>
-            <div class="col-sm-12 margin-bottom-md" id="test-wrapper">
-                <?php echo $breadcrumbCode ?>
-            </div>
-        </div>
-        <div class="row">
-            <div id="code-title">
-                <a href="#" id="code-slide-link"><?php echo CODE; ?> <i class="glyphicon glyphicon-arrow-up"></i></a>
-            </div>
-            <div class="col-sm-12" id="code-wrapper">
-                <pre></pre>
+        <div class="col-sm-4 margin-bottom-md">
+            <div class="form-control form-control-like">
+                <button class="btn btn-sm btn-success" id="add-new-item"><?php echo ADD_NEW_ITEM; ?><span class="bootstrap-icon-plus append"></span></button>
             </div>
         </div>
     </div>
+    <div class="row" id="preview">
+        <div id="preview-title" class="margin-bottom-md">
+            <span class="btn-primary"><?php echo PREVIEW; ?></span>
+        </div>
+        <div class="col-sm-12 margin-bottom-md" id="test-wrapper">
+            <?php echo $breadcrumbCode ?>
+        </div>
+    </div>
+    <div class="row">
+        <div id="code-title">
+            <a href="#" id="code-slide-link"><?php echo CODE; ?> <i class="glyphicon glyphicon-arrow-up"></i></a>
+        </div>
+        <div class="col-sm-12" id="code-wrapper">
+            <pre></pre>
+        </div>
+    </div>
+</div>
 <script type="text/javascript" src="<?php echo JQUERY_JS ?>"></script>
 <script type="text/javascript" src="<?php echo BOOTSTRAP_JS ?>"></script>
 <script type="text/javascript" src="js/utils.min.js"></script>
 <script type="text/javascript" src="js/jquery.htmlClean.min.js"></script>
 <script type="text/javascript" src="<?php echo PRISM_JS; ?>"></script>
 <script type="text/javascript">
-    var newBreadcrumb  = '<?php echo $newBreadcrumb; ?>';
-    var breadcrumbCode  = '<?php echo $breadcrumbCode; ?>';
+    var newBreadcrumb = '<?php echo $newBreadcrumb; ?>';
+    var breadcrumbCode = '<?php echo $breadcrumbCode; ?>';
     var index;
     $.noConflict();
     jQuery(document).ready(function ($) {
@@ -177,8 +178,7 @@ if (isset($_GET['edit'])) {
             addNewItem('new item', '', true);
         });
 
-        function changeText(input, index)
-        {
+        function changeText(input, index) {
             var li = $('#test-wrapper ol li')[index];
             var value = $(input).prop('value');
             if (value == 'icon-home') {
@@ -192,8 +192,7 @@ if (isset($_GET['edit'])) {
             updateCode();
         }
 
-        function changeLink(input, index)
-        {
+        function changeLink(input, index) {
             var li = $('#test-wrapper ol li')[index];
             var value = $(input).prop('value');
             if (value.length < 1) { // new link empty
@@ -211,8 +210,7 @@ if (isset($_GET['edit'])) {
             updateCode();
         }
 
-        function addNewItem(text, link, addToPreview)
-        {
+        function addNewItem(text, link, addToPreview) {
             var newItemHtml;
             var newItemPreview;
 
@@ -232,8 +230,7 @@ if (isset($_GET['edit'])) {
             updateCode();
         }
 
-        function deleteItem(index)
-        {
+        function deleteItem(index) {
             var li = $('#test-wrapper ol li')[index];
             var row = $('#items div.row')[index];
             li.remove();
