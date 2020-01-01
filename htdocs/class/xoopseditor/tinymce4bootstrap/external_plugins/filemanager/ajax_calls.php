@@ -1,7 +1,7 @@
 <?php
 
 include('config/config.php');
-if('RESPONSIVEfilemanager' != $_SESSION['verify']) die('forbiden');
+if('RESPONSIVEfilemanager' !== $_SESSION['verify']) die('forbiden');
 include('include/utils.php');
 
 if(isset($_GET['action']))
@@ -60,7 +60,7 @@ if(isset($_GET['action']))
             {
                 $OnlyFileName = $zip->getNameIndex($i);
                 $FullFileName = $zip->statIndex($i);
-                if ('/' == $FullFileName['name'][strlen($FullFileName['name']) - 1])
+                if ('/' === $FullFileName['name'][strlen($FullFileName['name']) - 1])
                 {
                 create_folder($base_folder.$FullFileName['name']);
                 }
@@ -71,7 +71,7 @@ if(isset($_GET['action']))
                 $OnlyFileName = $zip->getNameIndex($i);
                 $FullFileName = $zip->statIndex($i);
 
-                if (!('/' == $FullFileName['name'][strlen($FullFileName['name']) - 1]))
+                if (!('/' === $FullFileName['name'][strlen($FullFileName['name']) - 1]))
                 {
                 $fileinfo = pathinfo($OnlyFileName);
                 if(in_array(strtolower($fileinfo['extension']),$ext))

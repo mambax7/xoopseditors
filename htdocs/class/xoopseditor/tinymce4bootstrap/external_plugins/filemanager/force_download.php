@@ -1,6 +1,6 @@
 <?php
 include('config/config.php');
-if('RESPONSIVEfilemanager' != $_SESSION['verify']) die('forbiden');
+if('RESPONSIVEfilemanager' !== $_SESSION['verify']) die('forbiden');
 include('include/utils.php');
 
 if(0 === strpos($_POST['path'], '/')

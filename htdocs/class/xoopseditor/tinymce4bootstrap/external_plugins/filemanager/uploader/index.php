@@ -2,7 +2,7 @@
 
 include '../config/config.php';
 if(!$java_upload) die('forbidden');
-if('RESPONSIVEfilemanager' != $_SESSION['verify']) die('forbidden');
+if('RESPONSIVEfilemanager' !== $_SESSION['verify']) die('forbidden');
 
 //Let's load the 'interesting' stuff ...  ;-)
 include 'jupload.php';

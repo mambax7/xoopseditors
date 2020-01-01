@@ -59,9 +59,9 @@ class JUpload {
     public $files;
 
     public function __construct($appletparams = [], $classparams = []) {
-        if ('array' != gettype($classparams))
+        if ('array' !== gettype($classparams))
         $this->abort('Invalid type of parameter classparams: Expecting an array');
-        if ('array' != gettype($appletparams))
+        if ('array' !== gettype($appletparams))
         $this->abort('Invalid type of parameter appletparams: Expecting an array');
 
         // set some defaults for the applet params
@@ -82,7 +82,7 @@ class JUpload {
         if (!isset($appletparams['width']))
         $appletparams['width'] = 640;
         if (!isset($appletparams['height']))
-        $appletparams['height'] = ('true' == $appletparams['showLogWindow']) ? 500 : 300;
+        $appletparams['height'] = ('true' === $appletparams['showLogWindow']) ? 500 : 300;
         if (!isset($appletparams['mayscript']))
         $appletparams['mayscript'] = 'true';
         if (!isset($appletparams['scriptable']))
@@ -297,7 +297,7 @@ class JUpload {
         $ret .= '  height = "'.$params['height'].'"'.$N;
         $ret .= '  name = "'.$params['name'].'">'.$N;
         foreach ($params as $key => $val) {
-            if ('width' != $key && 'height' != $key)
+            if ('width' !== $key && 'height' !== $key)
             $ret .= '  <param name = "'.$key.'" value = "'.$val.'" />'.$N;
         }
         $ret .= '  <comment>'.$N;
@@ -392,16 +392,16 @@ class JUpload {
         }
         $ret = $this->classparams['destdir'].'/'.$subdir.$name;
         if (file_exists($ret)) {
-            if ('overwrite' == $this->classparams['duplicate']) {
+            if ('overwrite' === $this->classparams['duplicate']) {
                 return $ret;
             }
-            if ('reject' == $this->classparams['duplicate']) {
+            if ('reject' === $this->classparams['duplicate']) {
                 $this->abort('A file with the same name already exists');
             }
-            if ('warning' == $this->classparams['duplicate']) {
+            if ('warning' === $this->classparams['duplicate']) {
                 $this->warning("File $name already exists - rejected");
             }
-            if ('rename' == $this->classparams['duplicate']) {
+            if ('rename' === $this->classparams['duplicate']) {
                 $cnt = 1;
                 $dir = $this->classparams['destdir'].'/'.$subdir;
                 $ext = strrchr($name, '.');
@@ -449,7 +449,7 @@ class JUpload {
             $addBR = false;
             foreach ($f as $key=>$value) {
                 //If it's a specific key, let's display it:
-                if ('name' != $key && 'size' != $key && 'relativePath' != $key && 'fullName' != $key && 'md5sum' != $key) {
+                if ('name' !== $key && 'size' !== $key && 'relativePath' !== $key && 'fullName' !== $key && 'md5sum' !== $key) {
                     if ($addBR) {
                         $flist .= '<br>';
                     } else {
@@ -562,7 +562,7 @@ private function receive_uploaded_files() {
     if (!is_array($this->files)) {
         $this->abort('Invalid session (in afterupload, POST, is_array(files))');
     }
-    if ('true' == $this->appletparams['sendMD5Sum'] && !isset($_POST['md5sum'])) {
+    if ('true' === $this->appletparams['sendMD5Sum'] && !isset($_POST['md5sum'])) {
         $this->abort('Required POST variable md5sum is missing');
     }
     $cnt = 0;
@@ -579,13 +579,13 @@ private function receive_uploaded_files() {
         //$relpaths = (isset($_POST["relpathinfo$cnt"])) ? $_POST["relpathinfo$cnt"] : null;
         //$md5sums = (isset($_POST["md5sum$cnt"])) ? $_POST["md5sum$cnt"] : null;
 
-        if ('string' == gettype($relpaths)) {
+        if ('string' === gettype($relpaths)) {
             $relpaths = [$relpaths];
         }
-        if ('string' == gettype($md5sums)) {
+        if ('string' === gettype($md5sums)) {
             $md5sums = [$md5sums];
         }
-        if ('true' == $this->appletparams['sendMD5Sum'] && !is_array($md5sums)) {
+        if ('true' === $this->appletparams['sendMD5Sum'] && !is_array($md5sums)) {
             $this->abort('Expecting an array of MD5 checksums');
         }
         if (!is_array($relpaths)) {
@@ -679,7 +679,7 @@ if ($jupart) {
         $dlen = filesize($dstname);
         if ($dlen != $_SESSION[$this->classparams['var_prefix'].'size'])
         $this->abort('file size mismatch');
-        if ('true' == $this->appletparams['sendMD5Sum']) {
+        if ('true' === $this->appletparams['sendMD5Sum']) {
             if ($md5sums[$cnt] != md5_file($dstname))
             $this->abort('MD5 checksum mismatch');
         }
@@ -704,7 +704,7 @@ if ($jupart) {
     }
 } else {
     // Got a single file upload. Trivial.
-    if ('true' == $this->appletparams['sendMD5Sum']) {
+    if ('true' === $this->appletparams['sendMD5Sum']) {
         if ($md5sums[$cnt] != md5_file($tmpname))
             $this->abort('MD5 checksum mismatch');
     }
@@ -738,10 +738,10 @@ private function page_start() {
 
     // If the applet checks for the serverProtocol, it issues a HEAD request
     // -> Simply return an empty doc.
-    if ('HEAD' == $_SERVER['REQUEST_METHOD']) {
+    if ('HEAD' === $_SERVER['REQUEST_METHOD']) {
         // Nothing to do
 
-    } else if ('GET' == $_SERVER['REQUEST_METHOD']) {
+    } else if ('GET' === $_SERVER['REQUEST_METHOD']) {
         // A GET request means: return upload page
         $this->logDebug('page_start', 'Entering GET management');
 
@@ -775,7 +775,7 @@ private function page_start() {
             ob_start([& $this, 'interceptBeforeUpload']);
         }
 
-    } else if ('POST' == $_SERVER['REQUEST_METHOD']) {
+    } else if ('POST' === $_SERVER['REQUEST_METHOD']) {
         // If we got a POST request, this is the real work.
         if (isset($_GET['errormail'])) {
             //Hum, an error occurs on server side. Let's manage the debug log, that we just received.

@@ -24,13 +24,13 @@ if ( file_exists($root . $_POST['dir']) ) {
         echo '<ul class="jqueryFileTree" style="display: none;">';
         // All dirs
         foreach ($files as $file) {
-            if ( file_exists($root . $_POST['dir'] . $file) && '.' != $file && '..' != $file && is_dir($root . $_POST['dir'] . $file) ) {
+            if ( file_exists($root . $_POST['dir'] . $file) && '.' !== $file && '..' !== $file && is_dir($root . $_POST['dir'] . $file) ) {
                 echo '<li class="directory collapsed"><a href="#" rel="' . htmlentities($_POST['dir'] . $file) . '/">' . htmlentities($file) . '</a></li>';
             }
         }
         // All files
         foreach ($files as $file) {
-            if ( file_exists($root . $_POST['dir'] . $file) && '.' != $file && '..' != $file && !is_dir($root . $_POST['dir'] . $file) ) {
+            if ( file_exists($root . $_POST['dir'] . $file) && '.' !== $file && '..' !== $file && !is_dir($root . $_POST['dir'] . $file) ) {
                 $ext = preg_replace('/^.*\./', '', $file);
                 if (preg_match('/^(jpg|jpeg|png|gif)$/i', $ext)) {
                     echo "<li class=\"file ext_$ext\"><a href=\"#\" rel=\"" . htmlentities($_POST['dir'] . $file) . '">' . htmlentities($file) . '</a></li>';

@@ -47,7 +47,7 @@ class Snippets
                 $html .= '</div>' . " \n";
             }
         }
-        if ('true' == $this->allow_edit) {
+        if ('true' === $this->allow_edit) {
             $html .= '<div class="col-sm-6">' . " \n";
             $html .= '    <div class="text-center">' . " \n";
             $html .= '        <button class="btn btn-primary" id="add-new-snippet-btn">' . ADD_NEW_SNIPPET . '</button>' . " \n";

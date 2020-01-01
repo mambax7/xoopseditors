@@ -7,42 +7,42 @@ $default_icon    = '';
 $css_icon_file   = ''; // default = glyphicon
 $js_icon_file    = 'iconset-glyphicon.min.js'; // default
 
-if('glyphicon' == $iconFont) {
+if('glyphicon' === $iconFont) {
     $icon_main_class = 'glyphicon ';
     $default_icon  = 'glyphicon-home';
-} else if('ionicon' == $iconFont) {
+} else if('ionicon' === $iconFont) {
     $css_icon_file = 'ionicons.min.css';
     $js_icon_file  = 'iconset-ionicon-1.5.2.min.js';
     $default_icon  = 'ion-home';
-} else if('fontawesome' == $iconFont) {
+} else if('fontawesome' === $iconFont) {
     $css_icon_file = 'font-awesome.min.css';
     $js_icon_file  = 'iconset-fontawesome-4.2.0.min.js';
     $icon_main_class = 'fa ';
     $default_icon  = 'fa-home';
-} else if('weathericon' == $iconFont) {
+} else if('weathericon' === $iconFont) {
     $css_icon_file = 'weather-icons.min.css';
     $js_icon_file  = 'iconset-weathericon-1.2.0.min.js';
     $icon_main_class = 'wi ';
     $default_icon  = 'wi-horizon-alt';
-} else if('mapicon' == $iconFont) {
+} else if('mapicon' === $iconFont) {
     $css_icon_file = 'map-icons.min.css';
     $js_icon_file  = 'iconset-mapicon-2.1.0.min.js';
     $default_icon  = 'map-icon-art-gallery';
-} else if('octicon' == $iconFont) {
+} else if('octicon' === $iconFont) {
     $css_icon_file = 'octicons.min.css';
     $js_icon_file  = 'iconset-octicon-2.1.2.min.js';
     $icon_main_class = 'octicon ';
     $default_icon  = 'octicon-home';
-} else if('typicon' == $iconFont) {
+} else if('typicon' === $iconFont) {
     $css_icon_file = 'typicons.min.css';
     $js_icon_file  = 'iconset-typicon-2.0.6.min.js';
     $icon_main_class = 'typcn ';
     $default_icon  = 'typcn-home';
-} else if('elusiveicon' == $iconFont) {
+} else if('elusiveicon' === $iconFont) {
     $css_icon_file = 'elusive-icons.min.css';
     $js_icon_file  = 'iconset-elusiveicon-2.0.0.min.js';
     $default_icon  = 'el-icon-home';
-} else if('materialdesign' == $iconFont) {
+} else if('materialdesign' === $iconFont) {
     $css_icon_file = 'material-design-iconic-font.min.css';
     $js_icon_file  = 'iconset-materialdesign-1.1.1.min.js';
     $default_icon  = 'md-home';
