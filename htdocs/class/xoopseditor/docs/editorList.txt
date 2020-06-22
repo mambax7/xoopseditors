@@ -1,0 +1,47 @@
+EDITOR LIST
+-----------------------
+
+This is a collection of various Text Editors. Please read the "install.txt" file for instructions on how to install the Text Editors.
+
+Currently we have following editors:
+
+EDITOR			VERSION
+aloha
+ckeditor
+cleditor
+codemirror
+codemirror2
+codemirror3
+docs
+elrte
+fckeditor
+hallo
+htmlbox
+jhtmlarea
+jwysiwyg
+markitup
+nicedit
+openwysiwyg
+rheditor
+rte
+sceditor
+tinymce
+tinymce4
+tinymce4bootstrap
+tinymce5
+tinymce5bootstrap
+tinymcejquery
+whizzywig
+wmd
+wymeditor
+wysibb
+xheditor
+xinha
+
+
+
+
+Happy Xoopsing and may the Source be with you! 
+
+
+
