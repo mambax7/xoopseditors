@@ -1,19 +1,20 @@
 <?php
+
 session_start();
 
 // checking lang value
-if(isset($_COOKIE['sy_lang'])) {
+if (isset($_COOKIE['sy_lang'])) {
     $load_lang_code = $_COOKIE['sy_lang'];
 } else {
-    $load_lang_code = "en";
+    $load_lang_code = 'en';
 }
 
 // including lang files
 switch ($load_lang_code) {
-    case "en":
+    case 'en':
         require(__DIR__ . '/lang/en.php');
         break;
-    case "pl":
+    case 'pl':
         require(__DIR__ . '/lang/pl.php');
         break;
 }
@@ -35,37 +36,36 @@ require(__DIR__ . '/pluginconfig.php');
 
 <?php
 
-if(isset($_SESSION['username'])){
-
+if (isset($_SESSION['username'])) {
     $imgName = filter_input(INPUT_GET, 'img', FILTER_SANITIZE_STRING);
-    $imgSrc = $useruploadpath.$imgName;
+    $imgSrc  = $useruploadpath . $imgName;
 
     // ckeck if file exists
-    if(file_exists($imgSrc)){
+    if (file_exists($imgSrc)) {
         // check if file is available to delete
         if (is_writable($imgSrc)) {
             // check if file is a sytem file
             $imgBasepath = pathinfo($imgSrc);
             $imgBasename = $imgBasepath['basename'];
-            if(!in_array($imgBasename, $sy_icons)){
+            if (!in_array($imgBasename, $sy_icons)) {
                 // check if the selected file is in the upload folder
-                $imgDirname = $imgBasepath['dirname'];
-                $preExamplePath = "$useruploadpath/test.txt";
-                $tmpUserUPath = pathinfo($preExamplePath);
+                $imgDirname            = $imgBasepath['dirname'];
+                $preExamplePath        = "$useruploadpath/test.txt";
+                $tmpUserUPath          = pathinfo($preExamplePath);
                 $useruploadpathDirname = $tmpUserUPath['dirname'];
-                if($imgDirname == $useruploadpathDirname){
+                if ($imgDirname == $useruploadpathDirname) {
                     // check if file is an image
-                    $a = getimagesize($imgSrc);
+                    $a          = getimagesize($imgSrc);
                     $image_type = $a[2];
-                    if(in_array($image_type , array(IMAGETYPE_GIF , IMAGETYPE_JPEG , IMAGETYPE_PNG , IMAGETYPE_ICO))) {
+                    if (in_array($image_type, [IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_ICO])) {
                         unlink($imgSrc);
                         header('Location: ' . $_SERVER['HTTP_REFERER']);
                     } else {
                         echo '
                             <script>
                             swal({
-                              title: "'.$dltimageerrors1.'",
-                              text: "'.$dltimageerrors2.'",
+                              title: "' . $dltimageerrors1 . '",
+                              text: "' . $dltimageerrors2 . '",
                               type: "error",
                               closeOnConfirm: false
                             },
@@ -79,8 +79,8 @@ if(isset($_SESSION['username'])){
                     echo '
                         <script>
                         swal({
-                          title: "'.$dltimageerrors1.'",
-                          text: "'.$dltimageerrors3.'",
+                          title: "' . $dltimageerrors1 . '",
+                          text: "' . $dltimageerrors3 . '",
                           type: "error",
                           closeOnConfirm: false
                         },
@@ -94,8 +94,8 @@ if(isset($_SESSION['username'])){
                 echo '
                     <script>
                     swal({
-                      title: "'.$dltimageerrors1.'",
-                      text: "'.$dltimageerrors4.'",
+                      title: "' . $dltimageerrors1 . '",
+                      text: "' . $dltimageerrors4 . '",
                       type: "error",
                       closeOnConfirm: false
                     },
@@ -109,8 +109,8 @@ if(isset($_SESSION['username'])){
             echo '
                 <script>
                 swal({
-                  title: "'.$dltimageerrors1.'",
-                  text: "'.$dltimageerrors5.'",
+                  title: "' . $dltimageerrors1 . '",
+                  text: "' . $dltimageerrors5 . '",
                   type: "error",
                   closeOnConfirm: false
                 },
@@ -124,8 +124,8 @@ if(isset($_SESSION['username'])){
         echo '
             <script>
             swal({
-              title: "'.$dltimageerrors1.'",
-              text: "'.$dltimageerrors6.'",
+              title: "' . $dltimageerrors1 . '",
+              text: "' . $dltimageerrors6 . '",
               type: "error",
               closeOnConfirm: false
             },
@@ -135,7 +135,6 @@ if(isset($_SESSION['username'])){
             </script>
         ';
     }
-
 }
 
 ?>

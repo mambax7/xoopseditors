@@ -11,12 +11,12 @@
  * @version         $Id: editor_registry.php 8066 2011-11-06 05:09:33Z beckmi $
  */
 
-return $config = array(
-        "name"      =>  "aloha",
-        "class"     =>  "XoopsFormAloha",
-        "file"      =>  XOOPS_ROOT_PATH . "/class/xoopseditor/aloha/formaloha.php",
-        "title"     =>  'Aloha',
-        "order"     =>  8,
-        "nohtml"    =>  0
-    );
-?>
+return $config = [
+    'name'   => 'aloha',
+    'class'  => 'XoopsFormAloha',
+    'file'   => XOOPS_ROOT_PATH . '/class/xoopseditor/aloha/formaloha.php',
+    'title'  => 'Aloha',
+    'order'  => 8,
+    'nohtml' => 0
+];
+

@@ -1,23 +1,24 @@
 <?php
-$filenames = array(
-    "imgbrowser.php",
-    "imgdelete.php",
-    "imgupload.php",
-    "pluginconfig.php",
-    "uploads/",
-);
-if ($username == "" and $password == "") {
-    $filenames[] = "create.php";
+
+$filenames = [
+    'imgbrowser.php',
+    'imgdelete.php',
+    'imgupload.php',
+    'pluginconfig.php',
+    'uploads/',
+];
+if ('' == $username and '' == $password) {
+    $filenames[] = 'create.php';
 }
-foreach($filenames as $filename){
-    if (!is_writable($filename)){
+foreach ($filenames as $filename) {
+    if (!is_writable($filename)) {
         $check_permission = false;
     } else {
         $check_permission = true;
     }
 }
-if(!$check_permission):
-?>
+if (!$check_permission):
+    ?>
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -52,7 +53,7 @@ if(!$check_permission):
 
     </body>
     </html>
-<?php
-exit;
+    <?php
+    exit;
 endif;
 ?>

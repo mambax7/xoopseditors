@@ -10,6 +10,7 @@
  * @author      Taiwen Jiang <phppp@users.sourceforge.net>
  * @version     $Id: english.php 10054 2012-08-11 10:06:44Z beckmi $
  */
+
 /*
  * Assocated with editor_registry.php
  */

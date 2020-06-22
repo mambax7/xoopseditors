@@ -11,12 +11,12 @@
  * @version         $Id: editor_registry.php 8066 2011-11-06 05:09:33Z beckmi $
  */
 
-return $config = array(
-        "name"      =>  "sceditor",
-        "class"     =>  "XoopsFormSceditor",
-        "file"      =>  XOOPS_ROOT_PATH . "/class/xoopseditor/sceditor/formsceditor.php",
-        "title"     =>  'SCEditor',
-        "order"     =>  6,
-        "nohtml"    =>  0
-    );
-?>
+return $config = [
+    'name'   => 'sceditor',
+    'class'  => 'XoopsFormSceditor',
+    'file'   => XOOPS_ROOT_PATH . '/class/xoopseditor/sceditor/formsceditor.php',
+    'title'  => 'SCEditor',
+    'order'  => 6,
+    'nohtml' => 0
+];
+

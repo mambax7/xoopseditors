@@ -11,8 +11,8 @@
 // +----------------------------------------------------------------------+
 // | getID3() - http://getid3.sourceforge.net or http://www.getid3.org    |
 // +----------------------------------------------------------------------+
-// | Authors: James Heinrich <infoØgetid3*org>                            |
-// |          Allan Hansen <ahØartemis*dk>                                |
+// | Authors: James Heinrich <infoï¿½getid3*org>                            |
+// |          Allan Hansen <ahï¿½artemis*dk>                                |
 // +----------------------------------------------------------------------+
 // | module.graphic.jpeg.php                                              |
 // | Module for analyzing JPEG graphic files.                             |
@@ -21,13 +21,11 @@
 //
 // $Id: module.graphic.jpeg.php,v 1.4 2006/11/02 10:48:02 ah Exp $
 
-        
-        
 class getid3_jpeg extends getid3_handler
 {
 
-    public function Analyze() {
-        
+    public function Analyze()
+    {
         $getid3 = $this->getid3;
 
         $getid3->info['fileformat']                  = 'jpg';
@@ -39,17 +37,14 @@ class getid3_jpeg extends getid3_handler
         fseek($getid3->fp, $getid3->info['avdataoffset'], SEEK_SET);
 
         list($getid3->info['video']['resolution_x'], $getid3->info['video']['resolution_y'], $type) = getimagesize($getid3->filename);
-        
-        if ($type != 2) {
+
+        if (2 != $type) {
             throw new getid3_exception('File detected as JPEG, but is currupt.');
         }
 
         if (function_exists('exif_read_data')) {
-
             $getid3->info['jpg']['exif'] = exif_read_data($getid3->filename, '', true, false);
-
         } else {
-
             $getid3->warning('EXIF parsing only available when compiled with --enable-exif (or php_exif.dll enabled for Windows).');
         }
 
@@ -59,4 +54,3 @@ class getid3_jpeg extends getid3_handler
 }
 
 
-?>

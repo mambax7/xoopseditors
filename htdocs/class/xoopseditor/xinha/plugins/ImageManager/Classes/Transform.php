@@ -1,17 +1,17 @@
 <?php
 /***********************************************************************
-** Title.........:  Image Transformation Interface
-** Version.......:  1.0
-** Author........:  Xiang Wei ZHUO <wei@zhuo.org>
-** Filename......:  Transform.php
-** Last changed..:  30 Aug 2003 
-** Notes.........:  Orginal is from PEAR
-                    
-                    Added a few extra,
-                        - create unique filename in a particular directory,
-                          used for temp image files.
-                        - added cropping to GD, NetPBM, ImageMagick
-**/
+ ** Title.........:  Image Transformation Interface
+ ** Version.......:  1.0
+ ** Author........:  Xiang Wei ZHUO <wei@zhuo.org>
+ ** Filename......:  Transform.php
+ ** Last changed..:  30 Aug 2003
+ ** Notes.........:  Orginal is from PEAR
+ *
+ * Added a few extra,
+ * - create unique filename in a particular directory,
+ * used for temp image files.
+ * - added cropping to GD, NetPBM, ImageMagick
+ **/
 
 // +----------------------------------------------------------------------+
 // | PHP Version 4                                                        |
@@ -35,7 +35,6 @@
 //
 // Image Transformation interface
 //
-
 
 /**
  * The main "Image_Resize" class is a container and base class which
@@ -65,48 +64,47 @@ Class Image_Transform
      * Name of the image file
      * @var string
      */
-    var $image = '';
+    public $image = '';
     /**
      * Type of the image file (eg. jpg, gif png ...)
      * @var string
      */
-    var $type = '';
+    public $type = '';
     /**
      * Original image width in x direction
      * @var int
      */
-    var $img_x = '';
+    public $img_x = '';
     /**
      * Original image width in y direction
      * @var int
      */
-    var $img_y = '';
+    public $img_y = '';
     /**
      * New image width in x direction
      * @var int
      */
-    var $new_x = '';
+    public $new_x = '';
     /**
      * New image width in y direction
      * @var int
      */
-    var $new_y = '';
+    public $new_y = '';
     /**
      * Path the the library used
      * e.g. /usr/local/ImageMagick/bin/ or
      * /usr/local/netpbm/
      */
-    var $lib_path = '';
+    public $lib_path = '';
     /**
      * Flag to warn if image has been resized more than once before displaying
      * or saving.
      */
-     var $resized = false;
+    public $resized = false;
 
+    public $uid = '';
 
-     var $uid = '';
-
-     var $lapse_time =900; //15 mins
+    public $lapse_time = 900; //15 mins
 
     /**
      * Create a new Image_resize object
@@ -119,21 +117,19 @@ Class Image_Transform
      * @see PEAR::isError()
      * @see Image_Transform::setOption()
      */
-    function &factory($driver)
+    public function &factory($driver)
     {
         if ('' == $driver) {
-            die("No image library specified... aborting.  You must call ::factory() with one parameter, the library to load.");
-
+            die('No image library specified... aborting.  You must call ::factory() with one parameter, the library to load.');
         }
         $this->uid = md5($_SERVER['REMOTE_ADDR']);
 
         include_once "../ImageManager/Classes/$driver.php";
 
         $classname = "Image_Transform_Driver_{$driver}";
-        $obj =& new $classname;
+        $obj       =& new $classname();
         return $obj;
     }
-
 
     /**
      * Resize the Image in the X and/or Y direction
@@ -146,7 +142,7 @@ Class Image_Transform
      *
      * @return mixed none or PEAR_error
      */
-    function resize($new_x = 0, $new_y = 0)
+    public function resize($new_x = 0, $new_y = 0)
     {
         // 0 means keep original size
         $new_x = (0 == $new_x) ? $this->img_x : $this->_parse_size($new_x, $this->img_x);
@@ -155,14 +151,13 @@ Class Image_Transform
         return $this->_resize($new_x, $new_y);
     } // End resize
 
-
     /**
      * Scale the image to have the max x dimension specified.
      *
      * @param int $new_x Size to scale X-dimension to
      * @return none
      */
-    function scaleMaxX($new_x)
+    public function scaleMaxX($new_x)
     {
         $new_y = round(($new_x / $this->img_x) * $this->img_y, 0);
         return $this->_resize($new_x, $new_y);
@@ -175,7 +170,7 @@ Class Image_Transform
      * @param int $new_y Size to scale Y-dimension to
      * @return none
      */
-    function scaleMaxY($new_y)
+    public function scaleMaxY($new_y)
     {
         $new_x = round(($new_y / $this->img_y) * $this->img_x, 0);
         return $this->_resize($new_x, $new_y);
@@ -188,9 +183,9 @@ Class Image_Transform
      * @param mixed (number, percentage 10% or 0.1)
      * @return mixed none or PEAR_error
      */
-    function scale($size)
+    public function scale($size)
     {
-        if ((strlen($size) > 1) && (substr($size,-1) == '%')) {
+        if ((strlen($size) > 1) && ('%' == substr($size, -1))) {
             return $this->scaleByPercentage(substr($size, 0, -1));
         } elseif ($size < 1) {
             return $this->scaleByFactor($size);
@@ -208,7 +203,7 @@ Class Image_Transform
      * @param int $size Percentage of original size to scale to
      * @return none
      */
-    function scaleByPercentage($size)
+    public function scaleByPercentage($size)
     {
         return $this->scaleByFactor($size / 100);
     } // End scaleByPercentage
@@ -222,7 +217,7 @@ Class Image_Transform
      * @param float $size Factor of original size to scale to
      * @return none
      */
-    function scaleByFactor($size)
+    public function scaleByFactor($size)
     {
         $new_x = round($size * $this->img_x, 0);
         $new_y = round($size * $this->img_y, 0);
@@ -236,9 +231,9 @@ Class Image_Transform
      * @param int $size Max dimension in pixels
      * @return none
      */
-    function scaleByLength($size)
+    public function scaleByLength($size)
     {
-         if ($this->img_x >= $this->img_y) {
+        if ($this->img_x >= $this->img_y) {
             $new_x = $size;
             $new_y = round(($new_x / $this->img_x) * $this->img_y, 0);
         } else {
@@ -248,20 +243,19 @@ Class Image_Transform
         return $this->_resize($new_x, $new_y);
     } // End scaleByLength
 
-
     /**
      *
      * @access public
      * @return void
      */
-    function _get_image_details($image)
+    public function _get_image_details($image)
     {
         //echo $image;
         $data = @GetImageSize($image);
         #1 = GIF, 2 = JPG, 3 = PNG, 4 = SWF, 5 = PSD, 6 = BMP, 7 = TIFF(intel byte order), 8 = TIFF(motorola byte order,
         # 9 = JPC, 10 = JP2, 11 = JPX, 12 = JB2, 13 = SWC
-        if (is_array($data)){
-            switch($data[2]){
+        if (is_array($data)) {
+            switch ($data[2]) {
                 case 1:
                     $type = 'gif';
                     break;
@@ -282,15 +276,15 @@ Class Image_Transform
                 case 8:
                     $type = 'tiff';
                 default:
-                    echo("We do not recognize this image format");
+                    echo('We do not recognize this image format');
             }
             $this->img_x = $data[0];
             $this->img_y = $data[1];
-            $this->type = $type;
+            $this->type  = $type;
 
             return true;
         } else {
-            echo("Cannot fetch image or images details.");
+            echo('Cannot fetch image or images details.');
             return null;
         }
         /*
@@ -303,7 +297,6 @@ Class Image_Transform
         */
     }
 
-
     /**
      * Parse input and convert
      * If either is 0 it will be scaled proportionally
@@ -311,80 +304,76 @@ Class Image_Transform
      * @access private
      *
      * @param mixed $new_size (0, number, percentage 10% or 0.1)
-     * @param int $old_size
+     * @param int   $old_size
      *
      * @return mixed none or PEAR_error
      */
-    function _parse_size($new_size, $old_size)
+    public function _parse_size($new_size, $old_size)
     {
         if ('%' == $new_size) {
-            $new_size = str_replace('%','',$new_size);
+            $new_size = str_replace('%', '', $new_size);
             $new_size = $new_size / 100;
         }
         if ($new_size > 1) {
-            return (int) $new_size;
-        } elseif ($new_size == 0) {
-            return (int) $old_size;
+            return (int)$new_size;
+        } elseif (0 == $new_size) {
+            return (int)$old_size;
         } else {
-            return (int) round($new_size * $old_size, 0);
+            return (int)round($new_size * $old_size, 0);
         }
     }
 
-
-    function uniqueStr()
+    public function uniqueStr()
     {
-      return substr(md5(microtime()),0,6);
+        return substr(md5(microtime()), 0, 6);
     }
 
     //delete old tmp files, and allow only 1 file per remote host.
-    function cleanUp($id, $dir)
+    public function cleanUp($id, $dir)
     {
-        $d = dir($dir);
+        $d         = dir($dir);
         $id_length = strlen($id);
 
         while (false !== ($entry = $d->read())) {
-            if (is_file($dir.'/'.$entry) && substr($entry,0,1) == '.' && !ereg($entry, $this->image))
-            {
+            if (is_file($dir . '/' . $entry) && '.' == substr($entry, 0, 1) && !ereg($entry, $this->image)) {
                 //echo filemtime($this->directory.'/'.$entry)."<br>"; 
                 //echo time();
 
-                if (filemtime($dir.'/'.$entry) + $this->lapse_time < time())
-                    unlink($dir.'/'.$entry);
+                if (filemtime($dir . '/' . $entry) + $this->lapse_time < time()) {
+                    unlink($dir . '/' . $entry);
+                }
 
-                if (substr($entry, 1, $id_length) == $id)
-                {
-                    if (is_file($dir.'/'.$entry))
-                        unlink($dir.'/'.$entry);
+                if (substr($entry, 1, $id_length) == $id) {
+                    if (is_file($dir . '/' . $entry)) {
+                        unlink($dir . '/' . $entry);
+                    }
                 }
             }
         }
         $d->close();
     }
 
-
-    function createUnique($dir)
+    public function createUnique($dir)
     {
-       $unique_str = '.'.$this->uid.'_'.$this->uniqueStr().".".$this->type;
-        
-       //make sure the the unique temp file does not exists
-        while (file_exists($dir.$unique_str))
-        {
-            $unique_str = '.'.$this->uid.'_'.$this->uniqueStr().".".$this->type;
+        $unique_str = '.' . $this->uid . '_' . $this->uniqueStr() . '.' . $this->type;
+
+        //make sure the the unique temp file does not exists
+        while (file_exists($dir . $unique_str)) {
+            $unique_str = '.' . $this->uid . '_' . $this->uniqueStr() . '.' . $this->type;
         }
-        
-      $this->cleanUp($this->uid, $dir);
 
-       return $unique_str;
+        $this->cleanUp($this->uid, $dir);
+
+        return $unique_str;
     }
-
 
     /**
      * Set the image width
      * @param int $size dimension to set
-     * @since 29/05/02 13:36:31
      * @return
+     * @since 29/05/02 13:36:31
      */
-    function _set_img_x($size)
+    public function _set_img_x($size)
     {
         $this->img_x = $size;
     }
@@ -392,10 +381,10 @@ Class Image_Transform
     /**
      * Set the image height
      * @param int $size dimension to set
-     * @since 29/05/02 13:36:31
      * @return
+     * @since 29/05/02 13:36:31
      */
-    function _set_img_y($size)
+    public function _set_img_y($size)
     {
         $this->img_y = $size;
     }
@@ -403,10 +392,10 @@ Class Image_Transform
     /**
      * Set the image width
      * @param int $size dimension to set
-     * @since 29/05/02 13:36:31
      * @return
+     * @since 29/05/02 13:36:31
      */
-    function _set_new_x($size)
+    public function _set_new_x($size)
     {
         $this->new_x = $size;
     }
@@ -414,10 +403,10 @@ Class Image_Transform
     /**
      * Set the image height
      * @param int $size dimension to set
-     * @since 29/05/02 13:36:31
      * @return
+     * @since 29/05/02 13:36:31
      */
-    function _set_new_y($size)
+    public function _set_new_y($size)
     {
         $this->new_y = $size;
     }
@@ -427,7 +416,7 @@ Class Image_Transform
      *
      * @return string $this->type the image type
      */
-    function getImageType()
+    public function getImageType()
     {
         return $this->type;
     }
@@ -437,9 +426,9 @@ Class Image_Transform
      * @access public
      * @return string web-safe image type
      */
-    function getWebSafeFormat()
+    public function getWebSafeFormat()
     {
-        switch($this->type){
+        switch ($this->type) {
             case 'gif':
             case 'png':
                 return 'png';
@@ -456,7 +445,8 @@ Class Image_Transform
      * @access private
      * @return PEAR_error
      */
-    function _resize() {
+    public function _resize()
+    {
         return null; //PEAR::raiseError("No Resize method exists", true);
     }
 
@@ -467,7 +457,8 @@ Class Image_Transform
      * @access public
      * @return PEAR_error
      */
-    function load($filename) {
+    public function load($filename)
+    {
         return null; //PEAR::raiseError("No Load method exists", true);
     }
 
@@ -479,7 +470,8 @@ Class Image_Transform
      * @param string filename
      * @return PEAR_error
      */
-    function display($type, $quality) {
+    public function display($type, $quality)
+    {
         return null; //PEAR::raiseError("No Display method exists", true);
     }
 
@@ -491,7 +483,8 @@ Class Image_Transform
      * @param string filename
      * @return PEAR_error
      */
-    function save($filename, $type, $quality) {
+    public function save($filename, $type, $quality)
+    {
         return null; //PEAR::raiseError("No Save method exists", true);
     }
 
@@ -502,7 +495,8 @@ Class Image_Transform
      * @access public
      * @return PEAR_error
      */
-    function free() {
+    public function free()
+    {
         return null; //PEAR::raiseError("No Free method exists", true);
     }
 
@@ -512,13 +506,14 @@ Class Image_Transform
      * @access public
      * @return PEAR_error
      *
-     * @see rgb2colorname
+     * @see    rgb2colorname
      */
-    function colorhex2colorarray($colorhex) {
+    public function colorhex2colorarray($colorhex)
+    {
         $r = hexdec(substr($colorhex, 1, 2));
         $g = hexdec(substr($colorhex, 3, 2));
         $b = hexdec(substr($colorhex, 4, 2));
-        return array($r,$g,$b);
+        return [$r, $g, $b];
     }
 
     /**
@@ -527,43 +522,44 @@ Class Image_Transform
      * @access public
      * @return PEAR_error
      *
-     * @see rgb2colorname
+     * @see    rgb2colorname
      */
-    function colorarray2colorhex($color) {
-        $color = '#'.dechex($color[0]).dechex($color[1]).dechex($color[2]);
-        return strlen($color)>6?false:$color;
+    public function colorarray2colorhex($color)
+    {
+        $color = '#' . dechex($color[0]) . dechex($color[1]) . dechex($color[2]);
+        return strlen($color) > 6 ? false : $color;
     }
 
-
     /* Methods to add to the driver classes in the future */
-    function addText()
+    public function addText()
     {
         return null; //PEAR::raiseError("No addText method exists", true);
     }
 
-    function addDropShadow()
+    public function addDropShadow()
     {
         return null; //PEAR::raiseError("No AddDropShadow method exists", true);
     }
 
-    function addBorder()
+    public function addBorder()
     {
         return null; //PEAR::raiseError("No addBorder method exists", true);
     }
 
-    function crop()
+    public function crop()
     {
         return null; //PEAR::raiseError("No crop method exists", true);
     }
 
-    function flip() 
+    public function flip()
     {
         return null;
     }
 
-    function gamma()
+    public function gamma()
     {
         return null; //PEAR::raiseError("No gamma method exists", true);
     }
 }
-?>
+
+

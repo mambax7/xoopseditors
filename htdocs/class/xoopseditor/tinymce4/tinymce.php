@@ -23,38 +23,37 @@
  * @author          Laurent JEN <dugris@frxoops.org>
  * @version         $Id $
  */
-
 class TinyMCE
 {
     public $rootpath;
     public $config  = [];
     public $setting = [];
 
-  /**
-  * PHP 5 Constructor
-  *
-  * @param    string    $config   The configuration
-  **/
+    /**
+     * PHP 5 Constructor
+     *
+     * @param string $config The configuration
+     **/
 
     public function __construct($config)
-     {
+    {
         $this->setConfig($config);
         $this->rootpath = $this->config['rootpath'] . '/tinymce/js/tinymce';
     }
 
-  /**
-  * Creates one instance of the tinyMCE object
-  *
-  * @param    array     $config     The configuration
-  * @return   object    $instance   The instance of tinyMCE object
-  **/
+    /**
+     * Creates one instance of the tinyMCE object
+     *
+     * @param array $config The configuration
+     * @return   object    $instance   The instance of tinyMCE object
+     **/
 
     public function &instance($config)
     {
         static $instance;
-        if(!isset($instance)) {
+        if (!isset($instance)) {
             $instance = new TinyMCE($config);
-        }else{
+        } else {
             $instance->setConfig($config);
         }
 
@@ -68,10 +67,10 @@ class TinyMCE
         }
     }
 
-  /**
-  * Initializes the tinyMCE
-  * @return   true
-  **/
+    /**
+     * Initializes the tinyMCE
+     * @return   true
+     **/
 
     public function init()
     {
@@ -177,13 +176,13 @@ class TinyMCE
                 $configured[]                                                 = 'fonts';
             }
 
-            for ($i=1 ; $i <= 4 ; ++$i ) {
+            for ($i = 1; $i <= 4; ++$i) {
                 $buttons = [];
                 if (isset($this->setting['theme_' . $this->setting['theme'] . "_buttons{$i}"])) {
                     $checklist = explode(',', $this->setting['theme_' . $this->setting['theme'] . "_buttons{$i}"]);
-                    foreach ( $checklist as $plugin ) {
+                    foreach ($checklist as $plugin) {
                         if (false != strpos(strtolower($plugin), 'xoops')) {
-                            if ( in_array( $plugin, $this->xoopsPlugins ) ) {
+                            if (in_array($plugin, $this->xoopsPlugins)) {
                                 $buttons[] = $plugin;
                             }
                         } else {
@@ -237,7 +236,7 @@ class TinyMCE
     {
         $xoopsPlugins = [];
         $allplugins   = XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . $this->rootpath . '/plugins');
-        foreach ( $allplugins as $plugin ) {
+        foreach ($allplugins as $plugin) {
             if (false != strpos(strtolower($plugin), 'xoops') && file_exists(XOOPS_ROOT_PATH . $this->config['rootpath'] . "/include/$plugin.php")) {
                 if ($right = @include XOOPS_ROOT_PATH . $this->config['rootpath'] . "/include/$plugin.php") {
                     $xoopsPlugins[$plugin] = $plugin;
@@ -253,78 +252,78 @@ class TinyMCE
         static $css_url, $css_path;
 
         if (!isset($css_url)) {
-            $css_url = dirname( xoops_getcss($GLOBALS['xoopsConfig']['theme_set']) );
+            $css_url  = dirname(xoops_getcss($GLOBALS['xoopsConfig']['theme_set']));
             $css_path = str_replace(XOOPS_THEME_URL, XOOPS_THEME_PATH, $css_url);
         }
 
         $css         = [];
-        $css[] = $css_url . '/' . $css_file;
-        $css_content = file_get_contents( $css_path . '/' . $css_file );
+        $css[]       = $css_url . '/' . $css_file;
+        $css_content = file_get_contents($css_path . '/' . $css_file);
 
         // get all import css files
-        if ( preg_match_all("~\@import url\((.*\.css)\);~sUi", $css_content, $matches, PREG_PATTERN_ORDER) ) {
-            foreach( $matches[1] as $key => $css_import ) {
-                $css = array_merge( $css, $this->loadCss( $css_import) );
+        if (preg_match_all("~\@import url\((.*\.css)\);~sUi", $css_content, $matches, PREG_PATTERN_ORDER)) {
+            foreach ($matches[1] as $key => $css_import) {
+                $css = array_merge($css, $this->loadCss($css_import));
             }
         }
 
         return $css;
     }
 
-  /**
-  * Renders the tinyMCE
-  * @return   string  $ret      The rendered HTML string
-  **/
+    /**
+     * Renders the tinyMCE
+     * @return   string  $ret      The rendered HTML string
+     **/
     public function render()
-  {
-    static $rendered;
+    {
+        static $rendered;
         if ($rendered) {
             return null;
         }
 
-    $rendered = true;
+        $rendered = true;
 
-    $this->init();
+        $this->init();
 
         if (!empty($this->setting['callback'])) {
             $callback = $this->setting['callback'];
             unset($this->setting['callback']);
-    } else {
+        } else {
             $callback = '';
-    }
+        }
 
-    $ret = '<script language="javascript" type="text/javascript" src="' . XOOPS_URL . $this->rootpath . '/tinymce.min.js"></script>';
-    $ret .= '<script language="javascript" type="text/javascript">
+        $ret = '<script language="javascript" type="text/javascript" src="' . XOOPS_URL . $this->rootpath . '/tinymce.min.js"></script>';
+        $ret .= '<script language="javascript" type="text/javascript">
                 tinyMCE.init({
             ';
 
-foreach ($this->setting as $key => $val) {
+        foreach ($this->setting as $key => $val) {
             $ret .= $key . ':';
             if (true === $val) {
                 $ret .= 'true,';
             } elseif (false === $val) {
                 $ret .= 'false,';
-         } else {
-             $ret .= "'{$val}',";
-         }
-         $ret .= "\n";
-     }
+            } else {
+                $ret .= "'{$val}',";
+            }
+            $ret .= "\n";
+        }
 
-//   Ajout alain01 tinymce v4
+        //   Ajout alain01 tinymce v4
 
-    $chemin_array=parse_url(XOOPS_URL);
+        $chemin_array  = parse_url(XOOPS_URL);
         $chemin_scheme = $chemin_array['scheme']; // http
         $chemin_host   = $chemin_array['host']; // www.example.com  or // localhost
-//  $chemin_path =  $chemin_array["path"]; // /myweb1
-    if (!isset($chemin_array['path'])){
+        //  $chemin_path =  $chemin_array["path"]; // /myweb1
+        if (!isset($chemin_array['path'])) {
             $chemin_path = '';
-    } else    {
+        } else {
             $chemin_path = $chemin_array['path'];
-    }
+        }
 
         //   $ret .='language_url : "'.$chemin_path.'/class/xoopseditor/tinymce4/tinymce/js/tinymce/langs/fr_FR.js",';
 
-    $ret .= 'external_plugins: {';
+        $ret .= 'external_plugins: {';
         $ret .= '"qrcode": "' . $chemin_path . '/class/xoopseditor/tinymce4/external_plugins/qrcode/plugin.min.js",';
         $ret .= '"youtube": "' . $chemin_path . '/class/xoopseditor/tinymce4/external_plugins/youtube/plugin.min.js",';
         $ret .= '"alignbtn": "' . $chemin_path . '/class/xoopseditor/tinymce4/external_plugins/alignbtn/plugin.min.js",';
@@ -337,9 +336,9 @@ foreach ($this->setting as $key => $val) {
 
         $ret .= '"filemanager": "' . $chemin_path . '/class/xoopseditor/tinymce4/external_plugins/filemanager/plugin.min.js",';
         $ret .= '"responsivefilemanager": "' . $chemin_path . '/class/xoopseditor/tinymce4/external_plugins/responsivefilemanager/plugin.min.js",';
-    $ret .= '},';
+        $ret .= '},';
 
-$ret .= 'codemirror: {
+        $ret .= 'codemirror: {
     indentOnInit: true,
     path: "CodeMirror",
     config: {
@@ -352,18 +351,18 @@ $ret .= 'codemirror: {
     ]
   },';
 
-    $ret .= "\n";
+        $ret .= "\n";
 
         $ret .= '"external_filemanager_path": "' . $chemin_path . '/class/xoopseditor/tinymce4/external_plugins/filemanager/",';
-    $ret .= "\n";
+        $ret .= "\n";
 
-    $ret .='templates: "'.$chemin_path.'/uploads/filemanager/templates/liste-templates.js",';
-    $ret .= "\n";
-// fin ajout alain01
+        $ret .= 'templates: "' . $chemin_path . '/uploads/filemanager/templates/liste-templates.js",';
+        $ret .= "\n";
+        // fin ajout alain01
 
-    $ret .= 'relative_urls : false,
+        $ret .= 'relative_urls : false,
                 remove_script_host : false, tinymceload : "1"});
-                '.$callback.'
+                ' . $callback . '
                 function showMCE(id) {
                     if (tinyMCE.getInstanceById(id) == null) {
                         tinyMCE.execCommand("mceAddControl", false, id);
@@ -374,6 +373,6 @@ $ret .= 'codemirror: {
                 </script>
             ';
 
-    return $ret ;
-  }
+        return $ret;
+    }
 }

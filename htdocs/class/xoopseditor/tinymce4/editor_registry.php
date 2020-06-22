@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  TinyMCE adapter for XOOPS
  *

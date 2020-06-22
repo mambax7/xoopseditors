@@ -7,6 +7,7 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
+
 /**
  *  TinyMCE 4.x settings for XOOPS
  *
@@ -24,8 +25,8 @@ return [
     'selector'               => 'textarea',
     'theme'                  => 'modern',
 
-// default skin
-// "skin"       => "lightgray",
+    // default skin
+    // "skin"       => "lightgray",
     // "skin_url"       => "/class/xoopseditor/tinymce4/external_skins/charcoal",
     // "skin_url"       => "/class/xoopseditor/tinymce4/external_skins/pepper-grinder",
     // "skin_url"       => "/class/xoopseditor/tinymce4/external_skins/tundora",
@@ -36,20 +37,20 @@ return [
     'language'               => 'en',
     /* possible values exemple, get from: http://wiki.moxiecode.com/examples/tinymce/installation_example_13.php */
     'mode'                   => 'exact',
-//    "convert_urls" => false,
-//    "force_p_newlines" => true,
+    //    "convert_urls" => false,
+    //    "force_p_newlines" => true,
     'forced_root_block'      => false,
     'force_hex_style_colors' => true,
     // to prevent new line after tags (really useful with Xoops)
-//    "apply_source_formatting" => false,
+    //    "apply_source_formatting" => false,
     // get more W3C compatible code, since font elements are deprecated
     'convert_fonts_to_spans' => true,
     // XHTML: list elements UL/OL will be converted to valid XHTML
     'fix_list_elements'      => true,
     // XHTML: table elements will be moved outside paragraphs or other block elements
-//    "fix_table_elements" => true, //Removed in 3.4, this is now the default behavior.
+    //    "fix_table_elements" => true, //Removed in 3.4, this is now the default behavior.
     // XHTML strict: attributes gets converted into CSS style attribute
-//    "inline_styles" => true, //This option is enabled by default as of 3.0a1.
+    //    "inline_styles" => true, //This option is enabled by default as of 3.0a1.
     // if true, some accessibility focus will be available to all buttons: you will be able to tab through them all
     'accessibility_focus'    => true,
     // if true, some accessibility warnings will be presented to the user
@@ -60,7 +61,7 @@ return [
     // Display or not the menu bar"
     'menubar'                => true,
 
-// load plugins
+    // load plugins
     'plugins'                => 'advlist,autolink,lists,link,image,preview,hr,anchor,'
                                 . 'searchreplace,wordcount,visualblocks,visualchars,code,fullscreen,'
                                 . 'insertdatetime,media,nonbreaking,save,table,contextmenu,directionality,'
@@ -68,8 +69,8 @@ return [
                                 . 'xoops_quote,xoops_code,xoops_tagextgal,'
                                 . 'filemanager,responsivefilemanager,youtube,qrcode,alignbtn,chartextbtn',
 
-//  "exclude_plugins" => "autosave,bbcode,example,fullpage",
-//  "content_css" => "editor_xoops.css",
+    //  "exclude_plugins" => "autosave,bbcode,example,fullpage",
+    //  "content_css" => "editor_xoops.css",
 
     'toolbar1'       => 'chartext align table | forecolor backcolor bullist numlist | styleselect formatselect',
     'toolbar2'       => 'responsivefilemanager image media youtube | link unlink anchor | qrcode emoticons hr xoops_emoticons xoops_quote xoops_code xoops_tagextgal template',

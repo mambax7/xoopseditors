@@ -11,8 +11,8 @@
 // +----------------------------------------------------------------------+
 // | getID3() - http://getid3.sourceforge.net or http://www.getid3.org    |
 // +----------------------------------------------------------------------+
-// | Authors: James Heinrich <infoØgetid3*org>                            |
-// |          Allan Hansen <ahØartemis*dk>                                |
+// | Authors: James Heinrich <infoï¿½getid3*org>                            |
+// |          Allan Hansen <ahï¿½artemis*dk>                                |
 // +----------------------------------------------------------------------+
 // | module.archive.szip.php                                              |
 // | module for analyzing SZIP compressed files                           |
@@ -21,21 +21,19 @@
 //
 // $Id: module.archive.szip.php,v 1.2 2006/11/02 10:48:00 ah Exp $
 
-        
-        
 class getid3_szip extends getid3_handler
 {
 
-    public function Analyze() {
-        
+    public function Analyze()
+    {
         $getid3 = $this->getid3;
 
         fseek($getid3->fp, $getid3->info['avdataoffset'], SEEK_SET);
         $szip_rkau = fread($getid3->fp, 6);
-        
+
         // Magic bytes:  'SZ'."\x0A\x04"
-            
-        $getid3->info['fileformat']            = 'szip';
+
+        $getid3->info['fileformat'] = 'szip';
 
         $getid3->info['szip']['major_version'] = getid3_lib::BigEndian2Int(substr($szip_rkau, 4, 1));
         $getid3->info['szip']['minor_version'] = getid3_lib::BigEndian2Int(substr($szip_rkau, 5, 1));
@@ -65,28 +63,28 @@ class getid3_szip extends getid3_handler
                         //4 byte access time (like in unix)
 
                         $bh_data_array['filename'] = substr($bh_header_data, $bh_header_offset, strcspn($bh_header_data, "\x00"));
-                        $bh_header_offset += (strlen($bh_data_array['filename']) + 1);
+                        $bh_header_offset          += (strlen($bh_data_array['filename']) + 1);
 
                         $bh_data_array['owner'] = substr($bh_header_data, $bh_header_offset, strcspn($bh_header_data, "\x00"));
-                        $bh_header_offset += (strlen($bh_data_array['owner']) + 1);
+                        $bh_header_offset       += (strlen($bh_data_array['owner']) + 1);
 
                         $bh_data_array['group'] = substr($bh_header_data, $bh_header_offset, strcspn($bh_header_data, "\x00"));
-                        $bh_header_offset += (strlen($bh_data_array['group']) + 1);
+                        $bh_header_offset       += (strlen($bh_data_array['group']) + 1);
 
                         $bh_data_array['filelength'] = getid3_lib::BigEndian2Int(substr($bh_header_data, $bh_header_offset, 3));
-                        $bh_header_offset += 3;
+                        $bh_header_offset            += 3;
 
                         $bh_data_array['access_flags'] = getid3_lib::BigEndian2Int(substr($bh_header_data, $bh_header_offset, 2));
-                        $bh_header_offset += 2;
+                        $bh_header_offset              += 2;
 
                         $bh_data_array['creation_time'] = getid3_lib::BigEndian2Int(substr($bh_header_data, $bh_header_offset, 4));
-                        $bh_header_offset += 4;
+                        $bh_header_offset               += 4;
 
                         $bh_data_array['modification_time'] = getid3_lib::BigEndian2Int(substr($bh_header_data, $bh_header_offset, 4));
-                        $bh_header_offset += 4;
+                        $bh_header_offset                   += 4;
 
                         $bh_data_array['access_time'] = getid3_lib::BigEndian2Int(substr($bh_header_data, $bh_header_offset, 4));
-                        $bh_header_offset += 4;
+                        $bh_header_offset             += 4;
 
                         $getid3->info['szip']['BH'][] = $bh_data_array;
                     }
@@ -102,4 +100,4 @@ class getid3_szip extends getid3_handler
 
 }
 
-?>
+

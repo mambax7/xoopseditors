@@ -11,12 +11,12 @@
  * @author          luciorota <lucio.rtoa@gmail.com>
  */
 
-return $config = array(
-        "name"      =>  "wymeditor",
-        "class"     =>  "XoopsFormWYMeditor",
-        "file"      =>  XOOPS_ROOT_PATH . "/class/xoopseditor/wymeditor/formwymeditor.php",
-        "title"     =>  _XOOPS_EDITOR_WYMEDITOR,
-        "order"     =>  7,
-        "nohtml"    =>  0
-    );
-?>
+return $config = [
+    'name'   => 'wymeditor',
+    'class'  => 'XoopsFormWYMeditor',
+    'file'   => XOOPS_ROOT_PATH . '/class/xoopseditor/wymeditor/formwymeditor.php',
+    'title'  => _XOOPS_EDITOR_WYMEDITOR,
+    'order'  => 7,
+    'nohtml' => 0
+];
+

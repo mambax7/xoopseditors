@@ -11,12 +11,12 @@
  * @version         $Id$
  */
 
-return $config = array(
-        "name"      =>  "codemirror",
-        "class"     =>  "XoopsFormCodemirror",
-        "file"      =>  XOOPS_ROOT_PATH . "/class/xoopseditor/codemirror/formcodemirror.php",
-        "title"     =>  _XOOPS_EDITOR_CODEMIRROR,
-        "order"     =>  11,
-        "nohtml"    =>  1
-    );
-?>
+return $config = [
+    'name'   => 'codemirror',
+    'class'  => 'XoopsFormCodemirror',
+    'file'   => XOOPS_ROOT_PATH . '/class/xoopseditor/codemirror/formcodemirror.php',
+    'title'  => _XOOPS_EDITOR_CODEMIRROR,
+    'order'  => 11,
+    'nohtml' => 1
+];
+

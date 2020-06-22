@@ -21,11 +21,11 @@
  * @version         $Id: editor_registry.php 760 2012-05-18 12:16:37Z kris_fr $
  */
 
-return $config = array(
-        "class"     =>  "XoopsFormCkeditor",
-        "file"      =>  XOOPS_ROOT_PATH . "/class/xoopseditor/ckeditor/ckeditor.php",
-        "title"     =>  _XOOPS_EDITOR_CKEDITOR,
-        "order"     =>  3,
-        "nohtml"    =>  0
-    );
-?>
+return $config = [
+    'class'  => 'XoopsFormCkeditor',
+    'file'   => XOOPS_ROOT_PATH . '/class/xoopseditor/ckeditor/ckeditor.php',
+    'title'  => _XOOPS_EDITOR_CKEDITOR,
+    'order'  => 3,
+    'nohtml' => 0
+];
+

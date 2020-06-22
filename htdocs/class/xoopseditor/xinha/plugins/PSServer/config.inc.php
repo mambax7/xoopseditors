@@ -1,7 +1,7 @@
 <?php
 /**
  * PersistentStorage Server backend configuration file.
- * @author Douglas Mayle <douglas@openplans.org>
+ * @author  Douglas Mayle <douglas@openplans.org>
  * @version 1.0
  * @package PersistentStorage
  */
@@ -17,15 +17,15 @@ if (__FILE__ == $_SERVER['SCRIPT_FILENAME']) {
 /**
  * Gets the configuration information used by this package.
  * {@source }
- * @param boolean $getprivates Return private configuration info merged with the public.
+ * @param bool $getprivates Return private configuration info merged with the public.
  * @returns array The configuration information for this package.
  */
-function get_config($getprivates=False) {
-
+function get_config($getprivates = false)
+{
     // We set up two different settings array, so that we can have settings
     // that won't be shown to the public.
-    $Private = array();
-    $Public = array();
+    $Private = [];
+    $Public  = [];
 
     /**
      * For demo purposes, we can lie to the frontend and pretend to have user
@@ -38,21 +38,21 @@ function get_config($getprivates=False) {
      * The capabilities array contains directives about what major options to
      * allow or disallow.
      */
-    $Public['capabilities'] = array(
+    $Public['capabilities'] = [
         // Allow directory operations (e.g. rename, create, delete directories)
         'directory_operations' => true,
         // Allow file operations (e.g. copy, rename, delete files)
-        'file_operations' => true,
+        'file_operations'      => true,
         // Allow image operations (e.g. scale, rotate, convert images)
-        'image_operations' => true,
+        'image_operations'     => true,
         // Allow file uploads
-        'upload_operations' => true,
+        'upload_operations'    => true,
         // Stored files have a published URL
-        'shared_publish' => true,
+        'shared_publish'       => true,
         // By default, if the user is authenticated, we enable user storage.
         // Set to false to disable.
-        'user_storage' => !empty($_SERVER['PHP_AUTH_USER']) || $Private['simulate_user_auth']
-    );
+        'user_storage'         => !empty($_SERVER['PHP_AUTH_USER']) || $Private['simulate_user_auth']
+    ];
 
     /**
      * Directory exposed to user operations.  Be sure that the web server has
@@ -66,8 +66,11 @@ function get_config($getprivates=False) {
      * allow user upload, this directory should not be executable by the
      * server.  A sample .htaccess file is included in demo_images.
      */
-    $Private['storage_url'] = str_replace( array("backend.php","manager.php"),
-                          "", $_SERVER["PHP_SELF"] ) . $Private['storage_dir'];
+    $Private['storage_url'] = str_replace(
+                                  ['backend.php', 'manager.php'],
+                                  '',
+                                  $_SERVER['PHP_SELF']
+                              ) . $Private['storage_dir'];
 
     /*
       Possible values: true, false
@@ -115,41 +118,40 @@ function get_config($getprivates=False) {
      * The thumbnail array groups all of the configuration related to thumbnail
      * operations.
      */
-    $Private['thumbnails'] = array(
+    $Private['thumbnails'] = [
         // The prefix to apply to all created thumbnails.
-        'prefix' => 't_',
+        'prefix'    => 't_',
         // A subdirectory to keep thumbnails in.  If this is empty, thumbnails
         // will be stored alongside the files.
         'directory' => '',
         // Whether or not to filter thumbnails from the directory listing.
-        'filter' => true,
+        'filter'    => true,
         // Filetypes which we restrict thumbnail operations to.
-        'filetypes' => array("jpg", "gif", "png", "bmp"),
+        'filetypes' => ['jpg', 'gif', 'png', 'bmp'],
         // What pixel sizes to save the thumbnails as.
-        'width' => 84,
-        'height' => 84
-    );
-
+        'width'     => 84,
+        'height'    => 84
+    ];
 
     /**
-    * Resized prefix
-    *
-    * The prefix for resized files, something like .resized will do.  The
-    * resized files will be named <prefix>_<width>x<height>_<original>
-    * resized files are created when one changes the dimensions of an image
-    * in the image manager selection dialog - the image is scaled when the
-    * user clicks the ok button.
-    */
+     * Resized prefix
+     *
+     * The prefix for resized files, something like .resized will do.  The
+     * resized files will be named <prefix>_<width>x<height>_<original>
+     * resized files are created when one changes the dimensions of an image
+     * in the image manager selection dialog - the image is scaled when the
+     * user clicks the ok button.
+     */
 
     $Private['resized_prefix'] = '.resized';
 
     // -------------------------------------------------------------------------
 
     /**
-    * Resized Directory
-    *
-    * Resized images may also be stored in a directory, except in safe mode.
-    */
+     * Resized Directory
+     *
+     * Resized images may also be stored in a directory, except in safe mode.
+     */
 
     $Private['resized_dir'] = '';
 
@@ -174,21 +176,20 @@ function get_config($getprivates=False) {
     -Changed by AFRU.
     */
 
-    $Private['allowed_image_extensions'] = array("jpg","gif","png","bmp");
-    $Private['allowed_link_extensions'] = array("jpg","gif","js","php","pdf","zip","txt","psd","png","html","swf","xml","xls","doc");
-
+    $Private['allowed_image_extensions'] = ['jpg', 'gif', 'png', 'bmp'];
+    $Private['allowed_link_extensions']  = ['jpg', 'gif', 'js', 'php', 'pdf', 'zip', 'txt', 'psd', 'png', 'html', 'swf', 'xml', 'xls', 'doc'];
 
     /*
       Image Editor temporary filename prefix.
     */
     $Private['tmp_prefix'] = '.editor_';
 
-
     // Config variables are finished, this returns our data to the caller.
     if ($getprivates) {
-        return $Public+$Private;
+        return $Public + $Private;
     }
 
     return $Public;
 }
-?>
+
+

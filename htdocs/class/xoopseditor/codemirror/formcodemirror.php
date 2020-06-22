@@ -25,46 +25,46 @@ xoops_load('XoopsEditor');
 
 class XoopsFormCodemirror extends XoopsEditor
 {
-    var $rootpath;
-    var $config = array();
-    var $setting = array();
-    var $language = _LANGCODE;
-    var $width = '100%';
-    var $height = '500px';
-    var $syntax = 'html';
-    
+    public $rootpath;
+    public $config   = [];
+    public $setting  = [];
+    public $language = _LANGCODE;
+    public $width    = '100%';
+    public $height   = '500px';
+    public $syntax   = 'html';
+
     /**
      * Constructor
      *
-     * @param    array   $configs  Editor Options
+     * @param array $configs Editor Options
      */
-    function __construct($configs)
+    public function __construct($configs)
     {
-        $this->rootPath = "/class/xoopseditor/codemirror";
+        $this->rootPath = '/class/xoopseditor/codemirror';
         parent::__construct($configs);
-        $this->width = isset($this->configs["width"]) ? $this->configs["width"] : $this->width;
-        $this->height = isset($this->configs["height"]) ? $this->configs["height"] : $this->height;
-        $this->syntax = isset($this->configs["syntax"]) ? $this->configs["syntax"] : $this->syntax;
+        $this->width  = isset($this->configs['width']) ? $this->configs['width'] : $this->width;
+        $this->height = isset($this->configs['height']) ? $this->configs['height'] : $this->height;
+        $this->syntax = isset($this->configs['syntax']) ? $this->configs['syntax'] : $this->syntax;
     }
 
-    function XoopsFormCodemirror($configs)
+    public function XoopsFormCodemirror($configs)
     {
         $this->__construct($configs);
     }
 
-    function setConfig( $config )
+    public function setConfig($config)
     {
         foreach ($config as $key => $val) {
             $this->config[$key] = $val;
         }
     }
 
-    function getName()
+    public function getName()
     {
         return $this->name;
     }
 
-    function setName($value)
+    public function setName($value)
     {
         $this->name = $value;
     }
@@ -74,7 +74,7 @@ class XoopsFormCodemirror extends XoopsEditor
      *
      * @return  string
      */
-    function getWidth()
+    public function getWidth()
     {
         return $this->width;
     }
@@ -84,7 +84,7 @@ class XoopsFormCodemirror extends XoopsEditor
      *
      * @return  string
      */
-    function getHeight()
+    public function getHeight()
     {
         return $this->height;
     }
@@ -94,13 +94,13 @@ class XoopsFormCodemirror extends XoopsEditor
      *
      * @return    string
      */
-    function getLanguage()
+    public function getLanguage()
     {
         if ($this->language) {
             return $this->language;
         }
-        if (defined("_XOOPS_EDITOR_CODEMIRROR_LANGUAGE")) {
-            $this->language = strtolower(constant("_XOOPS_EDITOR_CODEMIRROR_LANGUAGE"));
+        if (defined('_XOOPS_EDITOR_CODEMIRROR_LANGUAGE')) {
+            $this->language = strtolower(constant('_XOOPS_EDITOR_CODEMIRROR_LANGUAGE'));
         } else {
             $this->language = str_replace('_', '-', strtolower(_LANGCODE));
         }
@@ -111,10 +111,11 @@ class XoopsFormCodemirror extends XoopsEditor
     /**
      * Get initial content
      *
-     * @param        bool    $encode To sanitizer the text? Default value should be "true"; however we have to set "false" for backward compat
+     * @param bool $encode To sanitizer the text? Default value should be "true"; however we have to set "false" for backward compat
      * @return        string
      */
-    function getValue() {
+    public function getValue()
+    {
         //return strtr(htmlspecialchars_decode($this->_value) , array("\n" => '<br />', "\r\n" =>'<br />'));
         return $this->_value;
     }
@@ -122,19 +123,18 @@ class XoopsFormCodemirror extends XoopsEditor
     /**
      * prepare HTML for output
      *
-     * @param   bool    decode content?
+     * @param bool    decode content?
      * @return  sting HTML
      */
-    function render($decode = true)
+    public function render($decode = true)
     {
         static $isCodemirrorJsLoaded = false;
         $ret = "\n";
-        if(!$isCodemirrorJsLoaded)
-        {
-            $ret.= "<script type='text/javascript' src='" . XOOPS_URL . "/class/xoopseditor/codemirror/CodeMirror/js/codemirror.js'></script>\n";
-            $ret.= "<script type='text/javascript' src='" . XOOPS_URL . "/class/xoopseditor/codemirror/CodeMirror/js/mirrorframe.js'></script>\n";
+        if (!$isCodemirrorJsLoaded) {
+            $ret .= "<script type='text/javascript' src='" . XOOPS_URL . "/class/xoopseditor/codemirror/CodeMirror/js/codemirror.js'></script>\n";
+            $ret .= "<script type='text/javascript' src='" . XOOPS_URL . "/class/xoopseditor/codemirror/CodeMirror/js/mirrorframe.js'></script>\n";
 
-            $ret.= "<style type='text/css'>
+            $ret .= "<style type='text/css'>
                         .CodeMirror-line-numbers {
                             width: 2.2em;
                             color: #000;
@@ -159,122 +159,123 @@ class XoopsFormCodemirror extends XoopsEditor
             \n";
         }
 
-        $this->setting['path'] = XOOPS_URL . $this->rootPath . '/CodeMirror/js/';
-        $this->setting['height'] = $this->height;
+        $this->setting['path']     = XOOPS_URL . $this->rootPath . '/CodeMirror/js/';
+        $this->setting['height']   = $this->height;
         $this->setting['language'] = $this->language;
         //$this->setting['width'] = $this->width; DO NOT SET width in this way...
         $this->setting['indentUnit'] = 4;
-        $this->setting['tabMode'] = 'shift';
-        $this->setting['readOnly'] = isset($this->configs["readonly"]) ? $this->configs["readonly"] : FALSE;
-        
+        $this->setting['tabMode']    = 'shift';
+        $this->setting['readOnly']   = isset($this->configs['readonly']) ? $this->configs['readonly'] : false;
+
         define('_CODEMIRROR_CSS_PATH', XOOPS_URL . $this->rootPath . '/CodeMirror/css/');
         switch ($this->syntax) {
             case 'css' :
-                $this->setting['parserfile'] = 'parsecss.js';
-                $this->setting['stylesheet'] = _CODEMIRROR_CSS_PATH . 'csscolors.css';
+                $this->setting['parserfile']         = 'parsecss.js';
+                $this->setting['stylesheet']         = _CODEMIRROR_CSS_PATH . 'csscolors.css';
                 $this->setting['continuousScanning'] = 500;
-                $this->setting['lineNumbers'] = TRUE;
-                $this->setting['textWrapping'] = FALSE;
+                $this->setting['lineNumbers']        = true;
+                $this->setting['textWrapping']       = false;
                 break;
             case 'js' :
-                $this->setting['parserfile'] = array ('tokenizejavascript.js', 'parsejavascript.js');
-                $this->setting['stylesheet'] = _CODEMIRROR_CSS_PATH . 'jscolors';
+                $this->setting['parserfile']         = ['tokenizejavascript.js', 'parsejavascript.js'];
+                $this->setting['stylesheet']         = _CODEMIRROR_CSS_PATH . 'jscolors';
                 $this->setting['continuousScanning'] = 500;
-                $this->setting['autoMatchParens'] = TRUE;
-                $this->setting['lineNumbers'] = TRUE;
-                $this->setting['textWrapping'] = FALSE;
-                $this->setting['autoMatchParens'] = TRUE;
+                $this->setting['autoMatchParens']    = true;
+                $this->setting['lineNumbers']        = true;
+                $this->setting['textWrapping']       = false;
+                $this->setting['autoMatchParens']    = true;
                 break;
             case 'html' :
-                $this->setting['parserfile'] = 'parsexml.js';
-                $this->setting['stylesheet'] = _CODEMIRROR_CSS_PATH . 'xmlcolors.css';
+                $this->setting['parserfile']         = 'parsexml.js';
+                $this->setting['stylesheet']         = _CODEMIRROR_CSS_PATH . 'xmlcolors.css';
                 $this->setting['continuousScanning'] = 500;
-                $this->setting['lineNumbers'] = TRUE;
+                $this->setting['lineNumbers']        = true;
                 break;
-/*
-            case 'sql' :
-                $this->setting['parserfile'] = 'parsesql.js';
-                $this->setting['stylesheet'] = _CODEMIRROR_CSS_PATH . 'sqlcolors.css';
-                $this->setting['continuousScanning'] = 500;
-                $this->setting['autoMatchParens'] = TRUE;
-                $this->setting['lineNumbers'] = TRUE;
-                $this->setting['textWrapping'] = FALSE;
-                break;
-*/
-            case 'sql' : // courtesy of John Benediktsson
-                $this->setting['parserfile'] = '../contrib/sql/js/parsesql.js';
-                $this->setting['stylesheet'] = _CODEMIRROR_CSS_PATH . '../contrib/sql/css/sqlcolors.css';
-                $this->setting['continuousScanning'] = 500;
-                $this->setting['autoMatchParens'] = TRUE;
-                $this->setting['lineNumbers'] = TRUE;
-                $this->setting['textWrapping'] = FALSE;
-                break;
-/*
-            case 'php' :
-                $this->setting['parserfile'][] = 'tokenizephp.js';
-                $this->setting['parserfile'][] = 'parsephp.js';
-                $this->setting['stylesheet'] = _CODEMIRROR_CSS_PATH . 'phpcolors.css';
-                $this->setting['continuousScanning'] = 500;
-                $this->setting['autoMatchParens'] = TRUE;
-                $this->setting['lineNumbers'] = TRUE;
-                $this->setting['textWrapping'] = FALSE;
-                break;
-*/
-            case 'php' : // courtesy of Yahoo!
-                $this->setting['parserfile'][] = 'parsexml.js';
-                $this->setting['parserfile'][] = 'parsecss.js';
-                $this->setting['parserfile'][] = 'tokenizejavascript.js';
-                $this->setting['parserfile'][] = 'parsejavascript.js';
-                $this->setting['parserfile'][] = '../contrib/php/js/tokenizephp.js';
-                $this->setting['parserfile'][] = '../contrib/php/js/parsephp.js';
-                $this->setting['parserfile'][] = '../contrib/php/js/parsephphtmlmixed.js';
-                $this->setting['stylesheet'][] = _CODEMIRROR_CSS_PATH . 'xmlcolors.css';
-                $this->setting['stylesheet'][] = _CODEMIRROR_CSS_PATH . 'jscolors.css';
-                $this->setting['stylesheet'][] = _CODEMIRROR_CSS_PATH . 'csscolors.css';
-                $this->setting['stylesheet'][] = _CODEMIRROR_CSS_PATH . '../contrib/php/css/phpcolors.css';
-                $this->setting['continuousScanning'] = 500;
-                $this->setting['autoMatchParens'] = TRUE;
-                $this->setting['lineNumbers'] = TRUE;
-                $this->setting['textWrapping'] = FALSE;
-                break;
+            /*
+                        case 'sql' :
+                            $this->setting['parserfile'] = 'parsesql.js';
+                            $this->setting['stylesheet'] = _CODEMIRROR_CSS_PATH . 'sqlcolors.css';
+                            $this->setting['continuousScanning'] = 500;
+                            $this->setting['autoMatchParens'] = TRUE;
+                            $this->setting['lineNumbers'] = TRUE;
+                            $this->setting['textWrapping'] = FALSE;
+                            break;
+            */ case 'sql' : // courtesy of John Benediktsson
+            $this->setting['parserfile']         = '../contrib/sql/js/parsesql.js';
+            $this->setting['stylesheet']         = _CODEMIRROR_CSS_PATH . '../contrib/sql/css/sqlcolors.css';
+            $this->setting['continuousScanning'] = 500;
+            $this->setting['autoMatchParens']    = true;
+            $this->setting['lineNumbers']        = true;
+            $this->setting['textWrapping']       = false;
+            break;
+            /*
+                        case 'php' :
+                            $this->setting['parserfile'][] = 'tokenizephp.js';
+                            $this->setting['parserfile'][] = 'parsephp.js';
+                            $this->setting['stylesheet'] = _CODEMIRROR_CSS_PATH . 'phpcolors.css';
+                            $this->setting['continuousScanning'] = 500;
+                            $this->setting['autoMatchParens'] = TRUE;
+                            $this->setting['lineNumbers'] = TRUE;
+                            $this->setting['textWrapping'] = FALSE;
+                            break;
+            */ case 'php' : // courtesy of Yahoo!
+            $this->setting['parserfile'][]       = 'parsexml.js';
+            $this->setting['parserfile'][]       = 'parsecss.js';
+            $this->setting['parserfile'][]       = 'tokenizejavascript.js';
+            $this->setting['parserfile'][]       = 'parsejavascript.js';
+            $this->setting['parserfile'][]       = '../contrib/php/js/tokenizephp.js';
+            $this->setting['parserfile'][]       = '../contrib/php/js/parsephp.js';
+            $this->setting['parserfile'][]       = '../contrib/php/js/parsephphtmlmixed.js';
+            $this->setting['stylesheet'][]       = _CODEMIRROR_CSS_PATH . 'xmlcolors.css';
+            $this->setting['stylesheet'][]       = _CODEMIRROR_CSS_PATH . 'jscolors.css';
+            $this->setting['stylesheet'][]       = _CODEMIRROR_CSS_PATH . 'csscolors.css';
+            $this->setting['stylesheet'][]       = _CODEMIRROR_CSS_PATH . '../contrib/php/css/phpcolors.css';
+            $this->setting['continuousScanning'] = 500;
+            $this->setting['autoMatchParens']    = true;
+            $this->setting['lineNumbers']        = true;
+            $this->setting['textWrapping']       = false;
+            break;
             default :
-                $this->setting['parserfile'] = array('parsexml.js', 'parsecss.js', 'tokenizejavascript.js', 'parsejavascript.js', 'tokenizephp.js', 'parsephp.js', 'parsephphtmlmixed.js');
-                $this->setting['stylesheet'] = array(_CODEMIRROR_CSS_PATH . 'xmlcolors.css', _CODEMIRROR_CSS_PATH . 'jscolors.css', _CODEMIRROR_CSS_PATH . 'csscolors.css', _CODEMIRROR_CSS_PATH . 'phpcolors.css');
+                $this->setting['parserfile']         = ['parsexml.js', 'parsecss.js', 'tokenizejavascript.js', 'parsejavascript.js', 'tokenizephp.js', 'parsephp.js', 'parsephphtmlmixed.js'];
+                $this->setting['stylesheet']         = [_CODEMIRROR_CSS_PATH . 'xmlcolors.css', _CODEMIRROR_CSS_PATH . 'jscolors.css', _CODEMIRROR_CSS_PATH . 'csscolors.css', _CODEMIRROR_CSS_PATH . 'phpcolors.css'];
                 $this->setting['continuousScanning'] = 500;
-                $this->setting['lineNumbers'] = TRUE;
-                $this->setting['textWrapping'] = FALSE;
+                $this->setting['lineNumbers']        = true;
+                $this->setting['textWrapping']       = false;
                 break;
-            }
+        }
         //$ret.= "<input type='button' value='Search' onclick='editor_" . $this->getName() . "[\"search\"].call(editor_" . $this->getName() . ");' />";
-        $ret.= "<div class='codemirror-container' width:" . $this->width . ";'>";
-        $ret.= "<textarea name='" . $this->getName() . "' id='" . $this->getName() . "' rows='" . $this->getRows() . "' cols='" . $this->getCols() . "' " . $this->getExtra() . " style='width:" . $this->getWidth() . ";height:" . $this->getHeight() . ";'>" . $this->getValue() . "</textarea>\n";
-        $ret.= "</div>";
-        $ret.= "<script type='text/javascript'>\n";
-        
-        $ret.= "  var textarea_" . $this->getName() . " = document.getElementById('" . $this->getName() . "');\n";
-        $ret.= "  var editor_" . $this->getName() . " = new MirrorFrame(CodeMirror.replace(textarea_" . $this->getName() . "), {\n";
-        $ret.= "content: textarea_" . $this->getName() . ".value,";
+        $ret .= "<div class='codemirror-container' width:" . $this->width . ";'>";
+        $ret .= "<textarea name='" . $this->getName() . "' id='" . $this->getName() . "' rows='" . $this->getRows() . "' cols='" . $this->getCols() . "' " . $this->getExtra() . " style='width:" . $this->getWidth() . ';height:' . $this->getHeight() . ";'>" . $this->getValue() . "</textarea>\n";
+        $ret .= '</div>';
+        $ret .= "<script type='text/javascript'>\n";
+
+        $ret .= '  var textarea_' . $this->getName() . " = document.getElementById('" . $this->getName() . "');\n";
+        $ret .= '  var editor_' . $this->getName() . ' = new MirrorFrame(CodeMirror.replace(textarea_' . $this->getName() . "), {\n";
+        $ret .= 'content: textarea_' . $this->getName() . '.value,';
 
         foreach ($this->setting as $key => $val) {
-            $ret .= $key . ":";
-            if ($val === TRUE) {
-                $ret.= "true,";
-            } elseif ($val === FALSE) {
-                $ret .= "false,";
+            $ret .= $key . ':';
+            if (true === $val) {
+                $ret .= 'true,';
+            } elseif (false === $val) {
+                $ret .= 'false,';
             } elseif (is_array($val)) {
-                $ret .= "[";
-                foreach ($val as $valkey => $valval) $val[$valkey] = "'" . $valval . "'";
+                $ret .= '[';
+                foreach ($val as $valkey => $valval) {
+                    $val[$valkey] = "'" . $valval . "'";
+                }
                 $ret .= implode(',', $val);
-                $ret .= "],";
+                $ret .= '],';
             } else {
                 $ret .= "'{$val}',";
             }
             $ret .= "\n";
         }
 
-        $ret.= "  });\n";
-        $ret.= "</script>\n";
+        $ret .= "  });\n";
+        $ret .= "</script>\n";
         return $ret;
     }
 }
-?>
+
+

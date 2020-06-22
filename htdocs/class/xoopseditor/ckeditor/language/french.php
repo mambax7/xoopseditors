@@ -10,12 +10,13 @@
  * @author      Taiwen Jiang <phppp@users.sourceforge.net>
  * @version     $Id: french.php 760 2012-05-18 12:16:37Z kris_fr $
  */
+
 /*
  * Associated with editor_registry.php
  */
-define("_XOOPS_EDITOR_CKEDITOR", "CK Editor");
+define('_XOOPS_EDITOR_CKEDITOR', 'CK Editor');
 //define("_XOOPS_EDITOR_CKEDITOR_FONTLIST",'Arial;Comic Sans MS;Courier New;Tahoma;Times New Roman;Verdana');
-define("_XOOPS_EDITOR_CKEDITOR_LANGUAGE", "fr");
+define('_XOOPS_EDITOR_CKEDITOR_LANGUAGE', 'fr');
 //define("_XOOPS_EDITOR_CKEDITOR_LANGDIRECTION", "ltr");
 
 /**
@@ -24,5 +25,5 @@ define("_XOOPS_EDITOR_CKEDITOR_LANGUAGE", "fr");
  * @specification   _CHARSET: UTF-8 sans BOM
  *
  * @version         $Id: french.php 760 2012-05-18 12:16:37Z kris_fr $
-**/
-?>
+ **/
+

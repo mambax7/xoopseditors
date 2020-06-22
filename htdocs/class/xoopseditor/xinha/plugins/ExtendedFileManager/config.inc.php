@@ -20,35 +20,38 @@
  *
  *	Best of Luck :) Afru.
  */
- 
+
 /*
  *	Getting the mode for further differentiation
  */
 
-if(isset($_REQUEST['mode'])) $insertMode=$_REQUEST['mode'];
-	if(!isset($insertMode)) $insertMode="image";
+if (isset($_REQUEST['mode'])) {
+    $insertMode = $_REQUEST['mode'];
+}
+if (!isset($insertMode)) {
+    $insertMode = 'image';
+}
 
 /**
-* Default backend URL
-*
-* URL to use for unified backend.
-*
-* The ?__plugin=ExtendedFileManager& is required.
-*/
+ * Default backend URL
+ *
+ * URL to use for unified backend.
+ *
+ * The ?__plugin=ExtendedFileManager& is required.
+ */
 
-$IMConfig['backend_url'] = "backend.php?__plugin=ExtendedFileManager&";
+$IMConfig['backend_url'] = 'backend.php?__plugin=ExtendedFileManager&';
 
 /**
-* Backend Installation Directory
-*
-* location of backend install; these are used to link to css and js
-* assets because we may have the front end installed in a different
-* directory than the backend. (i.e. nothing assumes that the frontend
-* and the backend are in the same directory)
-*/
+ * Backend Installation Directory
+ *
+ * location of backend install; these are used to link to css and js
+ * assets because we may have the front end installed in a different
+ * directory than the backend. (i.e. nothing assumes that the frontend
+ * and the backend are in the same directory)
+ */
 $IMConfig['base_dir'] = getcwd();
 $IMConfig['base_url'] = '';
-
 
 /*
 	 File system path to the directory you want to manage the images
@@ -67,14 +70,14 @@ $IMConfig['images_dir'] = 'demo_images';
  Please remove scripting capabilities in this directory
  for this directory (i.e. disable PHP, Perl, CGI; see .htaccess file in demo_images folder).
 */
-$IMConfig['images_url'] = str_replace( array("backend.php","manager.php"), "", $_SERVER["PHP_SELF"] ) . $IMConfig['images_dir'];
+$IMConfig['images_url'] = str_replace(['backend.php', 'manager.php'], '', $_SERVER['PHP_SELF']) . $IMConfig['images_dir'];
 //$IMConfig['files_url'] = 'url/to/files_dir';
 
 /*
   Format of the Date Modified in list view.
   It has to be a string understood by the PHP date() function (for possible values see http://http://php.net/manual/en/function.date.php)
 */
-$IMConfig['date_format'] = "d.m.y H:i";
+$IMConfig['date_format'] = 'd.m.y H:i';
 /*
   Possible values: true, false
 
@@ -93,18 +96,16 @@ FALSE - Thumbnails will be resized by browser ignoring image libraries.
 */
 $IMConfig['img_library'] = true;
 
-
 /*
 View type when the File manager is in insert image mode.
 Valid values are "thumbview" and "listview".
 */
 
-    
-if ($insertMode == 'image')
-	$IMConfig['view_type'] = "thumbview";
-	
-else if($insertMode == "link")
-	$IMConfig['view_type'] = "listview";
+if ('image' == $insertMode) {
+    $IMConfig['view_type'] = 'thumbview';
+} elseif ('link' == $insertMode) {
+    $IMConfig['view_type'] = 'listview';
+}
 
 $IMConfig['insert_mode'] = $insertMode;
 
@@ -117,7 +118,6 @@ $IMConfig['insert_mode'] = $insertMode;
 */
 define('IMAGE_CLASS', 'GD');
 
-
 /*
  After defining which library to use, if it is NetPBM or IM, you need to
  specify where the binary for the selected library are. And of course
@@ -127,14 +127,12 @@ define('IMAGE_CLASS', 'GD');
 define('IMAGE_TRANSFORM_LIB_PATH', '/usr/bin/');
 //define('IMAGE_TRANSFORM_LIB_PATH', 'C:/"Program Files"/ImageMagick-5.5.7-Q16/');
 
-
 /*
   The prefix for thumbnail files, something like .thumb will do. The
   thumbnails files will be named as "prefix_imagefile.ext", that is,
   prefix + orginal filename.
 */
 $IMConfig['thumbnail_prefix'] = 't_';
-
 
 /*
   Thumbnail can also be stored in a directory, this directory
@@ -148,32 +146,32 @@ $IMConfig['thumbnail_dir'] = 't';
 
 /**
  * Resize files, or not.  If the dimensions for an image are changed
- * this will control if the image is actually resized.  
+ * this will control if the image is actually resized.
  *
  * Usually you want this true, unless you are very disk space concious.
  */
- 
+
 $IMConfig['resize_files'] = true;
 
 /**
-* Resized prefix
-*
-* The prefix for resized files, something like .resized will do.  The
-* resized files will be named <prefix>_<width>x<height>_<original>
-* resized files are created when one changes the dimensions of an image
-* in the image manager selection dialog - the image is scaled when the
-* user clicks the ok button.
-*/
+ * Resized prefix
+ *
+ * The prefix for resized files, something like .resized will do.  The
+ * resized files will be named <prefix>_<width>x<height>_<original>
+ * resized files are created when one changes the dimensions of an image
+ * in the image manager selection dialog - the image is scaled when the
+ * user clicks the ok button.
+ */
 
 $IMConfig['resized_prefix'] = '.resized';
 
 // -------------------------------------------------------------------------
 
 /**
-* Resized Directory
-*
-* Resized images may also be stored in a directory, except in safe mode.
-*/
+ * Resized Directory
+ *
+ * Resized images may also be stored in a directory, except in safe mode.
+ */
 
 $IMConfig['resized_dir'] = '';
 
@@ -322,26 +320,24 @@ Available icons are for "doc,fla,gif,gz,html,jpg,js,mov,pdf,php,png,ppt,rar,txt,
 -Changed by AFRU.
 */
 
-$IMConfig['allowed_image_extensions'] = array("jpg","gif","png","bmp");
-$IMConfig['allowed_link_extensions'] = array("jpg","gif","js","php","pdf","zip","txt","psd","png","html","swf","xml","xls","doc");
-
+$IMConfig['allowed_image_extensions'] = ['jpg', 'gif', 'png', 'bmp'];
+$IMConfig['allowed_link_extensions']  = ['jpg', 'gif', 'js', 'php', 'pdf', 'zip', 'txt', 'psd', 'png', 'html', 'swf', 'xml', 'xls', 'doc'];
 
 /*
  The default thumbnail and list view icon in case thumbnails are not created and the files are of unknown.
 */
 $IMConfig['default_thumbnail'] = 'icons/def.gif';
-$IMConfig['default_listicon'] = 'icons/def_small.gif';
-
+$IMConfig['default_listicon']  = 'icons/def_small.gif';
 
 /*
 Only files with these extensions will be shown as thumbnails. All other files will be shown as icons.
 */
-$IMConfig['thumbnail_extensions'] = array("jpg", "gif", "png", "bmp");
+$IMConfig['thumbnail_extensions'] = ['jpg', 'gif', 'png', 'bmp'];
 
 /*
   Thumbnail dimensions.
 */
-$IMConfig['thumbnail_width'] = 84;
+$IMConfig['thumbnail_width']  = 84;
 $IMConfig['thumbnail_height'] = 84;
 
 /*
@@ -349,64 +345,57 @@ $IMConfig['thumbnail_height'] = 84;
 */
 $IMConfig['tmp_prefix'] = '.editor_';
 
-
 // Standard PHP Backend Data Passing
 //  if data was passed using xinha_pass_to_php_backend() we merge the items
 //  provided into the Config
 require_once(realpath(dirname(__FILE__) . '/../../contrib/php-xinha.php'));
-if($passed_data = xinha_read_passed_data())
-{
-  $IMConfig = array_merge($IMConfig, $passed_data);
-  $IMConfig['backend_url'] .= xinha_passed_data_querystring() . '&';
+if ($passed_data = xinha_read_passed_data()) {
+    $IMConfig                = array_merge($IMConfig, $passed_data);
+    $IMConfig['backend_url'] .= xinha_passed_data_querystring() . '&';
+} // Deprecated config passing, don't use this way any more!
+elseif (isset($_REQUEST['backend_config'])) {
+    if (get_magic_quotes_gpc()) {
+        $_REQUEST['backend_config'] = stripslashes($_REQUEST['backend_config']);
+    }
+
+    if ('Xinha:ExtendedFileManager' !== $_REQUEST['backend_config_secret_key_location']) {
+        trigger_error(
+            'Programming Error - please contact the website administrator/programmer to alert them to this problem. A non-default backend key location is being used to pass backend data to Xinha, but the same key location is not being used to receive data.  The special backend configuration has been ignored.  To resolve this, you should edit plugins/ExtendedFileManager/config.php and change the default key location from "Xinha:ExtendedFileManager" to your desired non default.  See: http://trac.xinha.org/ticket/1518',
+            E_USER_ERROR
+        );
+    } else {
+        // Config specified from front end, check that it's valid
+        session_start();
+        if (!array_key_exists($_REQUEST['backend_config_secret_key_location'], $_SESSION)) {
+            die('Backend security error.');
+        }
+
+        $secret = $_SESSION[$_REQUEST['backend_config_secret_key_location']];
+
+        if ($_REQUEST['backend_config_hash'] !== sha1($_REQUEST['backend_config'] . $secret)) {
+            die('Backend security error.');
+        }
+
+        $to_merge = unserialize($_REQUEST['backend_config']);
+        if (!is_array($to_merge)) {
+            die('Backend config syntax error.');
+        }
+
+        $IMConfig = array_merge($IMConfig, $to_merge);
+
+        // changed config settings keys in relation to ImageManager
+        $IMConfig['backend_url'] .= 'backend_config=' . rawurlencode($_REQUEST['backend_config']) . '&';
+        $IMConfig['backend_url'] .= 'backend_config_hash=' . rawurlencode($_REQUEST['backend_config_hash']) . '&';
+        $IMConfig['backend_url'] .= 'backend_config_secret_key_location=' . rawurlencode($_REQUEST['backend_config_secret_key_location']) . '&';
+    }
 }
-// Deprecated config passing, don't use this way any more!
-elseif(isset($_REQUEST['backend_config']))
-{
-  if(get_magic_quotes_gpc()) {
-    $_REQUEST['backend_config'] = stripslashes($_REQUEST['backend_config']);
-  }
-  
-  if($_REQUEST['backend_config_secret_key_location'] !== 'Xinha:ExtendedFileManager')
-  {
-    trigger_error('Programming Error - please contact the website administrator/programmer to alert them to this problem. A non-default backend key location is being used to pass backend data to Xinha, but the same key location is not being used to receive data.  The special backend configuration has been ignored.  To resolve this, you should edit plugins/ExtendedFileManager/config.php and change the default key location from "Xinha:ExtendedFileManager" to your desired non default.  See: http://trac.xinha.org/ticket/1518', E_USER_ERROR);    
-  }
-  else
-  {
-  // Config specified from front end, check that it's valid
-  session_start();
-  if (!array_key_exists($_REQUEST['backend_config_secret_key_location'], $_SESSION))
-    die("Backend security error.");
-
-  $secret = $_SESSION[$_REQUEST['backend_config_secret_key_location']];
-
-  if($_REQUEST['backend_config_hash'] !== sha1($_REQUEST['backend_config'] . $secret))
-  {
-    die("Backend security error.");
-  }
-
-  $to_merge = unserialize($_REQUEST['backend_config']);
-  if(!is_array($to_merge))
-  {
-    die("Backend config syntax error.");
-  }
-
-  $IMConfig = array_merge($IMConfig, $to_merge);
-
-   // changed config settings keys in relation to ImageManager
-  $IMConfig['backend_url'] .= "backend_config=" . rawurlencode($_REQUEST['backend_config']) . '&';
-  $IMConfig['backend_url'] .= "backend_config_hash=" . rawurlencode($_REQUEST['backend_config_hash']) . '&';
-  $IMConfig['backend_url'] .= "backend_config_secret_key_location=" . rawurlencode($_REQUEST['backend_config_secret_key_location']) . '&';
-  }
-}
-if ($IMConfig['max_filesize_kb_link'] == "max")
-{
-  $IMConfig['max_filesize_kb_link'] = upload_max_filesize_kb();
+if ('max' == $IMConfig['max_filesize_kb_link']) {
+    $IMConfig['max_filesize_kb_link'] = upload_max_filesize_kb();
 }
 
-if ($IMConfig['max_filesize_kb_image'] == "max")
-{
-  $IMConfig['max_filesize_kb_image'] = upload_max_filesize_kb();
+if ('max' == $IMConfig['max_filesize_kb_image']) {
+    $IMConfig['max_filesize_kb_image'] = upload_max_filesize_kb();
 }
 // END
 
-?>
+

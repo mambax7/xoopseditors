@@ -10,10 +10,11 @@
  * @author          Rota Lucio <lucio.rota@gmail.com>
  * @version         $Id$
  */
+
 /*
  * Assocated with editor_registry.php
  */
 // Name of the editor
-define("_XOOPS_EDITOR_CODEMIRROR", "CodeMirror");
-define("_XOOPS_EDITOR_CODEMIRROR_LANGUAGE", "en");
-?>
+define('_XOOPS_EDITOR_CODEMIRROR', 'CodeMirror');
+define('_XOOPS_EDITOR_CODEMIRROR_LANGUAGE', 'en');
+

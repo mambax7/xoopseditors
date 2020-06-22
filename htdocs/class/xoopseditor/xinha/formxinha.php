@@ -11,72 +11,75 @@
 
 /**
  * Adapted Xinha wysiwyg editor
- * @copyright	copyright (c) 2000-2003 XOOPS.org
+ * @copyright     copyright (c) 2000-2003 XOOPS.org
  *
- * @author	    phppp
- * @author	    luciorota (lucio.rota@gmail.com)
+ * @author        phppp
+ * @author        luciorota (lucio.rota@gmail.com)
  */
-
 class XoopsFormXinha extends XoopsFormTextArea
 {
-    var $language = _LANGCODE;
-    var $caption;
-    var $name;
-    var $value;
-    var $rows = 5; // default
-    var $cols = 50; // default
-    var $width = "100%"; // default
-    var $height = "300px"; // default
+    public $language = _LANGCODE;
+    public $caption;
+    public $name;
+    public $value;
+    public $rows     = 5; // default
+    public $cols     = 50; // default
+    public $width    = '100%'; // default
+    public $height   = '300px'; // default
 
     // COMPATIBLE WITH "formdhtmltextarea.php" HACK (Xoops 2.0.13+) AND WITH MODULES LIKE "News","Smartsection", ...
     /**
      * Constructor
      *
-     * @param   string  $caption      Caption
-     * @param   string  $name         "name" attribute
-     * @param   string  $value        Initial text
-     * @param   string  $rows         Number of rows (facultative)
-     * @param   string  $cols         Number of cols (facultative)
-     * @param   string  $width        iframe width (facultative)
-     * @param   string  $height       iframe height (facultative)
-     * @param   array   $options      Toolbar Options (facultative)
-     * OR
-     * @param   array   $options      Editor Options
+     * @param string $caption Caption
+     * @param string $name    "name" attribute
+     * @param string $value   Initial text
+     * @param string $rows    Number of rows (facultative)
+     * @param string $cols    Number of cols (facultative)
+     * @param string $width   iframe width (facultative)
+     * @param string $height  iframe height (facultative)
+     * @param array  $options Toolbar Options (facultative)
+     *                        OR
+     * @param array  $options Editor Options
      */
 
-    function __construct()
+    public function __construct()
     {
         if (func_num_args()) { // if there is/are one or more arguments...
-            $numargs = func_num_args(); // number of arguments
+            $numargs   = func_num_args(); // number of arguments
             $args_list = func_get_args(); // is an array of arguments
-            if((!empty($args_list[$numargs-1])) && (is_array($args_list[$numargs-1]))) { // if the last argument is an array...
-                $options = $args_list[$numargs-1]; // ... it is an array of options
-                foreach($options as $key => $val) { // it sets the options
-                    if (method_exists($this, 'set'.Ucfirst($key))) $this->{'set'.Ucfirst($key)}($val);
-                    else $this->$key = $val;
+            if ((!empty($args_list[$numargs - 1])) && (is_array($args_list[$numargs - 1]))) { // if the last argument is an array...
+                $options = $args_list[$numargs - 1]; // ... it is an array of options
+                foreach ($options as $key => $val) { // it sets the options
+                    if (method_exists($this, 'set' . Ucfirst($key))) {
+                        $this->{'set' . Ucfirst($key)}($val);
+                    } else {
+                        $this->$key = $val;
+                    }
                 }
             }
-            if($numargs >= 2) {
+            if ($numargs >= 2) {
                 $this->caption = $args_list[0];
-                $this->name = $args_list[1];
-                $this->value = (($numargs >= 3) ? $args_list[2] : "");
-                $this->rows = (($numargs >= 4) ? $args_list[3] : $rows);
-                $this->cols = (($numargs >= 5) ? $args_list[4] : $cols);
+                $this->name    = $args_list[1];
+                $this->value   = (($numargs >= 3) ? $args_list[2] : '');
+                $this->rows    = (($numargs >= 4) ? $args_list[3] : $rows);
+                $this->cols    = (($numargs >= 5) ? $args_list[4] : $cols);
                 $this->XoopsFormTextArea($this->caption, $this->name, $this->value, $this->rows, $this->cols);
             }
         }
     }
-    function XoopsFormXinha()
+
+    public function XoopsFormXinha()
     {
         $this->__construct();
     }
 
-    function getName()
+    public function getName()
     {
         return $this->name;
     }
 
-    function setName($value)
+    public function setName($value)
     {
         $this->name = $value;
     }
@@ -86,7 +89,7 @@ class XoopsFormXinha extends XoopsFormTextArea
      *
      * @return  string
      */
-    function getWidth()
+    public function getWidth()
     {
         return $this->width;
     }
@@ -96,7 +99,7 @@ class XoopsFormXinha extends XoopsFormTextArea
      *
      * @return  string
      */
-    function getHeight()
+    public function getHeight()
     {
         return $this->height;
     }
@@ -106,9 +109,9 @@ class XoopsFormXinha extends XoopsFormTextArea
      *
      * @return  string
      */
-    function getLanguage()
+    public function getLanguage()
     {
-        return str_replace('_','-',strtolower($this->language));
+        return str_replace('_', '-', strtolower($this->language));
     }
 
     /**
@@ -116,7 +119,7 @@ class XoopsFormXinha extends XoopsFormTextArea
      *
      * @return  null
      */
-    function setLanguage($lang='en')
+    public function setLanguage($lang = 'en')
     {
         $this->language = $lang;
     }
@@ -126,18 +129,18 @@ class XoopsFormXinha extends XoopsFormTextArea
      *
      * @return    string
      */
-    function renderValidationJS() 
+    public function renderValidationJS()
     {
         if ($this->isRequired() && $eltname = $this->getName()) {
             //$eltname = $this->getName();
             $eltcaption = $this->getCaption();
-            $eltmsg = empty($eltcaption) ? sprintf( _FORM_ENTER, $eltname ) : sprintf( _FORM_ENTER, $eltcaption );
-            $eltmsg = str_replace('"', '\"', stripslashes( $eltmsg ) );
-            $ret = "\n";
-            $ret.= "if ( myform.{$eltname}.value == '' || myform.{$eltname}.value == '<br />' )";
-            $ret.= "{ window.alert(\"{$eltmsg}\"); myform.{$eltname}.focus(); return false; }";
+            $eltmsg     = empty($eltcaption) ? sprintf(_FORM_ENTER, $eltname) : sprintf(_FORM_ENTER, $eltcaption);
+            $eltmsg     = str_replace('"', '\"', stripslashes($eltmsg));
+            $ret        = "\n";
+            $ret        .= "if ( myform.{$eltname}.value == '' || myform.{$eltname}.value == '<br />' )";
+            $ret        .= "{ window.alert(\"{$eltmsg}\"); myform.{$eltname}.focus(); return false; }";
             return $ret;
-            }
+        }
         return '';
     }
 
@@ -146,12 +149,11 @@ class XoopsFormXinha extends XoopsFormTextArea
      *
      * @return  sting HTML
      */
-    function render()
+    public function render()
     {
         static $isXinhaJsLoaded = false;
         $ret = '';
-        if(!$isXinhaJsLoaded)
-        {
+        if (!$isXinhaJsLoaded) {
             $ret .= "<script type='text/javascript'>\n";
             // You must set _editor_url to the URL (including trailing slash) where
             // where xinha is installed, it's highly recommended to use an absolute URL
@@ -160,7 +162,7 @@ class XoopsFormXinha extends XoopsFormTextArea
             //  eg: _editor_url = "../";
             $ret .= "_editor_url  = '" . XOOPS_URL . "/class/xoopseditor/xinha/';\n";
             // And the language we need to use in the editor.
-            $ret .= "_editor_lang = '".$this->getLanguage()."';\n";
+            $ret .= "_editor_lang = '" . $this->getLanguage() . "';\n";
             // If you want use a skin, add the name (of the folder) here
             // Original skins are: blue-look, blue-metallic, green-look, inditreuse, silva, titan, xp-blue, xp-green
             $ret .= "_editor_skin = 'blue_look';\n";
@@ -168,7 +170,7 @@ class XoopsFormXinha extends XoopsFormTextArea
             //$ret .= "<script type='text/javascript' src='" . XOOPS_URL . "/class/xoopseditor/xinha/XinhaLoader.js'></script>\n";
             $ret .= "<script type='text/javascript' src='" . XOOPS_URL . "/class/xoopseditor/xinha/XinhaCore.js'></script>\n";
 
-            $ret .=<<<EOF
+            $ret             .= <<<EOF
 <script type='text/javascript'>
 var xinha_editors = new Array;
 xinha_init = null;
@@ -318,10 +320,27 @@ Xinha._addEvent(window,'load', xinha_init);
 EOF;
             $isXinhaJsLoaded = true;
         }
-        $ret .="<style type='text/css'>.htmlarea .toolbar table { width:auto;}</style>\n";
-        $ret .="<textarea name='".$this->getName()."' id='".$this->getName()."' rows='".$this->getRows()."' cols='".$this->getCols()."' ".$this->getExtra()." style='width:".$this->getWidth().";height:".$this->getHeight().";display:none;'>".$this->getValue()."</textarea>\n";
-        $ret .="<script type='text/javascript'>xinha_editors.push('".$this->getName()."');</script>\n";	
+        $ret .= "<style type='text/css'>.htmlarea .toolbar table { width:auto;}</style>\n";
+        $ret .= "<textarea name='"
+                . $this->getName()
+                . "' id='"
+                . $this->getName()
+                . "' rows='"
+                . $this->getRows()
+                . "' cols='"
+                . $this->getCols()
+                . "' "
+                . $this->getExtra()
+                . " style='width:"
+                . $this->getWidth()
+                . ';height:'
+                . $this->getHeight()
+                . ";display:none;'>"
+                . $this->getValue()
+                . "</textarea>\n";
+        $ret .= "<script type='text/javascript'>xinha_editors.push('" . $this->getName() . "');</script>\n";
         return $ret;
     }
 }
-?>
+
+

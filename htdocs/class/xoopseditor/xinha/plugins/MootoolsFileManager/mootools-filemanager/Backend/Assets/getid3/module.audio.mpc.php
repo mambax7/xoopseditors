@@ -11,8 +11,8 @@
 // +----------------------------------------------------------------------+
 // | getID3() - http://getid3.sourceforge.net or http://www.getid3.org    |
 // +----------------------------------------------------------------------+
-// | Authors: James Heinrich <infoØgetid3*org>                            |
-// |          Allan Hansen <ahØartemis*dk>                                |
+// | Authors: James Heinrich <infoï¿½getid3*org>                            |
+// |          Allan Hansen <ahï¿½artemis*dk>                                |
 // +----------------------------------------------------------------------+
 // | module.audio.mpc.php                                                 |
 // | Module for analyzing Musepack/MPEG+ Audio files                      |
@@ -21,15 +21,13 @@
 //
 // $Id: module.audio.mpc.php,v 1.3 2006/11/02 10:48:01 ah Exp $
 
-        
-        
 class getid3_mpc extends getid3_handler
 {
 
-    public function Analyze() {
-
+    public function Analyze()
+    {
         $getid3 = $this->getid3;
-        
+
         // http://www.uni-jena.de/~pfk/mpp/sv8/header.html
 
         $getid3->info['fileformat']            = 'mpc';
@@ -37,64 +35,63 @@ class getid3_mpc extends getid3_handler
         $getid3->info['audio']['bitrate_mode'] = 'vbr';
         $getid3->info['audio']['channels']     = 2;  // the format appears to be hardcoded for stereo only
         $getid3->info['audio']['lossless']     = false;
-        
-        $getid3->info['mpc']['header'] = array ();
-        $info_mpc_header = &$getid3->info['mpc']['header'];
-        $info_mpc_header['size'] = 28;
+
+        $getid3->info['mpc']['header']      = [];
+        $info_mpc_header                    = &$getid3->info['mpc']['header'];
+        $info_mpc_header['size']            = 28;
         $info_mpc_header['raw']['preamble'] = 'MP+';    // Magic bytes
-        
+
         fseek($getid3->fp, $getid3->info['avdataoffset'], SEEK_SET);
         $mpc_header_data = fread($getid3->fp, 28);
-        
-        $stream_version_byte = getid3_lib::LittleEndian2Int(substr($mpc_header_data, 3, 1));
+
+        $stream_version_byte                     = getid3_lib::LittleEndian2Int(substr($mpc_header_data, 3, 1));
         $info_mpc_header['stream_major_version'] = ($stream_version_byte & 0x0F);
         $info_mpc_header['stream_minor_version'] = ($stream_version_byte & 0xF0) >> 4;
-        if ($info_mpc_header['stream_major_version'] != 7) {
+        if (7 != $info_mpc_header['stream_major_version']) {
             throw new getid3_exception('Only Musepack SV7 supported');
         }
-            
+
         $info_mpc_header['frame_count'] = getid3_lib::LittleEndian2Int(substr($mpc_header_data, 4, 4));
-        
-        $info_mpc_header['raw']['title_peak']      = getid3_lib::LittleEndian2Int(substr($mpc_header_data, 12, 2));
-        $info_mpc_header['raw']['title_gain']      = getid3_lib::LittleEndian2Int(substr($mpc_header_data, 14, 2), true);
-        $info_mpc_header['raw']['album_peak']      = getid3_lib::LittleEndian2Int(substr($mpc_header_data, 16, 2));
-        $info_mpc_header['raw']['album_gain']      = getid3_lib::LittleEndian2Int(substr($mpc_header_data, 18, 2), true);
-        
+
+        $info_mpc_header['raw']['title_peak'] = getid3_lib::LittleEndian2Int(substr($mpc_header_data, 12, 2));
+        $info_mpc_header['raw']['title_gain'] = getid3_lib::LittleEndian2Int(substr($mpc_header_data, 14, 2), true);
+        $info_mpc_header['raw']['album_peak'] = getid3_lib::LittleEndian2Int(substr($mpc_header_data, 16, 2));
+        $info_mpc_header['raw']['album_gain'] = getid3_lib::LittleEndian2Int(substr($mpc_header_data, 18, 2), true);
+
         $info_mpc_header['raw']['not_sure_what']   = getid3_lib::LittleEndian2Int(substr($mpc_header_data, 24, 3));
         $info_mpc_header['raw']['encoder_version'] = getid3_lib::LittleEndian2Int(substr($mpc_header_data, 27, 1));
-        
-        $flags_dword1                              = getid3_lib::LittleEndian2Int(substr($mpc_header_data, 8, 4));
-        $flags_dword2                              = getid3_lib::LittleEndian2Int(substr($mpc_header_data, 20, 4));
-        
+
+        $flags_dword1 = getid3_lib::LittleEndian2Int(substr($mpc_header_data, 8, 4));
+        $flags_dword2 = getid3_lib::LittleEndian2Int(substr($mpc_header_data, 20, 4));
+
         $info_mpc_header['intensity_stereo']   = (bool)(($flags_dword1 & 0x80000000) >> 31);
         $info_mpc_header['mid_side_stereo']    = (bool)(($flags_dword1 & 0x40000000) >> 30);
-        $info_mpc_header['max_subband']        =         ($flags_dword1 & 0x3F000000) >> 24;
-        $info_mpc_header['raw']['profile']     =         ($flags_dword1 & 0x00F00000) >> 20;
+        $info_mpc_header['max_subband']        = ($flags_dword1 & 0x3F000000) >> 24;
+        $info_mpc_header['raw']['profile']     = ($flags_dword1 & 0x00F00000) >> 20;
         $info_mpc_header['begin_loud']         = (bool)(($flags_dword1 & 0x00080000) >> 19);
         $info_mpc_header['end_loud']           = (bool)(($flags_dword1 & 0x00040000) >> 18);
-        $info_mpc_header['raw']['sample_rate'] =         ($flags_dword1 & 0x00030000) >> 16;
-        $info_mpc_header['max_level']          =         ($flags_dword1 & 0x0000FFFF);
-        
-        $info_mpc_header['true_gapless']       = (bool)(($flags_dword2 & 0x80000000) >> 31);
-        $info_mpc_header['last_frame_length']  =         ($flags_dword2 & 0x7FF00000) >> 20;
-        
-        $info_mpc_header['profile']            = getid3_mpc::MPCprofileNameLookup($info_mpc_header['raw']['profile']);
-        $info_mpc_header['sample_rate']        = getid3_mpc::MPCfrequencyLookup($info_mpc_header['raw']['sample_rate']);
-        $getid3->info['audio']['sample_rate']  = $info_mpc_header['sample_rate'];
-        $info_mpc_header['samples']            = ((($info_mpc_header['frame_count'] - 1) * 1152) + $info_mpc_header['last_frame_length']) * $getid3->info['audio']['channels'];
+        $info_mpc_header['raw']['sample_rate'] = ($flags_dword1 & 0x00030000) >> 16;
+        $info_mpc_header['max_level']          = ($flags_dword1 & 0x0000FFFF);
+
+        $info_mpc_header['true_gapless']      = (bool)(($flags_dword2 & 0x80000000) >> 31);
+        $info_mpc_header['last_frame_length'] = ($flags_dword2 & 0x7FF00000) >> 20;
+
+        $info_mpc_header['profile']           = getid3_mpc::MPCprofileNameLookup($info_mpc_header['raw']['profile']);
+        $info_mpc_header['sample_rate']       = getid3_mpc::MPCfrequencyLookup($info_mpc_header['raw']['sample_rate']);
+        $getid3->info['audio']['sample_rate'] = $info_mpc_header['sample_rate'];
+        $info_mpc_header['samples']           = ((($info_mpc_header['frame_count'] - 1) * 1152) + $info_mpc_header['last_frame_length']) * $getid3->info['audio']['channels'];
 
         $getid3->info['playtime_seconds'] = ($info_mpc_header['samples'] / $getid3->info['audio']['channels']) / $getid3->info['audio']['sample_rate'];
 
         $getid3->info['avdataoffset'] += $info_mpc_header['size'];
-        
+
         $getid3->info['audio']['bitrate'] = (($getid3->info['avdataend'] - $getid3->info['avdataoffset']) * 8) / $getid3->info['playtime_seconds'];
 
         $info_mpc_header['title_peak']    = $info_mpc_header['raw']['title_peak'];
         $info_mpc_header['title_peak_db'] = getid3_mpc::MPCpeakDBLookup($info_mpc_header['title_peak']);
         if ($info_mpc_header['raw']['title_gain'] < 0) {
             $info_mpc_header['title_gain_db'] = (float)(32768 + $info_mpc_header['raw']['title_gain']) / -100;
-        } 
-        else {
+        } else {
             $info_mpc_header['title_gain_db'] = (float)$info_mpc_header['raw']['title_gain'] / 100;
         }
 
@@ -102,8 +99,7 @@ class getid3_mpc extends getid3_handler
         $info_mpc_header['album_peak_db'] = getid3_mpc::MPCpeakDBLookup($info_mpc_header['album_peak']);
         if ($info_mpc_header['raw']['album_gain'] < 0) {
             $info_mpc_header['album_gain_db'] = (float)(32768 + $info_mpc_header['raw']['album_gain']) / -100;
-        } 
-        else {
+        } else {
             $info_mpc_header['album_gain_db'] = (float)$info_mpc_header['raw']['album_gain'] / 100;;
         }
         $info_mpc_header['encoder_version'] = getid3_mpc::MPCencoderVersionLookup($info_mpc_header['raw']['encoder_version']);
@@ -113,8 +109,7 @@ class getid3_mpc extends getid3_handler
 
         if ($info_mpc_header['title_peak'] > 0) {
             $getid3->info['replay_gain']['track']['peak'] = $info_mpc_header['title_peak'];
-        } 
-        elseif (round($info_mpc_header['max_level'] * 1.18) > 0) {
+        } elseif (round($info_mpc_header['max_level'] * 1.18) > 0) {
             $getid3->info['replay_gain']['track']['peak'] = (int)(round($info_mpc_header['max_level'] * 1.18)); // why? I don't know - see mppdec.c
         }
         if ($info_mpc_header['album_peak'] > 0) {
@@ -123,15 +118,13 @@ class getid3_mpc extends getid3_handler
 
         $getid3->info['audio']['encoder']         = $info_mpc_header['encoder_version'];
         $getid3->info['audio']['encoder_options'] = $info_mpc_header['profile'];
-        
+
         return true;
     }
 
-
-
-    public static function MPCprofileNameLookup($profileid) {
-        
-        static $lookup = array (
+    public static function MPCprofileNameLookup($profileid)
+    {
+        static $lookup = [
             0  => 'no profile',
             1  => 'Experimental',
             2  => 'unused',
@@ -148,64 +141,53 @@ class getid3_mpc extends getid3_handler
             13 => 'BrainDead (q = 8.0)',
             14 => 'above BrainDead (q = 9.0)',
             15 => 'above BrainDead (q = 10.0)'
-        );
+        ];
         return (isset($lookup[$profileid]) ? $lookup[$profileid] : 'invalid');
     }
 
-
-
-    public static function MPCfrequencyLookup($frequencyid) {
-        
-        static $lookup = array (
+    public static function MPCfrequencyLookup($frequencyid)
+    {
+        static $lookup = [
             0 => 44100,
             1 => 48000,
             2 => 37800,
             3 => 32000
-        );
+        ];
         return (isset($lookup[$frequencyid]) ? $lookup[$frequencyid] : 'invalid');
     }
 
-
-
-    public static function MPCpeakDBLookup($int_value) {
-        
+    public static function MPCpeakDBLookup($int_value)
+    {
         if ($int_value > 0) {
             return ((log10($int_value) / log10(2)) - 15) * 6;
         }
         return false;
     }
 
-
-
-    public static function MPCencoderVersionLookup($encoder_version) {
-    
+    public static function MPCencoderVersionLookup($encoder_version)
+    {
         //Encoder version * 100  (106 = 1.06)
         //EncoderVersion % 10 == 0        Release (1.0)
         //EncoderVersion %  2 == 0        Beta (1.06)
         //EncoderVersion %  2 == 1        Alpha (1.05a...z)
 
-        if ($encoder_version == 0) {
+        if (0 == $encoder_version) {
             // very old version, not known exactly which
             return 'Buschmann v1.7.0-v1.7.9 or Klemm v0.90-v1.05';
         }
 
-        if (($encoder_version % 10) == 0) {
-
+        if (0 == ($encoder_version % 10)) {
             // release version
             return number_format($encoder_version / 100, 2);
-
-        } elseif (($encoder_version % 2) == 0) {
-
+        } elseif (0 == ($encoder_version % 2)) {
             // beta version
-            return number_format($encoder_version / 100, 2).' beta';
-
+            return number_format($encoder_version / 100, 2) . ' beta';
         }
 
         // alpha version
-        return number_format($encoder_version / 100, 2).' alpha';
+        return number_format($encoder_version / 100, 2) . ' alpha';
     }
 
 }
 
 
-?>

@@ -1,12 +1,13 @@
 <?php
 /***********************************************************************
-** Title.........:  GD Driver
-** Version.......:  1.0
-** Author........:  Xiang Wei ZHUO <wei@zhuo.org>
-** Filename......:  GD.php
-** Last changed..:  30 Aug 2003 
-** Notes.........:  Orginal is from PEAR
-**/
+ ** Title.........:  GD Driver
+ ** Version.......:  1.0
+ ** Author........:  Xiang Wei ZHUO <wei@zhuo.org>
+ ** Filename......:  GD.php
+ ** Last changed..:  30 Aug 2003
+ ** Notes.........:  Orginal is from PEAR
+ **/
+
 // +----------------------------------------------------------------------+
 // | PHP Version 4                                                        |
 // +----------------------------------------------------------------------+
@@ -42,19 +43,19 @@
 // Image Transformation interface using the GD library
 //
 
-require_once "../ImageManager/Classes/Transform.php";
+require_once '../ImageManager/Classes/Transform.php';
 
 Class Image_Transform_Driver_GD extends Image_Transform
 {
     /**
      * Holds the image file for manipulation
      */
-    var $imageHandle = '';
+    public $imageHandle = '';
 
     /**
      * Holds the original image file
      */
-    var $old_image = '';
+    public $old_image = '';
 
     /**
      * Check settings
@@ -63,7 +64,7 @@ Class Image_Transform_Driver_GD extends Image_Transform
      *
      * @see PEAR::isError()
      */
-    function Image_Transform_GD()
+    public function Image_Transform_GD()
     {
         return;
     } // End function Image
@@ -76,67 +77,65 @@ Class Image_Transform_Driver_GD extends Image_Transform
      * @return mixed none or a PEAR error object on error
      * @see PEAR::isError()
      */
-    function load($image)
+    public function load($image)
     {
-        $this->uid = md5($_SERVER['REMOTE_ADDR']);
+        $this->uid   = md5($_SERVER['REMOTE_ADDR']);
         $this->image = $image;
         $this->_get_image_details($image);
         $functionName = 'ImageCreateFrom' . $this->type;
-		
-		if(function_exists($functionName))
-		{
-			$this->imageHandle = $functionName($this->image);
-			if ( $this->type == 'png')
-			{
-				imageAlphaBlending($this->imageHandle, false);
-				imageSaveAlpha($this->imageHandle, true);
-			}
-		}
+
+        if (function_exists($functionName)) {
+            $this->imageHandle = $functionName($this->image);
+            if ('png' == $this->type) {
+                imageAlphaBlending($this->imageHandle, false);
+                imageSaveAlpha($this->imageHandle, true);
+            }
+        }
     } // End load
 
     /**
      * addText
      *
-     * @param   array   options     Array contains options
-     *                              array(
-     *                                  'text'  The string to draw
-     *                                  'x'     Horizontal position
-     *                                  'y'     Vertical Position
-     *                                  'Color' Font color
-     *                                  'font'  Font to be used
-     *                                  'size'  Size of the fonts in pixel
-     *                                  'resize_first'  Tell if the image has to be resized
+     * @param array   options     Array contains options
+     *                                                  array(
+     *                                                  'text'  The string to draw
+     *                                                  'x'     Horizontal position
+     *                                                  'y'     Vertical Position
+     *                                                  'Color' Font color
+     *                                                  'font'  Font to be used
+     *                                                  'size'  Size of the fonts in pixel
+     *                                                  'resize_first'  Tell if the image has to be resized
      *                                                  before drawing the text
-     *                              )
+     *                                                  )
      *
      * @return none
      * @see PEAR::isError()
      */
-    function addText($params)
+    public function addText($params)
     {
-        $default_params = array(
-                                'text' => 'This is Text',
-                                'x' => 10,
-                                'y' => 20,
-                                'color' => array(255,0,0),
-                                'font' => 'Arial.ttf',
-                                'size' => '12',
-                                'angle' => 0,
-                                'resize_first' => false // Carry out the scaling of the image before annotation?  Not used for GD
-                                );
-        $params = array_merge($default_params, $params);
+        $default_params = [
+            'text'         => 'This is Text',
+            'x'            => 10,
+            'y'            => 20,
+            'color'        => [255, 0, 0],
+            'font'         => 'Arial.ttf',
+            'size'         => '12',
+            'angle'        => 0,
+            'resize_first' => false // Carry out the scaling of the image before annotation?  Not used for GD
+        ];
+        $params         = array_merge($default_params, $params);
         extract($params);
 
-        if( !is_array($color) ){
-            if ($color[0]=='#'){
-                $this->colorhex2colorarray( $color );
+        if (!is_array($color)) {
+            if ('#' == $color[0]) {
+                $this->colorhex2colorarray($color);
             } else {
                 include_once('Image/Transform/Driver/ColorsDefs.php');
-                $color = isset($colornames[$color])?$colornames[$color]:false;
+                $color = isset($colornames[$color]) ? $colornames[$color] : false;
             }
         }
 
-        $c = imagecolorresolve ($this->imageHandle, $color[0], $color[1], $color[2]);
+        $c = imagecolorresolve($this->imageHandle, $color[0], $color[1], $color[2]);
 
         if ('ttf' == substr($font, -3)) {
             ImageTTFText($this->imageHandle, $size, $angle, $x, $y, $c, $font, $text);
@@ -146,108 +145,107 @@ Class Image_Transform_Driver_GD extends Image_Transform
         return true;
     } // End addText
 
-
     /**
      * Rotate image by the given angle
      * Uses a fast rotation algorythm for custom angles
      * or lines copy for multiple of 90 degrees
      *
-     * @param int       $angle      Rotation angle
-     * @param array     $options    array(  'autoresize'=>true|false,
+     * @param int   $angle                  Rotation angle
+     * @param array $options                array(  'autoresize'=>true|false,
      *                                      'color_mask'=>array(r,g,b), named color or #rrggbb
-     *                                   )
-     * @author Pierre-Alain Joye
+     *                                      )
      * @return mixed none or a PEAR error object on error
-     * @see PEAR::isError()
+     * @author Pierre-Alain Joye
+     * @see    PEAR::isError()
      */
-    function rotate($angle, $options=null)
+    public function rotate($angle, $options = null)
     {
-        if(function_exists('imagerotate')) {
-            $white = imagecolorallocatealpha ($this->imageHandle, 255, 255, 255, 127);
-			$this->imageHandle = imagerotate($this->imageHandle, $angle, $white);
+        if (function_exists('imagerotate')) {
+            $white             = imagecolorallocatealpha($this->imageHandle, 255, 255, 255, 127);
+            $this->imageHandle = imagerotate($this->imageHandle, $angle, $white);
             return true;
         }
 
-        if ( $options==null ){
+        if (null == $options) {
             $autoresize = true;
-            $color_mask = array(105,255,255);
+            $color_mask = [105, 255, 255];
         } else {
-            extract( $options );
+            extract($options);
         }
 
         while ($angle <= -45) {
-            $angle  += 360;
+            $angle += 360;
         }
         while ($angle > 270) {
-            $angle  -= 360;
+            $angle -= 360;
         }
 
-        $t      = deg2rad($angle);
+        $t = deg2rad($angle);
 
-        if( !is_array($color_mask) ){
-            if ($color[0]=='#'){
-                $this->colorhex2colorarray( $color_mask );
+        if (!is_array($color_mask)) {
+            if ('#' == $color[0]) {
+                $this->colorhex2colorarray($color_mask);
             } else {
                 include_once('Image/Transform/Driver/ColorDefs.php');
-                $color = isset($colornames[$color_mask])?$colornames[$color_mask]:false;
+                $color = isset($colornames[$color_mask]) ? $colornames[$color_mask] : false;
             }
         }
 
         // Do not round it, too much lost of quality
-        $cosT   = cos($t);
-        $sinT   = sin($t);
+        $cosT = cos($t);
+        $sinT = sin($t);
 
-        $img    =& $this->imageHandle;
+        $img =& $this->imageHandle;
 
-        $width  = $max_x  = $this->img_x;
-        $height = $max_y  = $this->img_y;
+        $width  = $max_x = $this->img_x;
+        $height = $max_y = $this->img_y;
         $min_y  = 0;
         $min_x  = 0;
 
-        $x1     = round($max_x/2,0);
-        $y1     = round($max_y/2,0);
+        $x1 = round($max_x / 2, 0);
+        $y1 = round($max_y / 2, 0);
 
-        if ( $autoresize ){
-            $t      = abs($t);
-            $a      = round($angle,0);
-            switch((int)($angle)){
+        if ($autoresize) {
+            $t = abs($t);
+            $a = round($angle, 0);
+            switch ((int)($angle)) {
                 case 0:
-                        $width2     = $width;
-                        $height2    = $height;
+                    $width2  = $width;
+                    $height2 = $height;
                     break;
                 case 90:
-                        $width2     = $height;
-                        $height2    = $width;
+                    $width2  = $height;
+                    $height2 = $width;
                     break;
                 case 180:
-                        $width2     = $width;
-                        $height2    = $height;
+                    $width2  = $width;
+                    $height2 = $height;
                     break;
                 case 270:
-                        $width2     = $height;
-                        $height2    = $width;
+                    $width2  = $height;
+                    $height2 = $width;
                     break;
                 default:
-                    $width2     = (int)(abs(sin($t) * $height + cos($t) * $width));
-                    $height2    = (int)(abs(cos($t) * $height+sin($t) * $width));
+                    $width2  = (int)(abs(sin($t) * $height + cos($t) * $width));
+                    $height2 = (int)(abs(cos($t) * $height + sin($t) * $width));
             }
 
-            $width2     -= $width2%2;
-            $height2    -= $height2%2;
+            $width2  -= $width2 % 2;
+            $height2 -= $height2 % 2;
 
-            $d_width    = abs($width - $width2);
-            $d_height   = abs($height - $height2);
-            $x_offset   = $d_width/2;
-            $y_offset   = $d_height/2;
-            $min_x2     = -abs($x_offset);
-            $min_y2     = -abs($y_offset);
-            $max_x2     = $width2;
-            $max_y2     = $height2;
+            $d_width  = abs($width - $width2);
+            $d_height = abs($height - $height2);
+            $x_offset = $d_width / 2;
+            $y_offset = $d_height / 2;
+            $min_x2   = -abs($x_offset);
+            $min_y2   = -abs($y_offset);
+            $max_x2   = $width2;
+            $max_y2   = $height2;
         }
 
-        $img2   = @$this->newImgPreserveAlpha( imagecreateTrueColor($width2,$height2) );
+        $img2 = @$this->newImgPreserveAlpha(imagecreateTrueColor($width2, $height2));
 
-        if ( !is_resource($img2) ){
+        if (!is_resource($img2)) {
             return false;/*PEAR::raiseError('Cannot create buffer for the rotataion.',
                                 null, PEAR_ERROR_TRIGGER, E_USER_NOTICE);*/
         }
@@ -255,113 +253,110 @@ Class Image_Transform_Driver_GD extends Image_Transform
         $this->img_x = $width2;
         $this->img_y = $height2;
 
+        imagepalettecopy($img2, $img);
 
-        imagepalettecopy($img2,$img);
-
-       $mask = imagecolorallocatealpha ($img2,$color_mask[0],$color_mask[1],$color_mask[2],127);
+        $mask = imagecolorallocatealpha($img2, $color_mask[0], $color_mask[1], $color_mask[2], 127);
         // use simple lines copy for axes angles
-        switch((int)($angle)){
+        switch ((int)($angle)) {
             case 0:
-                imagefill ($img2, 0, 0,$mask);
-                for ($y=0; $y < $max_y; $y++) {
-                    for ($x = $min_x; $x < $max_x; $x++){
-                        $c  = @imagecolorat ( $img, $x, $y);
-                        imagesetpixel($img2,$x+$x_offset,$y+$y_offset,$c);
+                imagefill($img2, 0, 0, $mask);
+                for ($y = 0; $y < $max_y; $y++) {
+                    for ($x = $min_x; $x < $max_x; $x++) {
+                        $c = @imagecolorat($img, $x, $y);
+                        imagesetpixel($img2, $x + $x_offset, $y + $y_offset, $c);
                     }
                 }
                 break;
             case 90:
-                imagefill ($img2, 0, 0,$mask);
-                for ($x = $min_x; $x < $max_x; $x++){
-                    for ($y=$min_y; $y < $max_y; $y++) {
-                        $c  = imagecolorat ( $img, $x, $y);
-                        imagesetpixel($img2,$max_y-$y-1,$x,$c);
+                imagefill($img2, 0, 0, $mask);
+                for ($x = $min_x; $x < $max_x; $x++) {
+                    for ($y = $min_y; $y < $max_y; $y++) {
+                        $c = imagecolorat($img, $x, $y);
+                        imagesetpixel($img2, $max_y - $y - 1, $x, $c);
                     }
                 }
                 break;
             case 180:
-                imagefill ($img2, 0, 0,$mask);
-                for ($y=0; $y < $max_y; $y++) {
-                    for ($x = $min_x; $x < $max_x; $x++){
-                        $c  = @imagecolorat ( $img, $x, $y);
-                        imagesetpixel($img2, $max_x2-$x-1, $max_y2-$y-1, $c);
+                imagefill($img2, 0, 0, $mask);
+                for ($y = 0; $y < $max_y; $y++) {
+                    for ($x = $min_x; $x < $max_x; $x++) {
+                        $c = @imagecolorat($img, $x, $y);
+                        imagesetpixel($img2, $max_x2 - $x - 1, $max_y2 - $y - 1, $c);
                     }
                 }
                 break;
             case 270:
-                imagefill ($img2, 0, 0,$mask);
-                for ($y=0; $y < $max_y; $y++) {
-                    for ($x = $max_x; $x >= $min_x; $x--){
-                        $c  = @imagecolorat ( $img, $x, $y);
-                        imagesetpixel($img2,$y,$max_x-$x-1,$c);
+                imagefill($img2, 0, 0, $mask);
+                for ($y = 0; $y < $max_y; $y++) {
+                    for ($x = $max_x; $x >= $min_x; $x--) {
+                        $c = @imagecolorat($img, $x, $y);
+                        imagesetpixel($img2, $y, $max_x - $x - 1, $c);
                     }
                 }
                 break;
             // simple reverse rotation algo
             default:
-                $i=0;
-                for ($y = $min_y2; $y < $max_y2; $y++){
-
+                $i = 0;
+                for ($y = $min_y2; $y < $max_y2; $y++) {
                     // Algebra :)
-                    $x2 = round((($min_x2-$x1) * $cosT) + (($y-$y1) * $sinT + $x1),0);
-                    $y2 = round((($y-$y1) * $cosT - ($min_x2-$x1) * $sinT + $y1),0);
+                    $x2 = round((($min_x2 - $x1) * $cosT) + (($y - $y1) * $sinT + $x1), 0);
+                    $y2 = round((($y - $y1) * $cosT - ($min_x2 - $x1) * $sinT + $y1), 0);
 
-                    for ($x = $min_x2; $x < $max_x2; $x++){
-
+                    for ($x = $min_x2; $x < $max_x2; $x++) {
                         // Check if we are out of original bounces, if we are
                         // use the default color mask
-                        if ( $x2>=0 && $x2<$max_x && $y2>=0 && $y2<$max_y ){
-                            $c  = imagecolorat ( $img, $x2, $y2);
+                        if ($x2 >= 0 && $x2 < $max_x && $y2 >= 0 && $y2 < $max_y) {
+                            $c = imagecolorat($img, $x2, $y2);
                         } else {
-                            $c  = $mask;
+                            $c = $mask;
                         }
-                        imagesetpixel($img2,$x+$x_offset,$y+$y_offset,$c);
+                        imagesetpixel($img2, $x + $x_offset, $y + $y_offset, $c);
 
                         // round verboten!
-                        $x2  += $cosT;
-                        $y2  -= $sinT;
+                        $x2 += $cosT;
+                        $y2 -= $sinT;
                     }
                 }
                 break;
         }
-        $this->old_image    = $this->imageHandle;
-        $this->imageHandle  =  $img2;
+        $this->old_image   = $this->imageHandle;
+        $this->imageHandle = $img2;
         return true;
     }
 
-
-   /**
-    * Resize Action
-    *
-    * For GD 2.01+ the new copyresampled function is used
-    * It uses a bicubic interpolation algorithm to get far
-    * better result.
-    *
-    * @param int  $new_x new width
-    * @param int  $new_y new height
-    *
-    * @return true on success or pear error
-    * @see PEAR::isError()
-    */
-    function _resize($new_x, $new_y) {
-        if ($this->resized === true) {
+    /**
+     * Resize Action
+     *
+     * For GD 2.01+ the new copyresampled function is used
+     * It uses a bicubic interpolation algorithm to get far
+     * better result.
+     *
+     * @param int $new_x new width
+     * @param int $new_y new height
+     *
+     * @return true on success or pear error
+     * @see PEAR::isError()
+     */
+    public function _resize($new_x, $new_y)
+    {
+        if (true === $this->resized) {
             return false; /*PEAR::raiseError('You have already resized the image without saving it.  Your previous resizing will be overwritten', null, PEAR_ERROR_TRIGGER, E_USER_NOTICE);*/
         }
-        if(function_exists('ImageCreateTrueColor')){
-           $new_img = $this->newImgPreserveAlpha( ImageCreateTrueColor($new_x,$new_y) );
+        if (function_exists('ImageCreateTrueColor')) {
+            $new_img = $this->newImgPreserveAlpha(ImageCreateTrueColor($new_x, $new_y));
         } else {
-            $new_img =ImageCreate($new_x,$new_y);
+            $new_img = ImageCreate($new_x, $new_y);
         }
 
-        if(function_exists('ImageCopyResampled')){
+        if (function_exists('ImageCopyResampled')) {
             ImageCopyResampled($new_img, $this->imageHandle, 0, 0, 0, 0, $new_x, $new_y, $this->img_x, $this->img_y);
         } else {
             ImageCopyResized($new_img, $this->imageHandle, 0, 0, 0, 0, $new_x, $new_y, $this->img_x, $this->img_y);
         }
 
-        $this->old_image = $this->imageHandle;
+        $this->old_image   = $this->imageHandle;
         $this->imageHandle = $new_img;
-        $this->resized = true;
+        $this->resized     = true;
 
         $this->new_x = $new_x;
         $this->new_y = $new_y;
@@ -371,64 +366,62 @@ Class Image_Transform_Driver_GD extends Image_Transform
     /**
      * Crop the image
      *
-     * @param int $crop_x left column of the image
-     * @param int $crop_y top row of the image
-     * @param int $crop_width new cropped image width
+     * @param int $crop_x      left column of the image
+     * @param int $crop_y      top row of the image
+     * @param int $crop_width  new cropped image width
      * @param int $crop_height new cropped image height
      */
-    function crop($new_x, $new_y, $new_width, $new_height) 
+    public function crop($new_x, $new_y, $new_width, $new_height)
     {
-        if(function_exists('ImageCreateTrueColor')){
-            $new_img =  $this->newImgPreserveAlpha(ImageCreateTrueColor($new_width,$new_height));
+        if (function_exists('ImageCreateTrueColor')) {
+            $new_img = $this->newImgPreserveAlpha(ImageCreateTrueColor($new_width, $new_height));
         } else {
-            $new_img =ImageCreate($new_width,$new_height);
+            $new_img = ImageCreate($new_width, $new_height);
         }
-        if(function_exists('ImageCopyResampled')){
-            ImageCopyResampled($new_img, $this->imageHandle, 0, 0, $new_x, $new_y,$new_width,$new_height,$new_width,$new_height);
+        if (function_exists('ImageCopyResampled')) {
+            ImageCopyResampled($new_img, $this->imageHandle, 0, 0, $new_x, $new_y, $new_width, $new_height, $new_width, $new_height);
         } else {
-            ImageCopyResized($new_img, $this->imageHandle, 0, 0, $new_x, $new_y, $new_width,$new_height,$new_width,$new_height);
+            ImageCopyResized($new_img, $this->imageHandle, 0, 0, $new_x, $new_y, $new_width, $new_height, $new_width, $new_height);
         }
-        $this->old_image = $this->imageHandle;
+        $this->old_image   = $this->imageHandle;
         $this->imageHandle = $new_img;
-        $this->resized = true;
+        $this->resized     = true;
 
         $this->new_x = $new_x;
         $this->new_y = $new_y;
         return true;
     }
-   
+
     /**
      * Flip the image horizontally or vertically
      *
-     * @param boolean $horizontal true if horizontal flip, vertical otherwise
+     * @param bool $horizontal true if horizontal flip, vertical otherwise
      */
-    function flip($horizontal)
+    public function flip($horizontal)
     {
-        if(!$horizontal) {
+        if (!$horizontal) {
             $this->rotate(180);
         }
 
-        $width = imagesx($this->imageHandle); 
-        $height = imagesy($this->imageHandle); 
+        $width  = imagesx($this->imageHandle);
+        $height = imagesy($this->imageHandle);
 
-        for ($j = 0; $j < $height; $j++) { 
-                $left = 0; 
-                $right = $width-1; 
+        for ($j = 0; $j < $height; $j++) {
+            $left  = 0;
+            $right = $width - 1;
 
-
-                while ($left < $right) { 
-                    //echo " j:".$j." l:".$left." r:".$right."\n<br>";
-                    $t = imagecolorat($this->imageHandle, $left, $j); 
-                    imagesetpixel($this->imageHandle, $left, $j, imagecolorat($this->imageHandle, $right, $j)); 
-                    imagesetpixel($this->imageHandle, $right, $j, $t); 
-                    $left++; $right--; 
-                } 
-            
+            while ($left < $right) {
+                //echo " j:".$j." l:".$left." r:".$right."\n<br>";
+                $t = imagecolorat($this->imageHandle, $left, $j);
+                imagesetpixel($this->imageHandle, $left, $j, imagecolorat($this->imageHandle, $right, $j));
+                imagesetpixel($this->imageHandle, $right, $j, $t);
+                $left++;
+                $right--;
+            }
         }
 
         return true;
     }
-
 
     /**
      * Adjust the image gamma
@@ -437,124 +430,112 @@ Class Image_Transform_Driver_GD extends Image_Transform
      *
      * @return none
      */
-    function gamma($outputgamma=1.0) {
+    public function gamma($outputgamma = 1.0)
+    {
         ImageGammaCorrect($this->imageHandle, 1.0, $outputgamma);
     }
-	function paletteToTrueColorWithTransparency()
-	{
-		$oldImg = $this->imageHandle;
-		$newImg = $this->newImgPreserveAlpha( imagecreatetruecolor($this->img_x,$this->img_y) );
-		imagecopy($newImg,$oldImg,0,0,0,0,$this->img_x,$this->img_y);
 
-		$this->imageHandle = $newImg;
-	}
-	
-	function newImgPreserveAlpha($newImg)
-	{
-		if ( $this->type == 'jpeg') return $newImg;
-		
-		// Turn off transparency blending (temporarily)
-		imagealphablending($newImg, false);
-		
-		// Create a new transparent color for image
-		if ( $transparent = imagecolortransparent($this->imageHandle) >= 0 )
-		{
-			if (imageistruecolor($this->imageHandle))
-			{
-				$red = ($transparent & 0xFF0000) >> 16;
-				$green = ($transparent & 0x00FF00) >> 8;
-				$blue = ($transparent & 0x0000FF);
-				$color_values = array('red' => $red, 'green' => $green, 'blue' => $blue);
-			}
-			else
-			{
-				$color_values = imagecolorsforindex($this->imageHandle,$transparent);
+    public function paletteToTrueColorWithTransparency()
+    {
+        $oldImg = $this->imageHandle;
+        $newImg = $this->newImgPreserveAlpha(imagecreatetruecolor($this->img_x, $this->img_y));
+        imagecopy($newImg, $oldImg, 0, 0, 0, 0, $this->img_x, $this->img_y);
 
-			}
-			$color_values = imagecolorsforindex($this->imageHandle,$transparent);
-			$color = imagecolorallocatealpha($newImg, $color_values['red'],$color_values['green'],$color_values['blue'], 127);
-			$colort = imagecolorallocate($newImg, $color_values['red'],$color_values['green'],$color_values['blue']);
-		}
-		else
-		{
-			$color = imagecolorallocatealpha($newImg, 252, 2, 252, 127);
-			$colort = imagecolorallocate($newImg, 252, 2, 252);
-		}
-		imagecolortransparent($newImg,$colort);
-		
-		// Completely fill the background of the new image with allocated color.
-		imagefill($newImg, 0, 0, $color);
-		
-		// Restore transparency blending
-		imagesavealpha($newImg, true);
-		
-		return $newImg;
-	}
-	
-	function preserveTransparencyForPalette()
-	{
-		$new_img = imagecreatetruecolor($this->img_x,$this->img_y);
-		$truecolor = imageistruecolor($this->imageHandle);
-		$transparent = imagecolorallocate($new_img, 252,2,252); // nasty pinkish purple that hopefully doesn't exist in the image
+        $this->imageHandle = $newImg;
+    }
 
-		imagecolortransparent($new_img, $transparent);
-		for ($i=0;$i<$this->img_y;$i++)
-		{
-			for ($j=0;$j<$this->img_x;$j++)
-			{
-				$c = imagecolorat($this->imageHandle,$j, $i);
-				if ($truecolor)
-				{
-					$a = ($c >> 24) & 0xFF;
-					$r = ($c >> 16) & 0xFF;
-					$g = ($c >> 8) & 0xFF;
-					$b = $c & 0xFF;
-					$color_values = array('red' => $r, 'green' => $g, 'blue' => $b, 'alpha' => $a);
-				}
-				else
-				{
-					$color_values = imagecolorsforindex($this->imageHandle,$c);
-				}
-				if ($color_values['alpha'] >= 126)
-				{
-					imagesetpixel($new_img, $j, $i, $transparent);
-				}
-				else
-				{
-					imagesetpixel($new_img, $j, $i, $c);
-				}
-			}
-		}
-		$this->imageHandle = $new_img;
-	}
+    public function newImgPreserveAlpha($newImg)
+    {
+        if ('jpeg' == $this->type) {
+            return $newImg;
+        }
+
+        // Turn off transparency blending (temporarily)
+        imagealphablending($newImg, false);
+
+        // Create a new transparent color for image
+        if ($transparent = imagecolortransparent($this->imageHandle) >= 0) {
+            if (imageistruecolor($this->imageHandle)) {
+                $red          = ($transparent & 0xFF0000) >> 16;
+                $green        = ($transparent & 0x00FF00) >> 8;
+                $blue         = ($transparent & 0x0000FF);
+                $color_values = ['red' => $red, 'green' => $green, 'blue' => $blue];
+            } else {
+                $color_values = imagecolorsforindex($this->imageHandle, $transparent);
+            }
+            $color_values = imagecolorsforindex($this->imageHandle, $transparent);
+            $color        = imagecolorallocatealpha($newImg, $color_values['red'], $color_values['green'], $color_values['blue'], 127);
+            $colort       = imagecolorallocate($newImg, $color_values['red'], $color_values['green'], $color_values['blue']);
+        } else {
+            $color  = imagecolorallocatealpha($newImg, 252, 2, 252, 127);
+            $colort = imagecolorallocate($newImg, 252, 2, 252);
+        }
+        imagecolortransparent($newImg, $colort);
+
+        // Completely fill the background of the new image with allocated color.
+        imagefill($newImg, 0, 0, $color);
+
+        // Restore transparency blending
+        imagesavealpha($newImg, true);
+
+        return $newImg;
+    }
+
+    public function preserveTransparencyForPalette()
+    {
+        $new_img     = imagecreatetruecolor($this->img_x, $this->img_y);
+        $truecolor   = imageistruecolor($this->imageHandle);
+        $transparent = imagecolorallocate($new_img, 252, 2, 252); // nasty pinkish purple that hopefully doesn't exist in the image
+
+        imagecolortransparent($new_img, $transparent);
+        for ($i = 0; $i < $this->img_y; $i++) {
+            for ($j = 0; $j < $this->img_x; $j++) {
+                $c = imagecolorat($this->imageHandle, $j, $i);
+                if ($truecolor) {
+                    $a            = ($c >> 24) & 0xFF;
+                    $r            = ($c >> 16) & 0xFF;
+                    $g            = ($c >> 8) & 0xFF;
+                    $b            = $c & 0xFF;
+                    $color_values = ['red' => $r, 'green' => $g, 'blue' => $b, 'alpha' => $a];
+                } else {
+                    $color_values = imagecolorsforindex($this->imageHandle, $c);
+                }
+                if ($color_values['alpha'] >= 126) {
+                    imagesetpixel($new_img, $j, $i, $transparent);
+                } else {
+                    imagesetpixel($new_img, $j, $i, $c);
+                }
+            }
+        }
+        $this->imageHandle = $new_img;
+    }
 
     /**
      * Save the image file
      *
-     * @param string  $filename the name of the file to write to
-     * @param int     $quality  output DPI, default is 85
-     * @param string  $types    define the output format, default
+     * @param string $filename  the name of the file to write to
+     * @param int    $quality   output DPI, default is 85
+     * @param string $types     define the output format, default
      *                          is the current used format
      *
      * @return none
      */
-    function save($filename, $type = '', $quality = 85)
+    public function save($filename, $type = '', $quality = 85)
     {
-		$type           = $type==''? $this->type : $type;
-		$functionName   = 'image' . $type;
+        $type         = '' == $type ? $this->type : $type;
+        $functionName = 'image' . $type;
 
-		if(function_exists($functionName))
-		{
-			$this->old_image = $this->imageHandle;
-			if($type=='jpeg')
-				$functionName($this->imageHandle, $filename, $quality);
-			else
-				$functionName($this->imageHandle, $filename);
-			$this->imageHandle = $this->old_image;
-			$this->resized = false;
-		}
+        if (function_exists($functionName)) {
+            $this->old_image = $this->imageHandle;
+            if ('jpeg' == $type) {
+                $functionName($this->imageHandle, $filename, $quality);
+            } else {
+                $functionName($this->imageHandle, $filename);
+            }
+            $this->imageHandle = $this->old_image;
+            $this->resized     = false;
+        }
     } // End save
-
 
     /**
      * Display image without saving and lose changes
@@ -564,21 +545,20 @@ Class Image_Transform_Driver_GD extends Image_Transform
      *
      * @return none
      */
-    function display($type = '', $quality = 75)
+    public function display($type = '', $quality = 75)
     {
-        if ($type != '') {
+        if ('' != $type) {
             $this->type = $type;
         }
         $functionName = 'Image' . $this->type;
-		if(function_exists($functionName))
-		{
-			header('Content-type: image/' . strtolower($this->type));
-			$functionName($this->imageHandle, '', $quality);
-			$this->imageHandle = $this->old_image;
-			$this->resized = false;
-			ImageDestroy($this->old_image);
-			$this->free();
-		}
+        if (function_exists($functionName)) {
+            header('Content-type: image/' . strtolower($this->type));
+            $functionName($this->imageHandle, '', $quality);
+            $this->imageHandle = $this->old_image;
+            $this->resized     = false;
+            ImageDestroy($this->old_image);
+            $this->free();
+        }
     }
 
     /**
@@ -586,12 +566,12 @@ Class Image_Transform_Driver_GD extends Image_Transform
      *
      * @return none
      */
-    function free()
+    public function free()
     {
-        if ($this->imageHandle){
+        if ($this->imageHandle) {
             ImageDestroy($this->imageHandle);
         }
     }
 
 } // End class ImageGD
-?>
+

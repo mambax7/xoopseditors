@@ -11,12 +11,12 @@
  * @version         $Id: editor_registry.php 1573 2008-05-04 15:24:06Z phppp $
  */
 
-return $config = array(
-        "name"      =>  "xinha",
-        "class"     =>  "XoopsFormXinha",
-        "file"      =>  XOOPS_ROOT_PATH . "/class/xoopseditor/xinha/formxinha.php",
-        "title"     =>  _XOOPS_EDITOR_XINHA,
-        "order"     =>  8,
-        "nohtml"    =>  0
-    );
-?>
+return $config = [
+    'name'   => 'xinha',
+    'class'  => 'XoopsFormXinha',
+    'file'   => XOOPS_ROOT_PATH . '/class/xoopseditor/xinha/formxinha.php',
+    'title'  => _XOOPS_EDITOR_XINHA,
+    'order'  => 8,
+    'nohtml' => 0
+];
+

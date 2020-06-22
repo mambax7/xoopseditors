@@ -11,8 +11,8 @@
 // +----------------------------------------------------------------------+
 // | getID3() - http://getid3.sourceforge.net or http://www.getid3.org    |
 // +----------------------------------------------------------------------+
-// | Authors: James Heinrich <infoØgetid3*org>                            |
-// |          Allan Hansen <ahØartemis*dk>                                |
+// | Authors: James Heinrich <infoï¿½getid3*org>                            |
+// |          Allan Hansen <ahï¿½artemis*dk>                                |
 // +----------------------------------------------------------------------+
 // | module.graphic.tiff.php                                              |
 // | Module for analyzing TIFF graphic files.                             |
@@ -21,44 +21,40 @@
 //
 // $Id: module.graphic.tiff.php,v 1.2 2006/11/02 10:48:02 ah Exp $
 
-        
-        
 class getid3_tiff extends getid3_handler
 {
 
-    public function Analyze() {
-        
+    public function Analyze()
+    {
         $getid3 = $this->getid3;
 
         fseek($getid3->fp, $getid3->info['avdataoffset'], SEEK_SET);
         $tiff_header = fread($getid3->fp, 4);
 
-        $getid3->info['tiff']['byte_order'] = substr($tiff_header, 0, 2) == 'II' ? 'Intel' : 'Motorola';
-        $endian2int = substr($tiff_header, 0, 2) == 'II' ? 'LittleEndian2Int' : 'BigEndian2Int';
-                
+        $getid3->info['tiff']['byte_order'] = 'II' == substr($tiff_header, 0, 2) ? 'Intel' : 'Motorola';
+        $endian2int                         = 'II' == substr($tiff_header, 0, 2) ? 'LittleEndian2Int' : 'BigEndian2Int';
+
         $getid3->info['fileformat']          = 'tiff';
         $getid3->info['video']['dataformat'] = 'tiff';
         $getid3->info['video']['lossless']   = true;
-        $getid3->info['tiff']['ifd']         = array ();
-        $current_ifd                         = array ();
+        $getid3->info['tiff']['ifd']         = [];
+        $current_ifd                         = [];
 
-        $field_type_byte_length = array (1=>1, 2=>1, 3=>2, 4=>4, 5=>8);
+        $field_type_byte_length = [1 => 1, 2 => 1, 3 => 2, 4 => 4, 5 => 8];
 
         $next_ifd_offset = getid3_lib::$endian2int(fread($getid3->fp, 4));
 
         while ($next_ifd_offset > 0) {
-
             $current_ifd['offset'] = $next_ifd_offset;
 
             fseek($getid3->fp, $getid3->info['avdataoffset'] + $next_ifd_offset, SEEK_SET);
             $current_ifd['fieldcount'] = getid3_lib::$endian2int(fread($getid3->fp, 2));
 
             for ($i = 0; $i < $current_ifd['fieldcount']; $i++) {
-                
                 // shortcut
-                $current_ifd['fields'][$i] = array ();
-                $current_ifd_fields_i = &$current_ifd['fields'][$i];
-                
+                $current_ifd['fields'][$i] = [];
+                $current_ifd_fields_i      = &$current_ifd['fields'][$i];
+
                 $current_ifd_fields_i['raw']['tag']    = getid3_lib::$endian2int(fread($getid3->fp, 2));
                 $current_ifd_fields_i['raw']['type']   = getid3_lib::$endian2int(fread($getid3->fp, 2));
                 $current_ifd_fields_i['raw']['length'] = getid3_lib::$endian2int(fread($getid3->fp, 4));
@@ -67,7 +63,7 @@ class getid3_tiff extends getid3_handler
                 switch ($current_ifd_fields_i['raw']['type']) {
                     case 1: // BYTE  An 8-bit unsigned integer.
                         if ($current_ifd_fields_i['raw']['length'] <= 4) {
-                            $current_ifd_fields_i['value']  = getid3_lib::$endian2int(substr($current_ifd_fields_i['raw']['offset'], 0, 1));
+                            $current_ifd_fields_i['value'] = getid3_lib::$endian2int(substr($current_ifd_fields_i['raw']['offset'], 0, 1));
                         } else {
                             $current_ifd_fields_i['offset'] = getid3_lib::$endian2int($current_ifd_fields_i['raw']['offset']);
                         }
@@ -75,7 +71,7 @@ class getid3_tiff extends getid3_handler
 
                     case 2: // ASCII 8-bit bytes  that store ASCII codes; the last byte must be null.
                         if ($current_ifd_fields_i['raw']['length'] <= 4) {
-                            $current_ifd_fields_i['value']  = substr($current_ifd_fields_i['raw']['offset'], 3);
+                            $current_ifd_fields_i['value'] = substr($current_ifd_fields_i['raw']['offset'], 3);
                         } else {
                             $current_ifd_fields_i['offset'] = getid3_lib::$endian2int($current_ifd_fields_i['raw']['offset']);
                         }
@@ -83,7 +79,7 @@ class getid3_tiff extends getid3_handler
 
                     case 3: // SHORT A 16-bit (2-byte) unsigned integer.
                         if ($current_ifd_fields_i['raw']['length'] <= 2) {
-                            $current_ifd_fields_i['value']  = getid3_lib::$endian2int(substr($current_ifd_fields_i['raw']['offset'], 0, 2));
+                            $current_ifd_fields_i['value'] = getid3_lib::$endian2int(substr($current_ifd_fields_i['raw']['offset'], 0, 2));
                         } else {
                             $current_ifd_fields_i['offset'] = getid3_lib::$endian2int($current_ifd_fields_i['raw']['offset']);
                         }
@@ -91,7 +87,7 @@ class getid3_tiff extends getid3_handler
 
                     case 4: // LONG  A 32-bit (4-byte) unsigned integer.
                         if ($current_ifd_fields_i['raw']['length'] <= 1) {
-                            $current_ifd_fields_i['value']  = getid3_lib::$endian2int($current_ifd_fields_i['raw']['offset']);
+                            $current_ifd_fields_i['value'] = getid3_lib::$endian2int($current_ifd_fields_i['raw']['offset']);
                         } else {
                             $current_ifd_fields_i['offset'] = getid3_lib::$endian2int($current_ifd_fields_i['raw']['offset']);
                         }
@@ -103,9 +99,8 @@ class getid3_tiff extends getid3_handler
             }
 
             $getid3->info['tiff']['ifd'][] = $current_ifd;
-            $current_ifd = array ();
-            $next_ifd_offset = getid3_lib::$endian2int(fread($getid3->fp, 4));
-
+            $current_ifd                   = [];
+            $next_ifd_offset               = getid3_lib::$endian2int(fread($getid3->fp, 4));
         }
 
         foreach ($getid3->info['tiff']['ifd'] as $ifd_id => $ifd_array) {
@@ -179,25 +174,21 @@ class getid3_tiff extends getid3_handler
         return true;
     }
 
-
-
-    public static function TIFFcompressionMethod($id) {
-        
-        static $lookup = array (
+    public static function TIFFcompressionMethod($id)
+    {
+        static $lookup = [
             1     => 'Uncompressed',
             2     => 'Huffman',
             3     => 'Fax - CCITT 3',
             5     => 'LZW',
             32773 => 'PackBits',
-        );
-        return (isset($lookup[$id]) ? $lookup[$id] : 'unknown/invalid ('.$id.')');
+        ];
+        return (isset($lookup[$id]) ? $lookup[$id] : 'unknown/invalid (' . $id . ')');
     }
 
-
-
-    public static function TIFFcommentName($id) {
-        
-        static $lookup = array (
+    public static function TIFFcommentName($id)
+    {
+        static $lookup = [
             270 => 'imagedescription',
             271 => 'make',
             272 => 'model',
@@ -205,11 +196,10 @@ class getid3_tiff extends getid3_handler
             306 => 'datetime',
             315 => 'artist',
             316 => 'hostcomputer',
-        );
-        return (isset($lookup[$id]) ? $lookup[$id] : 'unknown/invalid ('.$id.')');
+        ];
+        return (isset($lookup[$id]) ? $lookup[$id] : 'unknown/invalid (' . $id . ')');
     }
 
 }
 
 
-?>

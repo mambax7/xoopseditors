@@ -71,8 +71,8 @@ if (isset($_GET['action'])) switch ($_GET['action']) {
         if (0 === strpos($_POST['path'], '/') || false !== strpos($_POST['path'], '../') || 0 === strpos($_POST['path'], './')) {
             die('wrong path');
         }
-        $path = $current_path . $_POST['path'];
-        $info = pathinfo($path);
+        $path        = $current_path . $_POST['path'];
+        $info        = pathinfo($path);
         $base_folder = $current_path . fix_dirname($_POST['path']) . '/';
         switch ($info['extension']) {
             case 'zip':

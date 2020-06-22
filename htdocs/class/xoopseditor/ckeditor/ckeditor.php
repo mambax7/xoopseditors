@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code 
@@ -25,18 +25,18 @@ xoops_load('XoopsEditor');
 
 class XoopsFormCkeditor extends XoopsEditor
 {
-	/**
+    /**
      * Constructor
      *
-     * @param    array   $configs  Editor Options
+     * @param array $configs Editor Options
      */
-    function __construct($configs)
+    public function __construct($configs)
     {
-        $this->rootPath = "/class/xoopseditor/ckeditor";
+        $this->rootPath = '/class/xoopseditor/ckeditor';
         parent::__construct($configs);
     }
-    
-    function XoopsFormCkeditor($configs)
+
+    public function XoopsFormCkeditor($configs)
     {
         $this->__construct($configs);
     }
@@ -44,66 +44,64 @@ class XoopsFormCkeditor extends XoopsEditor
     /**
      * prepare HTML for output
      *
-     * @param   bool    decode content?
+     * @param bool    decode content?
      * @return  sting HTML
      */
-    function render($decode = true)
+    public function render($decode = true)
     {
-		static $ckeditor_added, $ret, $retb;
-		
-		if ( is_object($GLOBALS['xoopsModule']) ) 
-			$dirname = $GLOBALS['xoopsModule']->getVar('dirname');
-		else
-			$dirname = 'system';
-		
-		if ( is_object($GLOBALS['xoTheme']) ) {
-			
-			if ( $ckeditor_added==false ) {
-				$GLOBALS['xoTheme']->addScript( XOOPS_URL . $this->rootPath . '/ckeditor/ckeditor.js' );
-				
-				if ( file_exists( XOOPS_ROOT_PATH . $this->rootPath . '/module/config.'.$dirname.'.js' ) ) 
-					$GLOBALS['xoTheme']->addScript( XOOPS_URL . $this->rootPath . '/module/config.'.$dirname.'.js' );			
-				else
-					$GLOBALS['xoTheme']->addScript( XOOPS_URL . $this->rootPath . '/ckeditor/config.js' );
-				$ckeditor_added = true;
-			}
-			
-			$retb .= '<script type="text/javascript">//<![CDATA[
+        static $ckeditor_added, $ret, $retb;
+
+        if (is_object($GLOBALS['xoopsModule'])) {
+            $dirname = $GLOBALS['xoopsModule']->getVar('dirname');
+        } else {
+            $dirname = 'system';
+        }
+
+        if (is_object($GLOBALS['xoTheme'])) {
+            if (false == $ckeditor_added) {
+                $GLOBALS['xoTheme']->addScript(XOOPS_URL . $this->rootPath . '/ckeditor/ckeditor.js');
+
+                if (file_exists(XOOPS_ROOT_PATH . $this->rootPath . '/module/config.' . $dirname . '.js')) {
+                    $GLOBALS['xoTheme']->addScript(XOOPS_URL . $this->rootPath . '/module/config.' . $dirname . '.js');
+                } else {
+                    $GLOBALS['xoTheme']->addScript(XOOPS_URL . $this->rootPath . '/ckeditor/config.js');
+                }
+                $ckeditor_added = true;
+            }
+
+            $retb .= '<script type="text/javascript">//<![CDATA[
 			CKEDITOR.replace( \'' . $this->getName() . '\');
 
 			//]]>
 			</script>';
-			   
-			
-		} else {
-			
-			if ( $ckeditor_added==false ) {		
-				$ret .= '<script src="' . XOOPS_URL . $this->rootPath . '/ckeditor/ckeditor.js' . '" type="text/javascript"></script>';
+        } else {
+            if (false == $ckeditor_added) {
+                $ret .= '<script src="' . XOOPS_URL . $this->rootPath . '/ckeditor/ckeditor.js' . '" type="text/javascript"></script>';
 
-				if ( file_exists( XOOPS_ROOT_PATH . $this->rootPath . '/module/config.'.$dirname.'.js' ) ) 
-					$ret .= '<script src="' . XOOPS_URL . $this->rootPath . '/module/config.'.$dirname.'.js' . '" type="text/javascript"></script>';
-				else				
-					$ret .= '<script src="' . XOOPS_URL . $this->rootPath . '/ckeditor/config.js' . '" type="text/javascript"></script>';
-				$ckeditor_added=true;
-			}
-			
-			$retb .= '<script type="text/javascript">//<![CDATA[
+                if (file_exists(XOOPS_ROOT_PATH . $this->rootPath . '/module/config.' . $dirname . '.js')) {
+                    $ret .= '<script src="' . XOOPS_URL . $this->rootPath . '/module/config.' . $dirname . '.js' . '" type="text/javascript"></script>';
+                } else {
+                    $ret .= '<script src="' . XOOPS_URL . $this->rootPath . '/ckeditor/config.js' . '" type="text/javascript"></script>';
+                }
+                $ckeditor_added = true;
+            }
+
+            $retb .= '<script type="text/javascript">//<![CDATA[
 			CKEDITOR.replace( \'' . $this->getName() . '\');
 			//]]>
 			</script>';
-			
-		}
+        }
 
         if ($decode) {
-            $ts = MyTextSanitizer::getInstance();
-            $value = $ts->undoHtmlSpecialChars( $this->getValue() );
+            $ts    = MyTextSanitizer::getInstance();
+            $value = $ts->undoHtmlSpecialChars($this->getValue());
         } else {
             $value = $this->getValue();
         }
-	
-	   return $ret."<textarea name='" . $this->getName() . "' id='" . $this->getName() . "'  title='" . $this->getTitle() . "' rows='" . $this->getRows() . "' cols='" . $this->getCols() . "'" . $this->getExtra() . ">" . $value . "</textarea>".$retb;
-		
+
+        return $ret . "<textarea name='" . $this->getName() . "' id='" . $this->getName() . "'  title='" . $this->getTitle() . "' rows='" . $this->getRows() . "' cols='" . $this->getCols() . "'" . $this->getExtra() . '>' . $value . '</textarea>' . $retb;
     }
 
 }
-?>
+
+

@@ -11,33 +11,31 @@
 // +----------------------------------------------------------------------+
 // | getID3() - http://getid3.sourceforge.net or http://www.getid3.org    |
 // +----------------------------------------------------------------------+
-// | Authors: James Heinrich <infoØgetid3*org>                            |
-// |          Allan Hansen <ahØartemis*dk>                                |
+// | Authors: James Heinrich <infoï¿½getid3*org>                            |
+// |          Allan Hansen <ahï¿½artemis*dk>                                |
 // +----------------------------------------------------------------------+
 // | module.archive.tar.php                                               |
 // | module for analyzing TAR files                                       |
 // | dependencies: NONE                                                   |
 // +----------------------------------------------------------------------+
-// | Module originally written by Mike Mozolin <teddybearØmail*ru>        |
+// | Module originally written by Mike Mozolin <teddybearï¿½mail*ru>        |
 // +----------------------------------------------------------------------+
 //
 // $Id: module.archive.tar.php,v 1.2 2006/11/02 10:48:00 ah Exp $
 
-        
-        
 class getid3_tar extends getid3_handler
 {
 
-    function Analyze() {
-
+    public function Analyze()
+    {
         $info = &$this->getid3->info;
 
         $info['fileformat'] = 'tar';
 
         $fp = $this->getid3->fp;
-        
+
         fseek($fp, 0);
-        
+
         $unpack_header = 'a100fname/a8mode/a8uid/a8gid/a12size/a12mtime/a8chksum/a1typflag/a100lnkname/a6magic/a2ver/a32uname/a32gname/a8devmaj/a8devmin/a155/prefix';
 
         $null_512k = str_repeat("\0", 512); // end-of-file marker
@@ -45,9 +43,8 @@ class getid3_tar extends getid3_handler
         $already_warned = false;
 
         while (!feof($fp)) {
-            
             $buffer = fread($fp, 512);
-            
+
             // check the block
             $checksum = 0;
             for ($i = 0; $i < 148; $i++) {
@@ -60,25 +57,25 @@ class getid3_tar extends getid3_handler
                 $checksum += ord(substr($buffer, $i, 1));
             }
             $attr    = unpack($unpack_header, $buffer);
-            $name    =        trim(@$attr['fname']);
+            $name    = trim(@$attr['fname']);
             $mode    = octdec(trim(@$attr['mode']));
             $uid     = octdec(trim(@$attr['uid']));
             $gid     = octdec(trim(@$attr['gid']));
             $size    = octdec(trim(@$attr['size']));
             $mtime   = octdec(trim(@$attr['mtime']));
             $chksum  = octdec(trim(@$attr['chksum']));
-            $typflag =        trim(@$attr['typflag']);
-            $lnkname =        trim(@$attr['lnkname']);
-            $magic   =        trim(@$attr['magic']);
-            $ver     =        trim(@$attr['ver']);
-            $uname   =        trim(@$attr['uname']);
-            $gname   =        trim(@$attr['gname']);
+            $typflag = trim(@$attr['typflag']);
+            $lnkname = trim(@$attr['lnkname']);
+            $magic   = trim(@$attr['magic']);
+            $ver     = trim(@$attr['ver']);
+            $uname   = trim(@$attr['uname']);
+            $gname   = trim(@$attr['gname']);
             $devmaj  = octdec(trim(@$attr['devmaj']));
             $devmin  = octdec(trim(@$attr['devmin']));
-            $prefix  =        trim(@$attr['prefix']);
+            $prefix  = trim(@$attr['prefix']);
 
             // EOF Found
-            if (($checksum == 256) && ($chksum == 0)) {
+            if ((256 == $checksum) && (0 == $chksum)) {
                 break;
             }
 
@@ -92,25 +89,25 @@ class getid3_tar extends getid3_handler
                     }
                 }
             }
-            
+
             if ($prefix) {
-                $name = $prefix.'/'.$name;
+                $name = $prefix . '/' . $name;
             }
             if ((preg_match('#/$#', $name)) && !$name) {
                 $typeflag = 5;
             }
-            
+
             // If it's the end of the tar-file...
             if ($buffer == $null_512k) {
                 break;
             }
-            
+
             // Protect against tar-files with garbage at the end
-            if ($name == '') {
+            if ('' == $name) {
                 break;
             }
-            
-            $info['tar']['file_details'][$name] = array (
+
+            $info['tar']['file_details'][$name] = [
                 'name'     => $name,
                 'mode_raw' => $mode,
                 'mode'     => getid3_tar::display_perms($mode),
@@ -127,8 +124,8 @@ class getid3_tar extends getid3_handler
                 'gname'    => $gname,
                 'devmajor' => $devmaj,
                 'devminor' => $devmin
-            );
-            
+            ];
+
             // Skip the next chunk
             fseek($fp, $size, SEEK_CUR);
 
@@ -136,39 +133,30 @@ class getid3_tar extends getid3_handler
             if ($size % 512) {
                 fseek($fp, 512 - $diff, SEEK_CUR);
             }
-            
         }
         return true;
     }
 
-
     // Parses the file mode to file permissions
-    public static function display_perms($mode) {
-
+    public static function display_perms($mode)
+    {
         // Determine Type
         if ($mode & 0x1000) {
-            $type='p'; // FIFO pipe
-        }
-        elseif ($mode & 0x2000) {
-            $type='c'; // Character special
-        }
-        elseif ($mode & 0x4000) {
-            $type='d'; // Directory
-        }
-        elseif ($mode & 0x6000) {
-            $type='b'; // Block special
-        }
-        elseif ($mode & 0x8000) {
-            $type='-'; // Regular
-        }
-        elseif ($mode & 0xA000) {
-            $type='l'; // Symbolic Link
-        }
-        elseif ($mode & 0xC000) {
-            $type='s'; // Socket
-        }
-        else {
-            $type='u'; // UNKNOWN
+            $type = 'p'; // FIFO pipe
+        } elseif ($mode & 0x2000) {
+            $type = 'c'; // Character special
+        } elseif ($mode & 0x4000) {
+            $type = 'd'; // Directory
+        } elseif ($mode & 0x6000) {
+            $type = 'b'; // Block special
+        } elseif ($mode & 0x8000) {
+            $type = '-'; // Regular
+        } elseif ($mode & 0xA000) {
+            $type = 'l'; // Symbolic Link
+        } elseif ($mode & 0xC000) {
+            $type = 's'; // Socket
+        } else {
+            $type = 'u'; // UNKNOWN
         }
 
         // Determine permissions
@@ -184,28 +172,27 @@ class getid3_tar extends getid3_handler
 
         // Adjust for SUID, SGID and sticky bit
         if ($mode & 0x800) {
-            $owner['execute'] = ($owner['execute'] == 'x') ? 's' : 'S';
+            $owner['execute'] = ('x' == $owner['execute']) ? 's' : 'S';
         }
         if ($mode & 0x400) {
-            $group['execute'] = ($group['execute'] == 'x') ? 's' : 'S';
+            $group['execute'] = ('x' == $group['execute']) ? 's' : 'S';
         }
         if ($mode & 0x200) {
-            $world['execute'] = ($world['execute'] == 'x') ? 't' : 'T';
+            $world['execute'] = ('x' == $world['execute']) ? 't' : 'T';
         }
 
-        $s  = sprintf('%1s', $type);
-        $s .= sprintf('%1s%1s%1s',      $owner['read'], $owner['write'], $owner['execute']);
-        $s .= sprintf('%1s%1s%1s',      $group['read'], $group['write'], $group['execute']);
-        $s .= sprintf('%1s%1s%1s'."\n", $world['read'], $world['write'], $world['execute']);
+        $s = sprintf('%1s', $type);
+        $s .= sprintf('%1s%1s%1s', $owner['read'], $owner['write'], $owner['execute']);
+        $s .= sprintf('%1s%1s%1s', $group['read'], $group['write'], $group['execute']);
+        $s .= sprintf('%1s%1s%1s' . "\n", $world['read'], $world['write'], $world['execute']);
 
         return $s;
     }
 
-
     // Converts the file type
-    public static function get_flag_type($typflag) {
-
-        static $flag_types = array (
+    public static function get_flag_type($typflag)
+    {
+        static $flag_types = [
             '0' => 'LF_NORMAL',
             '1' => 'LF_LINK',
             '2' => 'LF_SYNLINK',
@@ -221,11 +208,11 @@ class getid3_tar extends getid3_handler
             'N' => 'LF_NAMES',
             'S' => 'LF_SPARSE',
             'V' => 'LF_VOLHDR'
-        );
+        ];
 
         return @$flag_types[$typflag];
     }
-    
+
 }
 
-?>
+

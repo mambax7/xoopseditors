@@ -1,13 +1,13 @@
 <?php
 
 /***********************************************************************
-** Title.........:  ImageMagick Driver
-** Version.......:  1.0
-** Author........:  Xiang Wei ZHUO <wei@zhuo.org>
-** Filename......:  IM.php
-** Last changed..:  30 Aug 2003 
-** Notes.........:  Orginal is from PEAR
-**/
+ ** Title.........:  ImageMagick Driver
+ ** Version.......:  1.0
+ ** Author........:  Xiang Wei ZHUO <wei@zhuo.org>
+ ** Filename......:  IM.php
+ ** Last changed..:  30 Aug 2003
+ ** Notes.........:  Orginal is from PEAR
+ **/
 
 // +----------------------------------------------------------------------+
 // | PHP Version 4                                                        |
@@ -30,7 +30,7 @@
 // Image Transformation interface using command line ImageMagick
 //
 
-require_once "../ImageManager/Classes/Transform.php";
+require_once '../ImageManager/Classes/Transform.php';
 
 Class Image_Transform_Driver_IM extends Image_Transform
 {
@@ -38,13 +38,13 @@ Class Image_Transform_Driver_IM extends Image_Transform
      * associative array commands to be executed
      * @var array
      */
-    var $command = array();
+    public $command = [];
 
     /**
      *
      *
      */
-    function Image_Transform_Driver_IM()
+    public function __construct()
     {
         return true;
     } // End Image_IM
@@ -57,9 +57,8 @@ Class Image_Transform_Driver_IM extends Image_Transform
      * @return mixed none or a PEAR error object on error
      * @see PEAR::isError()
      */
-    function load($image)
+    public function load($image)
     {
-
         $this->uid = md5($_SERVER['REMOTE_ADDR']);
         /*if (!file_exists($image)) {
             return PEAR::raiseError('The image file ' . $image . ' does\'t exist', true);
@@ -77,7 +76,7 @@ Class Image_Transform_Driver_IM extends Image_Transform
      * @return none
      * @see PEAR::isError()
      */
-    function _resize($new_x, $new_y)
+    public function _resize($new_x, $new_y)
     {
         /*if (isset($this->command['resize'])) {
             return PEAR::raiseError("You cannot scale or resize an image more than once without calling save or display", true);
@@ -91,12 +90,12 @@ Class Image_Transform_Driver_IM extends Image_Transform
     /**
      * Crop the image
      *
-     * @param int $crop_x left column of the image
-     * @param int $crop_y top row of the image
-     * @param int $crop_width new cropped image width
+     * @param int $crop_x      left column of the image
+     * @param int $crop_y      top row of the image
+     * @param int $crop_width  new cropped image width
      * @param int $crop_height new cropped image height
      */
-    function crop($crop_x, $crop_y, $crop_width, $crop_height) 
+    public function crop($crop_x, $crop_y, $crop_width, $crop_height)
     {
         $this->command['crop'] = "-crop {$crop_width}x{$crop_height}+{$crop_x}+{$crop_y}";
     }
@@ -104,68 +103,70 @@ Class Image_Transform_Driver_IM extends Image_Transform
     /**
      * Flip the image horizontally or vertically
      *
-     * @param boolean $horizontal true if horizontal flip, vertical otherwise
+     * @param bool $horizontal true if horizontal flip, vertical otherwise
      */
-    function flip($horizontal) 
+    public function flip($horizontal)
     {
-        if($horizontal)
-            $this->command['flop'] = "-flop";
-        else
-            $this->command['flip'] = "-flip";
+        if ($horizontal) {
+            $this->command['flop'] = '-flop';
+        } else {
+            $this->command['flip'] = '-flip';
+        }
     }
+
     /**
      * rotate
      *
-     * @param   int     angle   rotation angle
-     * @param   array   options no option allowed
+     * @param int     angle   rotation angle
+     * @param array   options no option allowed
      *
      */
-    function rotate($angle, $options=null)
+    public function rotate($angle, $options = null)
     {
         if ('-' == $angle{0}) {
             $angle = 360 - substr($angle, 1);
         }
-         $this->command['rotate'] = "-rotate $angle";
+        $this->command['rotate'] = "-rotate $angle";
     } // End rotate
 
     /**
      * addText
      *
-     * @param   array   options     Array contains options
-     *                              array(
-     *                                  'text'  The string to draw
-     *                                  'x'     Horizontal position
-     *                                  'y'     Vertical Position
-     *                                  'Color' Font color
-     *                                  'font'  Font to be used
-     *                                  'size'  Size of the fonts in pixel
-     *                                  'resize_first'  Tell if the image has to be resized
+     * @param array   options     Array contains options
+     *                                                  array(
+     *                                                  'text'  The string to draw
+     *                                                  'x'     Horizontal position
+     *                                                  'y'     Vertical Position
+     *                                                  'Color' Font color
+     *                                                  'font'  Font to be used
+     *                                                  'size'  Size of the fonts in pixel
+     *                                                  'resize_first'  Tell if the image has to be resized
      *                                                  before drawing the text
-     *                              )
+     *                                                  )
      *
      * @return none
      * @see PEAR::isError()
      */
-    function addText($params)
+    public function addText($params)
     {
-        $default_params = array(
-                                'text' => 'This is Text',
-                                'x' => 10,
-                                'y' => 20,
-                                'color' => 'red',
-                                'font' => 'Arial.ttf',
-                                'resize_first' => false // Carry out the scaling of the image before annotation?
-                                );
-         $params = array_merge($default_params, $params);
-         extract($params);
-         if (true === $resize_first) {
-             // Set the key so that this will be the last item in the array
+        $default_params = [
+            'text'         => 'This is Text',
+            'x'            => 10,
+            'y'            => 20,
+            'color'        => 'red',
+            'font'         => 'Arial.ttf',
+            'resize_first' => false // Carry out the scaling of the image before annotation?
+        ];
+        $params         = array_merge($default_params, $params);
+        extract($params);
+        if (true === $resize_first) {
+            // Set the key so that this will be the last item in the array
             $key = 'ztext';
-         } else {
+        } else {
             $key = 'text';
-         }
-         $this->command[$key] = "-font $font -fill $color -draw 'text $x,$y \"$text\"'";
-         // Producing error: gs: not found gs: not found convert: Postscript delegate failed [No such file or directory].
+        }
+        $this->command[$key] = "-font $font -fill $color -draw 'text $x,$y \"$text\"'";
+        // Producing error: gs: not found gs: not found convert: Postscript delegate failed [No such file or directory].
     } // End addText
 
     /**
@@ -175,14 +176,16 @@ Class Image_Transform_Driver_IM extends Image_Transform
      *
      * @return none
      */
-    function gamma($outputgamma=1.0) {
+    public function gamma($outputgamma = 1.0)
+    {
         $this->command['gamma'] = "-gamma $outputgamma";
     }
-	
-	function reduce_colors($number = 256)
-	{
-		 $this->command['colors'] = "-colors $number";
-	}
+
+    public function reduce_colors($number = 256)
+    {
+        $this->command['colors'] = "-colors $number";
+    }
+
     /**
      * Save the image file
      *
@@ -192,17 +195,17 @@ Class Image_Transform_Driver_IM extends Image_Transform
      *
      * @return none
      */
-    function save($filename, $type='', $quality = 85)
+    public function save($filename, $type = '', $quality = 85)
     {
-        $type == '' ? $this->type : $type;
+        '' == $type ? $this->type : $type;
         $cmd = '' . IMAGE_TRANSFORM_LIB_PATH . 'convert ';
-		$cmd .= implode(' ', $this->command) . " -quality $quality ";
-		$cmd .= '"'.($this->image) . '" "' . ($filename) . '"';
-        
+        $cmd .= implode(' ', $this->command) . " -quality $quality ";
+        $cmd .= '"' . ($this->image) . '" "' . ($filename) . '"';
+
         //$cmd = str_replace('/', '\\', $cmd);
-		//echo($cmd.'<br>');
-        exec($cmd,$retval);
-		//error_log('IM '.print_r($retval,true));
+        //echo($cmd.'<br>');
+        exec($cmd, $retval);
+        //error_log('IM '.print_r($retval,true));
     } // End save
 
     /**
@@ -213,27 +216,26 @@ Class Image_Transform_Driver_IM extends Image_Transform
      *
      * @return none
      */
-    function display($type = '', $quality = 75)
+    public function display($type = '', $quality = 75)
     {
-        if ($type == '') {
+        if ('' == $type) {
             header('Content-type: image/' . $this->type);
-            passthru(IMAGE_TRANSFORM_LIB_PATH . '  ' . implode(' ', $this->command) . " -quality $quality "  . escapeshellarg($this->image) . ' ' . strtoupper($this->type) . ":-");
+            passthru(IMAGE_TRANSFORM_LIB_PATH . '  ' . implode(' ', $this->command) . " -quality $quality " . escapeshellarg($this->image) . ' ' . strtoupper($this->type) . ':-');
         } else {
             header('Content-type: image/' . $type);
-            passthru(IMAGE_TRANSFORM_LIB_PATH . 'convert ' . implode(' ', $this->command) . " -quality $quality "  . escapeshellarg($this->image) . ' ' . strtoupper($type) . ":-");
+            passthru(IMAGE_TRANSFORM_LIB_PATH . 'convert ' . implode(' ', $this->command) . " -quality $quality " . escapeshellarg($this->image) . ' ' . strtoupper($type) . ':-');
         }
     }
-
 
     /**
      * Destroy image handle
      *
      * @return none
      */
-    function free()
+    public function free()
     {
         return true;
     }
 
 } // End class ImageIM
-?>
+

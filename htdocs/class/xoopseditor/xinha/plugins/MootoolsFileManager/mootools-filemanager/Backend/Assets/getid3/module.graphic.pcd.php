@@ -11,8 +11,8 @@
 // +----------------------------------------------------------------------+
 // | getID3() - http://getid3.sourceforge.net or http://www.getid3.org    |
 // +----------------------------------------------------------------------+
-// | Authors: James Heinrich <infoØgetid3*org>                            |
-// |          Allan Hansen <ahØartemis*dk>                                |
+// | Authors: James Heinrich <infoï¿½getid3*org>                            |
+// |          Allan Hansen <ahï¿½artemis*dk>                                |
 // +----------------------------------------------------------------------+
 // | module.graphic.pcd.php                                               |
 // | Module for analyzing PhotoCD (PCD) Image files.                      |
@@ -21,14 +21,11 @@
 //
 // $Id: module.graphic.pcd.php,v 1.2 2006/11/02 10:48:02 ah Exp $
 
-        
-        
 class getid3_pcd extends getid3_handler
 {
 
-
-    public function Analyze() {
-        
+    public function Analyze()
+    {
         $getid3 = $this->getid3;
 
         $getid3->info['fileformat']          = 'pcd';
@@ -47,10 +44,8 @@ class getid3_pcd extends getid3_handler
             $getid3->info['video']['resolution_x'] = 2048;
             $getid3->info['video']['resolution_y'] = 3072;
         }
-
     }
-
 
 }
 
-?>
+

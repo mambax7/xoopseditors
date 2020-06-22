@@ -10,9 +10,10 @@
  * @author      Taiwen Jiang <phppp@users.sourceforge.net>
  * @version     $Id: english.php 760 2012-05-18 12:16:37Z kris_fr $
  */
+
 /*
  * Associated with editor_registry.php
  */
-define("_XOOPS_EDITOR_CKEDITOR", "CK Editor");
-define("_XOOPS_EDITOR_CKEDITOR_LANGUAGE", "en");
-?>
+define('_XOOPS_EDITOR_CKEDITOR', 'CK Editor');
+define('_XOOPS_EDITOR_CKEDITOR_LANGUAGE', 'en');
+

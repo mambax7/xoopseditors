@@ -13,12 +13,12 @@
  * @version         $Id: editor_registry.php 3496 2009-08-25 14:21:12Z dugris $
  */
 
-return $config = array(
-        "name"      =>  "nicedit",
-        "class"     =>  "XoopsFormNicedit",
-        "file"      =>  XOOPS_ROOT_PATH . "/class/xoopseditor/nicedit/formnicedit.php",
-        "title"     =>  _XOOPS_EDITOR_NICEDIT,
-        "order"     =>  9,
-        "nohtml"    =>  0
-    );
-?>
+return $config = [
+    'name'   => 'nicedit',
+    'class'  => 'XoopsFormNicedit',
+    'file'   => XOOPS_ROOT_PATH . '/class/xoopseditor/nicedit/formnicedit.php',
+    'title'  => _XOOPS_EDITOR_NICEDIT,
+    'order'  => 9,
+    'nohtml' => 0
+];
+

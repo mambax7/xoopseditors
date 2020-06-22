@@ -12,45 +12,35 @@
 /**
  *  TinyMCE adapter for XOOPS
  *
- * @copyright       (c) 2000-2014 XOOPS Project (www.xoops.org)
- * @license         http://www.fsf.org/copyleft/gpl.html GNU public license
- * @package         class
- * @subpackage      editor
- * @since           2.3.0
- * @author          Taiwen Jiang <phppp@users.sourceforge.net>
- * @author          Lucio Rota <lucio.rota@gmail.com>
- * @author          Laurent JEN <dugris@frxoops.org>
- * @version         $Id $
+ * @copyright       (c) 2000-2016 XOOPS Project (www.xoops.org)
+ * @license             GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @package             class
+ * @subpackage          editor
+ * @since               2.3.0
+ * @author              Taiwen Jiang <phppp@users.sourceforge.net>
+ * @author              Lucio Rota <lucio.rota@gmail.com>
+ * @author              Laurent JEN <dugris@frxoops.org>
  */
-
 class TinyMCE
 {
-    var $rootpath;
-    var $config = array();
-    var $setting = array();
-    static $LastOfElementsTinymce="";
-    static $ListOfElementsTinymce=array();
+    public        $rootpath;
+    public        $config                = [];
+    public        $setting               = [];
+    public static $LastOfElementsTinymce = '';
+    public static $ListOfElementsTinymce = [];
 
     // PHP 5 Constructor
-    /**
-     * @param $config
-     */
-    function __construct($config)
-     {
-        $this->setConfig($config);
-        $this->rootpath = $this->config["rootpath"] . "/tinymce/jscripts/tiny_mce";
-        $this->xoopsPlugins = $this->get_xoopsPlugins();
-        self::$LastOfElementsTinymce=$this->config["elements"];
-           self::$ListOfElementsTinymce[]= self::$LastOfElementsTinymce;
-    }
 
-    // PHP 4 Contructor
     /**
      * @param $config
      */
-    function TinyMCE($config)
+    public function __construct($config)
     {
-        $this->__construct($config) ;
+        $this->setConfig($config);
+        $this->rootpath                = $this->config['rootpath'] . '/tinymce/jscripts/tiny_mce';
+        $this->xoopsPlugins            = $this->get_xoopsPlugins();
+        self::$LastOfElementsTinymce   = $this->config['elements'];
+        self::$ListOfElementsTinymce[] = self::$LastOfElementsTinymce;
     }
 
     /**
@@ -58,7 +48,7 @@ class TinyMCE
      *
      * @return TinyMCE
      */
-    function &instance( $config )
+    public function &instance($config)
     {
         static $instance;
         if (!isset($instance)) {
@@ -73,7 +63,7 @@ class TinyMCE
     /**
      * @param $config
      */
-    function setConfig( $config )
+    public function setConfig($config)
     {
         foreach ($config as $key => $val) {
             $this->config[$key] = $val;
@@ -83,122 +73,122 @@ class TinyMCE
     /**
      * @return bool
      */
-    function init()
+    public function init()
     {
         // list of configured options
-        $configured = array();
+        $configured = [];
 
         // Load default settings
-        if ( ! ($this->setting = @include( $GLOBALS['xoops']->path( "var/configs/tinymce.php" ) ) ) ) {
-            $this->setting = include __DIR__ . "/settings.php";
+        if (!($this->setting = @include($GLOBALS['xoops']->path('var/configs/tinymce.php')))) {
+            $this->setting = include __DIR__ . '/settings.php';
         }
 
         // get editor language (from ...)
-        if (isset($this->config["language"]) && is_readable(XOOPS_ROOT_PATH . $this->rootpath . '/langs/' . $this->config["language"] . '.js')) {
-            $this->setting["language"] = $this->config["language"];
-            $configured[] = "language";
+        if (isset($this->config['language']) && is_readable(XOOPS_ROOT_PATH . $this->rootpath . '/langs/' . $this->config['language'] . '.js')) {
+            $this->setting['language'] = $this->config['language'];
+            $configured[]              = 'language';
         }
 
-        $this->setting["content_css"] = implode( ",", $this->loadCss() );
-        $configured[] = "content_css";
+        $this->setting['content_css'] = implode(',', $this->loadCss());
+        $configured[]                 = 'content_css';
 
-        if ( !empty($this->config["theme"]) && is_dir(XOOPS_ROOT_PATH . $this->rootpath . "/themes/" . $this->config["theme"]) ) {
-            $this->setting["theme"] = $this->config["theme"];
-            $configured[] = "theme";
+        if (!empty($this->config['theme']) && is_dir(XOOPS_ROOT_PATH . $this->rootpath . '/themes/' . $this->config['theme'])) {
+            $this->setting['theme'] = $this->config['theme'];
+            $configured[]           = 'theme';
         }
 
-        if (!empty($this->config["mode"])) {
-            $this->setting["mode"] = $this->config["mode"];
-            $configured[] = "mode";
+        if (!empty($this->config['mode'])) {
+            $this->setting['mode'] = $this->config['mode'];
+            $configured[]          = 'mode';
         }
 
         // load all plugins except the plugins in setting["exclude_plugins"]
-        $this->setting["plugins"] = implode(",", $this->loadPlugins());
-        $configured[] = "plugins";
+        $this->setting['plugins'] = implode(',', $this->loadPlugins());
+        $configured[]             = 'plugins';
 
-        if ($this->setting["theme"] != "simple") {
-            if (empty($this->config["buttons"])) {
-                $this->config["buttons"][] = array(
-                    "before"    => "",
-                    "add"       => "",
-                    );
-                $this->config["buttons"][] = array(
-                    "before"    => "",
-                    "add"       => "",
-                    );
-                $this->config["buttons"][] = array(
-                    "before"    => "",
-                    "add"       => "",
-                    );
+        if ('simple' !== $this->setting['theme']) {
+            if (empty($this->config['buttons'])) {
+                $this->config['buttons'][] = [
+                    'before' => '',
+                    'add'    => ''
+                ];
+                $this->config['buttons'][] = [
+                    'before' => '',
+                    'add'    => ''
+                ];
+                $this->config['buttons'][] = [
+                    'before' => '',
+                    'add'    => ''
+                ];
             }
             $i = 0;
-            foreach ($this->config["buttons"] as $button) {
-                $i++;
-                if (isset($button["before"])) {
-                    $this->setting["theme_" . $this->setting["theme"] . "_buttons{$i}_add_before"] = $button["before"];
+            foreach ($this->config['buttons'] as $button) {
+                ++$i;
+                if (isset($button['before'])) {
+                    $this->setting['theme_' . $this->setting['theme'] . "_buttons{$i}_add_before"] = $button['before'];
                 }
-                if (isset($button["add"])) {
-                    $this->setting["theme_" . $this->setting["theme"] . "_buttons{$i}_add"] = $button["add"];
+                if (isset($button['add'])) {
+                    $this->setting['theme_' . $this->setting['theme'] . "_buttons{$i}_add"] = $button['add'];
                 }
-                if (isset($button[""])) {
-                    $this->setting["theme_" . $this->setting["theme"] . "_buttons{$i}"] = $button[""];
+                if (isset($button[''])) {
+                    $this->setting['theme_' . $this->setting['theme'] . "_buttons{$i}"] = $button[''];
                 }
             }
-            $configured[] = "buttons";
+            $configured[] = 'buttons';
 
-            if (isset($this->config["toolbar_location"])) {
-                $this->setting["theme_" . $this->setting["theme"] . "_toolbar_location"] = $this->config["toolbar_location"];
-                $configured[] = "toolbar_location";
+            if (isset($this->config['toolbar_location'])) {
+                $this->setting['theme_' . $this->setting['theme'] . '_toolbar_location'] = $this->config['toolbar_location'];
+                $configured[]                                                            = 'toolbar_location';
             } else {
-                $this->setting["theme_" . $this->setting["theme"] . "_toolbar_location"] = "top";
+                $this->setting['theme_' . $this->setting['theme'] . '_toolbar_location'] = 'top';
             }
 
-            if (isset($this->config["toolbar_align"])) {
-                $this->setting["theme_" . $this->setting["theme"] . "_toolbar_align"] = $this->config["toolbar_align"];
-                $configured[] = "toolbar_align";
+            if (isset($this->config['toolbar_align'])) {
+                $this->setting['theme_' . $this->setting['theme'] . '_toolbar_align'] = $this->config['toolbar_align'];
+                $configured[]                                                         = 'toolbar_align';
             } else {
-                $this->setting["theme_" . $this->setting["theme"] . "_toolbar_align"] = "left";
+                $this->setting['theme_' . $this->setting['theme'] . '_toolbar_align'] = 'left';
             }
 
-            if (isset($this->config["statusbar_location"])) {
-                $this->setting["theme_" . $this->setting["theme"] . "_statusbar_location"] = $this->config["statusbar_location"];
-                $configured[] = "statusbar_location";
+            if (isset($this->config['statusbar_location'])) {
+                $this->setting['theme_' . $this->setting['theme'] . '_statusbar_location'] = $this->config['statusbar_location'];
+                $configured[]                                                              = 'statusbar_location';
             }
 
-            if (isset($this->config["path_location"])) {
-                $this->setting["theme_" . $this->setting["theme"] . "_path_location"] = $this->config["path_location"];
-                $configured[] = "path_location";
+            if (isset($this->config['path_location'])) {
+                $this->setting['theme_' . $this->setting['theme'] . '_path_location'] = $this->config['path_location'];
+                $configured[]                                                         = 'path_location';
             }
 
-            if (isset($this->config["resize_horizontal"])) {
-                $this->setting["theme_" . $this->setting["theme"] . "_resize_horizontal"] = $this->config["resize_horizontal"];
-                $configured[] = "resize_horizontal";
+            if (isset($this->config['resize_horizontal'])) {
+                $this->setting['theme_' . $this->setting['theme'] . '_resize_horizontal'] = $this->config['resize_horizontal'];
+                $configured[]                                                             = 'resize_horizontal';
             }
 
-            if (isset($this->config["resizing"])) {
-                $this->setting["theme_" . $this->setting["theme"] . "_resizing"] = $this->config["resizing"];
-                $configured[] = "resizing";
+            if (isset($this->config['resizing'])) {
+                $this->setting['theme_' . $this->setting['theme'] . '_resizing'] = $this->config['resizing'];
+                $configured[]                                                    = 'resizing';
             }
 
-            if (!empty($this->config["fonts"])) {
-                $this->setting["theme_" . $this->setting["theme"] . "_fonts"] = $this->config["fonts"];
-                $configured[] = "fonts";
+            if (!empty($this->config['fonts'])) {
+                $this->setting['theme_' . $this->setting['theme'] . '_fonts'] = $this->config['fonts'];
+                $configured[]                                                 = 'fonts';
             }
 
-            for ($i=1 ; $i <= 4 ; $i++) {
-                $buttons = array();
-                if ( isset($this->setting["theme_" . $this->setting["theme"] . "_buttons{$i}"]) ) {
-                    $checklist = explode(",", $this->setting["theme_" . $this->setting["theme"] . "_buttons{$i}"] );
+            for ($i = 1; $i <= 4; ++$i) {
+                $buttons = [];
+                if (isset($this->setting['theme_' . $this->setting['theme'] . "_buttons{$i}"])) {
+                    $checklist = explode(',', $this->setting['theme_' . $this->setting['theme'] . "_buttons{$i}"]);
                     foreach ($checklist as $plugin) {
-                        if ( strpos( strtolower($plugin), "xoops") != false ) {
-                            if ( in_array( $plugin, $this->xoopsPlugins ) ) {
+                        if (false != strpos(strtolower($plugin), 'xoops')) {
+                            if (in_array($plugin, $this->xoopsPlugins)) {
                                 $buttons[] = $plugin;
                             }
                         } else {
                             $buttons[] = $plugin;
                         }
                     }
-                    $this->setting["theme_" . $this->setting["theme"] . "_buttons{$i}"] = implode(",", $buttons);
+                    $this->setting['theme_' . $this->setting['theme'] . "_buttons{$i}"] = implode(',', $buttons);
                 }
             }
         }
@@ -211,8 +201,8 @@ class TinyMCE
             $this->setting[$key] = $val;
         }
 
-        if (!is_dir(XOOPS_ROOT_PATH . $this->rootpath . "/themes/" . $this->setting["theme"] . '/docs/' . $this->setting["language"] . '/')) {
-            $this->setting["docs_language"] = "en";
+        if (!is_dir(XOOPS_ROOT_PATH . $this->rootpath . '/themes/' . $this->setting['theme'] . '/docs/' . $this->setting['language'] . '/')) {
+            $this->setting['docs_language'] = 'en';
         }
 
         unset($this->config, $configured);
@@ -221,39 +211,41 @@ class TinyMCE
     }
 
     // load all plugins execpt the plugins in setting["exclude_plugins"]
+
     /**
      * @return array
      */
-    function loadPlugins()
+    public function loadPlugins()
     {
-        $plugins = array();
-        $plugins_list = XoopsLists::getDirListAsArray( XOOPS_ROOT_PATH . $this->rootpath . "/plugins" );
-        if (empty($this->setting["plugins"])) {
+        $plugins      = [];
+        $plugins_list = XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . $this->rootpath . '/plugins');
+        if (empty($this->setting['plugins'])) {
             $plugins = $plugins_list;
         } else {
-            $plugins = array_intersect(explode(",", $this->setting["plugins"]), $plugins_list);
+            $plugins = array_intersect(explode(',', $this->setting['plugins']), $plugins_list);
         }
-        if (!empty($this->setting["exclude_plugins"])) {
-            $plugins = array_diff($plugins, explode(",", $this->setting["exclude_plugins"]));
+        if (!empty($this->setting['exclude_plugins'])) {
+            $plugins = array_diff($plugins, explode(',', $this->setting['exclude_plugins']));
         }
-        if (!empty($this->config["plugins"])) {
-            $plugins = array_merge($plugins, $this->config["plugins"]);
+        if (!empty($this->config['plugins'])) {
+            $plugins = array_merge($plugins, $this->config['plugins']);
         }
 
         return $plugins;
     }
 
     // return all xoops plugins
+
     /**
      * @return array
      */
-    function get_xoopsPlugins()
+    public function get_xoopsPlugins()
     {
-        $xoopsPlugins = array();
-        $allplugins = XoopsLists::getDirListAsArray( XOOPS_ROOT_PATH . $this->rootpath . "/plugins" );
+        $xoopsPlugins = [];
+        $allplugins   = XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH . $this->rootpath . '/plugins');
         foreach ($allplugins as $plugin) {
-            if ( strpos( strtolower($plugin), "xoops") != false && file_exists(XOOPS_ROOT_PATH . $this->config["rootpath"] . "/include/$plugin.php") ) {
-                if ($right = @include XOOPS_ROOT_PATH . $this->config["rootpath"] . "/include/$plugin.php") {
+            if (false != strpos(strtolower($plugin), 'xoops') && file_exists(XOOPS_ROOT_PATH . $this->config['rootpath'] . "/include/$plugin.php")) {
+                if ($right = @include XOOPS_ROOT_PATH . $this->config['rootpath'] . "/include/$plugin.php") {
                     $xoopsPlugins[$plugin] = $plugin;
                 }
             }
@@ -267,23 +259,23 @@ class TinyMCE
      *
      * @return array
      */
-    function loadCss($css_file = 'style.css')
+    public function loadCss($css_file = 'style.css')
     {
         static $css_url, $css_path;
 
         if (!isset($css_url)) {
-            $css_url = dirname( xoops_getcss($GLOBALS['xoopsConfig']['theme_set']) );
+            $css_url  = dirname(xoops_getcss($GLOBALS['xoopsConfig']['theme_set']));
             $css_path = str_replace(XOOPS_THEME_URL, XOOPS_THEME_PATH, $css_url);
         }
 
-        $css = array();
-        $css[] = $css_url . '/' . $css_file;
-        $css_content = file_get_contents( $css_path . '/' . $css_file );
+        $css         = [];
+        $css[]       = $css_url . '/' . $css_file;
+        $css_content = file_get_contents($css_path . '/' . $css_file);
 
         // get all import css files
-        if ( preg_match_all("~\@import url\((.*\.css)\);~sUi", $css_content, $matches, PREG_PATTERN_ORDER) ) {
+        if (preg_match_all("~\@import url\((.*\.css)\);~sUi", $css_content, $matches, PREG_PATTERN_ORDER)) {
             foreach ($matches[1] as $key => $css_import) {
-                $css = array_merge( $css, $this->loadCss( $css_import) );
+                $css = array_merge($css, $this->loadCss($css_import));
             }
         }
 
@@ -293,89 +285,89 @@ class TinyMCE
     /**
      * @return string
      */
-    function render()
+    public function render()
     {
         static $isTinyMceJsLoaded = false;
 
         $this->init();
-        if (isset($this->setting["elements"]) && self::$LastOfElementsTinymce!=$this->setting["elements"]) {
-                $ret = "\n<!-- 'tiny_mce.js' SCRIPT NOT YET ".$this->setting["elements"]." -->\n"; //debug
+        if (isset($this->setting['elements']) && self::$LastOfElementsTinymce != $this->setting['elements']) {
+            $ret = "\n<!-- 'tiny_mce.js' SCRIPT NOT YET " . $this->setting['elements'] . " -->\n"; //debug
 
-                return $ret;
-               } else {
-            $this->setting["elements"]=implode(",",self::$ListOfElementsTinymce);
-            }
-        if ( !empty($this->setting["callback"]) ) {
-            $callback = $this->setting["callback"];
-            unset($this->setting["callback"]);
+            return $ret;
         } else {
-            $callback = "";
+            $this->setting['elements'] = implode(',', self::$ListOfElementsTinymce);
         }
-        if ( !empty($this->setting["file_browser_callback"]) ) {
-            $fbc_name=XOOPS_ROOT_PATH . "/class/xoopseditor/tinymce/include/".$this->setting["file_browser_callback"].".js";
+        if (!empty($this->setting['callback'])) {
+            $callback = $this->setting['callback'];
+            unset($this->setting['callback']);
+        } else {
+            $callback = '';
+        }
+        if (!empty($this->setting['file_browser_callback'])) {
+            $fbc_name = XOOPS_ROOT_PATH . '/class/xoopseditor/tinymce/include/' . $this->setting['file_browser_callback'] . '.js';
             //suis passé la /lesrevespossibles/x244/class/xoopseditor/tinymce/tinymce/jscripts/include/openFinder.js
-            $file_browser_callback ="MyXoopsUrl ='".XOOPS_URL."';\n";
+            $file_browser_callback = "MyXoopsUrl ='" . XOOPS_URL . "';\n";
             $file_browser_callback .= file_get_contents($fbc_name);
-             $file_browser_callback .="\n//suis passé la ".$fbc_name;
+            $file_browser_callback .= "\n//suis passé la " . $fbc_name;
             //unset($this->setting["file_browser_callback"]);
         } else {
-            $file_browser_callback = "//suis absent";
+            $file_browser_callback = '//suis absent';
         }
 
         // create returned string - start
         $ret = "\n";
 
-/*
-// IE BUG - start
-// more info here:
-// http://www.456bereastreet.com/archive/200802/beware_of_id_and_name_attribute_mixups_when_using_getelementbyid_in_internet_explorer/
-// possible solution here:
-// http://www.sixteensmallstones.org/ie-javascript-bugs-overriding-internet-explorers-documentgetelementbyid-to-be-w3c-compliant-exposes-an-additional-bug-in-getattributes
-        $ret =<<<EOF
-<script language='javascript' type='text/javascript'>
-    if (/msie/i.test (navigator.userAgent)) { //only override IE
-        document.nativeGetElementById = document.getElementById;
-        document.getElementById = function(id) {
-            var elem = document.nativeGetElementById(id);
-            if (elem) {
-                //make sure that it is a valid match on id
-                if (elem.attributes['id'].value == id) {
-                    return elem;
-                } else {
-                    //otherwise find the correct element
-                    for (var i=1;i<document.all[id].length;i++) {
-                        if (document.all[id][i].attributes['id'].value == id) {
-                            return document.all[id][i];
+        /*
+        // IE BUG - start
+        // more info here:
+        // http://www.456bereastreet.com/archive/200802/beware_of_id_and_name_attribute_mixups_when_using_getelementbyid_in_internet_explorer/
+        // possible solution here:
+        // http://www.sixteensmallstones.org/ie-javascript-bugs-overriding-internet-explorers-documentgetelementbyid-to-be-w3c-compliant-exposes-an-additional-bug-in-getattributes
+                $ret =<<<EOF
+        <script language='javascript' type='text/javascript'>
+            if (/msie/i.test (navigator.userAgent)) { //only override IE
+                document.nativeGetElementById = document.getElementById;
+                document.getElementById = function(id) {
+                    var elem = document.nativeGetElementById(id);
+                    if (elem) {
+                        //make sure that it is a valid match on id
+                        if (elem.attributes['id'].value == id) {
+                            return elem;
+                        } else {
+                            //otherwise find the correct element
+                            for (var i=1;i<document.all[id].length;i++) {
+                                if (document.all[id][i].attributes['id'].value == id) {
+                                    return document.all[id][i];
+                                }
+                            }
                         }
                     }
-                }
-            }
 
-            return null;
-        };
-    }
-</script>
-\n
-EOF;
-// IE BUG - end
-*/
+                    return null;
+                };
+            }
+        </script>
+        \n
+        EOF;
+        // IE BUG - end
+        */
 
         $ret .= "<!-- Start TinyMce Rendering -->\n"; //debug
         if ($isTinyMceJsLoaded) {
             $ret .= "<!-- 'tiny_mce.js' SCRIPT IS ALREADY LOADED -->\n"; //debug
         } else {
-            $ret .= "<script type='text/javascript' src='" . XOOPS_URL . $this->rootpath . "/tiny_mce.js'></script>\n";
+            $ret               .= "<script type='text/javascript' src='" . XOOPS_URL . $this->rootpath . "/tiny_mce.js'></script>\n";
             $isTinyMceJsLoaded = true;
         }
         $ret .= "<script type='text/javascript'>\n";
         $ret .= "tinyMCE.init({\n";
         // set options - start
         foreach ($this->setting as $key => $val) {
-            $ret .= $key . ":";
-            if ($val === true) {
-                $ret.= "true,";
-            } elseif ($val === false) {
-                $ret .= "false,";
+            $ret .= $key . ':';
+            if (true === $val) {
+                $ret .= 'true,';
+            } elseif (false === $val) {
+                $ret .= 'false,';
             } else {
                 $ret .= "'{$val}',";
             }
@@ -385,11 +377,11 @@ EOF;
         $ret .= "tinymceload: true\n";
         $ret .= "});\n";
         $ret .= $callback . "\n";
-    $ret .= $file_browser_callback. "\n";
+        $ret .= $file_browser_callback . "\n";
         //$ret .= "function toggleEditor(id) {tinyMCE.execCommand('mceToggleEditor',false, id);}\n";
         $ret .= "</script>\n";
         $ret .= "<!-- End TinyMce Rendering -->\n";//debug
         // create returned string - end
-        return $ret ;
+        return $ret;
     }
 }

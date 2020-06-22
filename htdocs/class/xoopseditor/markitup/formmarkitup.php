@@ -2,12 +2,12 @@
 /**
  * Adapted MarkitUp editor
  *
- * @copyright  	 The XOOPS project http://www.xoops.org/
- * @license     	http://www.fsf.org/copyleft/gpl.html GNU public license
- * @package	core
- * @subpackage	xoopseditor
- * @since       	2.4.5
- * @author          	kris <http://www.xoofoo.org>
+ * @copyright         The XOOPS project http://www.xoops.org/
+ * @license           http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @package           core
+ * @subpackage        xoopseditor
+ * @since             2.4.5
+ * @author            kris <http://www.xoofoo.org>
  */
 
 xoops_load('XoopsEditor');
@@ -15,49 +15,50 @@ xoops_load('XoopsEditor');
 /**
  * Constructor
  *
- * @param        string  $caption      Caption
- * @param        string  $name         "name" attribute
- * @param        string  $value        Initial text
- * @param        string  $width        iframe width
- * @param        string  $height       iframe height
- * @param        array   $options  Toolbar Options
+ * @param string $caption Caption
+ * @param string $name    "name" attribute
+ * @param string $value   Initial text
+ * @param string $width   iframe width
+ * @param string $height  iframe height
+ * @param array  $options Toolbar Options
  */
 class XoopsFormMarkitup extends XoopsEditor
 {
-    var $language = _LANGCODE;
-    var $width;
-    var $height;
-    var $sets;
-    var $skins;
-    var $editor;
+    public $language = _LANGCODE;
+    public $width;
+    public $height;
+    public $sets;
+    public $skins;
+    public $editor;
+
     // PHP 5 Constructor
-    function __construct($configs)
+    public function __construct($configs)
     {
         $current_path = __FILE__;
-        if ( DIRECTORY_SEPARATOR != "/" ) {
-            $current_path = str_replace( strpos( $current_path, "\\\\", 2 ) ? "\\\\" : DIRECTORY_SEPARATOR, "/", $current_path);
+        if (DIRECTORY_SEPARATOR != '/') {
+            $current_path = str_replace(strpos($current_path, "\\\\", 2) ? "\\\\" : DIRECTORY_SEPARATOR, '/', $current_path);
         }
-        $this->rootPath = "/class/xoopseditor/markitup";
+        $this->rootPath = '/class/xoopseditor/markitup';
         parent::__construct($configs);
         //$this->XoopsFormTextArea($configs['caption'], $configs['name'], $configs['value']);
-        $this->width = $configs["width"] . "500px";
-        $this->height = $configs["height"] . "300px";
-	$this->sets = $this->config["sets"] . "html";
-	$this->skins = $this->config["skins"] . "markitup";
+        $this->width  = $configs['width'] . '500px';
+        $this->height = $configs['height'] . '300px';
+        $this->sets   = $this->config['sets'] . 'html';
+        $this->skins  = $this->config['skins'] . 'markitup';
     }
 
     // PHP 4 Constructor
-    function XoopsFormMarkitup($configs)
+    public function XoopsFormMarkitup($configs)
     {
         $this->__construct($configs);
     }
 
-    function getName()
+    public function getName()
     {
         return $this->name;
     }
 
-    function setName($value)
+    public function setName($value)
     {
         $this->name = $value;
     }
@@ -67,7 +68,7 @@ class XoopsFormMarkitup extends XoopsEditor
      *
      * @return  string
      */
-    function getWidth()
+    public function getWidth()
     {
         return $this->width;
     }
@@ -77,7 +78,7 @@ class XoopsFormMarkitup extends XoopsEditor
      *
      * @return  string
      */
-    function getHeight()
+    public function getHeight()
     {
         return $this->height;
     }
@@ -87,9 +88,9 @@ class XoopsFormMarkitup extends XoopsEditor
      *
      * @return  string
      */
-    function getLanguage()
+    public function getLanguage()
     {
-        return str_replace('_','-',strtolower($this->language));
+        return str_replace('_', '-', strtolower($this->language));
     }
 
     /**
@@ -97,7 +98,7 @@ class XoopsFormMarkitup extends XoopsEditor
      *
      * @return  null
      */
-    function setLanguage($lang='en')
+    public function setLanguage($lang = 'en')
     {
         $this->language = $lang;
     }
@@ -105,11 +106,12 @@ class XoopsFormMarkitup extends XoopsEditor
     /**
      * Get initial content
      *
-     * @param        bool    $encode To sanitizer the text? Default value should be "true"; however we have to set "false" for backward compat
+     * @param bool $encode To sanitizer the text? Default value should be "true"; however we have to set "false" for backward compat
      * @return        string
      */
-    function getValue() {
-        return strtr(htmlspecialchars_decode($this->_value) , array("\n" => '<br />', "\r\n" =>'<br />'));
+    public function getValue()
+    {
+        return strtr(htmlspecialchars_decode($this->_value), ["\n" => '<br />', "\r\n" => '<br />']);
     }
 
     /**
@@ -117,17 +119,17 @@ class XoopsFormMarkitup extends XoopsEditor
      *
      * @return    string
      */
-    function renderValidationJS()
+    public function renderValidationJS()
     {
         if ($this->isRequired() && $eltname = $this->getName()) {
             $eltcaption = $this->getCaption();
-            $eltmsg = empty($eltcaption) ? sprintf( _FORM_ENTER, $eltname ) : sprintf( _FORM_ENTER, $eltcaption );
-            $eltmsg = str_replace('"', '\"', stripslashes( $eltmsg ) );
-            $ret = "\n";
-            $ret.= "if ( myform.{$eltname}.value == '' || myform.{$eltname}.value == '<br />' )";
-            $ret.= "{ window.alert(\"{$eltmsg}\"); myform.{$eltname}.focus(); return false; }";
+            $eltmsg     = empty($eltcaption) ? sprintf(_FORM_ENTER, $eltname) : sprintf(_FORM_ENTER, $eltcaption);
+            $eltmsg     = str_replace('"', '\"', stripslashes($eltmsg));
+            $ret        = "\n";
+            $ret        .= "if ( myform.{$eltname}.value == '' || myform.{$eltname}.value == '<br />' )";
+            $ret        .= "{ window.alert(\"{$eltmsg}\"); myform.{$eltname}.focus(); return false; }";
             return $ret;
-            }
+        }
         return '';
     }
 
@@ -136,31 +138,31 @@ class XoopsFormMarkitup extends XoopsEditor
      *
      * @return  sting HTML
      */
-    function render()
+    public function render()
     {
         static $isJsLoaded = false;
         $ret = "\n";
-        if(!$isJsLoaded)
-        {
-		/* css files */
-		$GLOBALS['xoTheme']->addStylesheet( XOOPS_URL . '/class/xoopseditor/markitup/markitup/skins/' . $this->skins . '/style.css' );
-		$GLOBALS['xoTheme']->addStylesheet( XOOPS_URL . '/class/xoopseditor//markitup/markitup/sets/' . $this->sets . '/style.css' );
-		$GLOBALS['xoTheme']->addStylesheet( XOOPS_URL . '/class/xoopseditor/markitup/markitup/markitup.css' );
-		/* javascript files */
-		$GLOBALS['xoTheme']->addScript('browse.php?Frameworks/jquery/jquery.js');
-		$GLOBALS['xoTheme']->addScript( XOOPS_URL . '/class/xoopseditor/markitup/markitup/jquery.markitup.js' );
-		$GLOBALS['xoTheme']->addScript( XOOPS_URL . '/class/xoopseditor/markitup/markitup/sets/' . $this->sets . '/set.js' );
-		$isJsLoaded = true;
+        if (!$isJsLoaded) {
+            /* css files */
+            $GLOBALS['xoTheme']->addStylesheet(XOOPS_URL . '/class/xoopseditor/markitup/markitup/skins/' . $this->skins . '/style.css');
+            $GLOBALS['xoTheme']->addStylesheet(XOOPS_URL . '/class/xoopseditor//markitup/markitup/sets/' . $this->sets . '/style.css');
+            $GLOBALS['xoTheme']->addStylesheet(XOOPS_URL . '/class/xoopseditor/markitup/markitup/markitup.css');
+            /* javascript files */
+            $GLOBALS['xoTheme']->addScript('browse.php?Frameworks/jquery/jquery.js');
+            $GLOBALS['xoTheme']->addScript(XOOPS_URL . '/class/xoopseditor/markitup/markitup/jquery.markitup.js');
+            $GLOBALS['xoTheme']->addScript(XOOPS_URL . '/class/xoopseditor/markitup/markitup/sets/' . $this->sets . '/set.js');
+            $isJsLoaded = true;
         }
-	$ret.= "<script type='text/javascript' charset='utf-8'>\n";
-        $ret.= "jQuery(document).ready(function(){\n";
-	// Add markItUp! to your textarea in one line
-	// jQuery('textarea').markItUp( { Settings }, { OptionalExtraSettings } );
-        $ret.= "       jQuery('#".$this->getName()."').markItUp(mySettings);\n";
-        $ret.= "   });\n";
-	$ret.= "</script>\n";
-	$ret.= "<textarea class='".$this->getName()."' name='".$this->getName()."' id='".$this->getName()."' ".$this->getExtra()."style='width:".$this->getWidth().";min-height:".$this->getHeight().";'>" . $this->getValue() . "</textarea>\n";
-        return $ret ;		
+        $ret .= "<script type='text/javascript' charset='utf-8'>\n";
+        $ret .= "jQuery(document).ready(function(){\n";
+        // Add markItUp! to your textarea in one line
+        // jQuery('textarea').markItUp( { Settings }, { OptionalExtraSettings } );
+        $ret .= "       jQuery('#" . $this->getName() . "').markItUp(mySettings);\n";
+        $ret .= "   });\n";
+        $ret .= "</script>\n";
+        $ret .= "<textarea class='" . $this->getName() . "' name='" . $this->getName() . "' id='" . $this->getName() . "' " . $this->getExtra() . "style='width:" . $this->getWidth() . ';min-height:' . $this->getHeight() . ";'>" . $this->getValue() . "</textarea>\n";
+        return $ret;
     }
 }
-?>
+
+
